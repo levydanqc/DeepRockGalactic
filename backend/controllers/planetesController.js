@@ -3,7 +3,7 @@
 const Planete = require("../models/planete");
 
 exports.getPlanetes = (req, res, next) => {
-  if (req.user.level !== 2) {
+  if (req.user.niveau !== 2) {
     const error = new Error("Vous ne pouvez pas...");
     error.statusCode = 401;
     throw error;
@@ -23,7 +23,7 @@ exports.getPlanetes = (req, res, next) => {
 exports.getPlanete = (req, res, next) => {
   const PlaneteId = req.params.PlaneteId;
 
-  if (req.user.level !== 2) {
+  if (req.user.niveau !== 2) {
     const error = new Error("Vous ne pouvez pas...");
     error.statusCode = 401;
     throw error;
@@ -48,7 +48,7 @@ exports.getPlanete = (req, res, next) => {
 exports.createPlanete = (req, res, next) => {
   const { nom, image } = req.body;
 
-  if (req.user.level !== 2) {
+  if (req.user.niveau !== 2) {
     const error = new Error("Vous ne pouvez pas...");
     error.statusCode = 401;
     throw error;
@@ -62,7 +62,7 @@ exports.createPlanete = (req, res, next) => {
   planete
     .save()
     .then(() => {
-      res.status(200).json({
+      res.status(201).json({
         message: "Planete créée",
         planete: planete,
       });
@@ -74,7 +74,7 @@ exports.createPlanete = (req, res, next) => {
 
 exports.deletePlanete = (req, res, next) => {
   console.log(req.user);
-  if (req.user.level !== 2) {
+  if (req.user.niveau !== 2) {
     const error = new Error("Vous ne pouvez pas supprimer");
     error.statusCode = 401;
     throw error;
@@ -92,7 +92,7 @@ exports.updatePlanete = (req, res, next) => {
   const planeteId = req.params.planeteId;
   const { nom, image } = req.body;
 
-  if (req.user.level !== 2) {
+  if (req.user.niveau !== 2) {
     const error = new Error("Vous ne pouvez pas...");
     error.statusCode = 401;
     throw error;
