@@ -11,7 +11,7 @@ const isAuth = require("../middleware/is-auth");
 router.get("/mineurs/", mineursController.getMineurs);
 
 // /mineur/ => POST
-router.post("/mineurs/", mineursController.createMineur);
+router.post("/mineurs/", isAuth, mineursController.createMineur);
 
 // /mineur/mineurId => GET
 router.get("/mineurs/:mineurId", mineursController.getMineur);
