@@ -1,5 +1,5 @@
 {
-  "name": "deep-rock-galactic",
+  "name": "app_deeprockgalactic",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,8 +8,7 @@
     "lint": "vue-cli-service lint",
     "lint-new-files": "eslint --ext='.js,.vue,.ts' . --ignore-path=.eslintignore-old-files",
     "lint:fix": "eslint --ext='.js,.vue,.ts' . --fix",
-    "validate-typescript": "tsc --noEmit",
-    "prepare": "husky install"
+    "validate-typescript": "tsc --noEmit"
   },
   "dependencies": {
     "core-js": "^3.8.3",

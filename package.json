@@ -1,7 +1,7 @@
 {
   "name": "deep-rock-galactic",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "",
   "repository": "git@github.com:levydanqc/DeepRockGalactic.git",
   "author": "Dan Levy <danlevy.ca@icloud.com>",
   "license": "MIT",
@@ -12,6 +12,7 @@
   },
   "scripts": {
     "prepare": "husky install",
+    "postinstall": "(cd frontend && yarn install) && (cd backend && yarn install)",
     "start": "concurrently \"cd frontend && yarn run serve\" \"cd backend && yarn run start\""
   },
   "dependencies": {
