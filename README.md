@@ -11,15 +11,3 @@ yarn install
 ```
 yarn run start
 ```
-
-### Compiles and minifies for production
-
-```
-cd frontend && yarn build
-```
-
-### Lints and fixes files
-
-```
-cd frontend && yarn lint
-```
