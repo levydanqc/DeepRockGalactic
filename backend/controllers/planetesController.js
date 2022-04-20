@@ -3,12 +3,6 @@
 const Planete = require("../models/planete");
 
 exports.getPlanetes = (req, res, next) => {
-  // if (req.user.niveau !== 2) {
-  //   const error = new Error("Vous ne pouvez pas...");
-  //   error.statusCode = 401;
-  //   throw error;
-  // }
-
   Planete.find()
     .then((planetes) => {
       res.json({
@@ -22,12 +16,6 @@ exports.getPlanetes = (req, res, next) => {
 
 exports.getPlanete = (req, res, next) => {
   const planeteId = req.params.planeteId;
-
-  // if (req.user.niveau !== 2) {
-  //   const error = new Error("Vous ne pouvez pas...");
-  //   error.statusCode = 401;
-  //   throw error;
-  // }
 
   Planete.findById(planeteId)
     .then((planete) => {
