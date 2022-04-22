@@ -60,7 +60,7 @@ exports.createPlanete = (req, res, next) => {
     });
 };
 
-exports.deletePlanete = (req, res, next) => {
+exports.deletePlanete = (req, res) => {
   if (req.user.niveau !== 2) {
     const error = new Error("Vous ne pouvez pas supprimer de planète");
     error.statusCode = 401;
