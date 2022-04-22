@@ -37,6 +37,12 @@ exports.getMineur = (req, res) => {
 };
 
 exports.createMineur = (req, res) => {
+  if (req.user.niveau !== 2) {
+    const error = new Error("Vous ne pouvez pas créer un mineur");
+    error.statusCode = 401;
+    throw error;
+  }
+
   const mineur = new Mineur({
     email: req.body.email,
     nom: req.body.nom,
@@ -61,6 +67,12 @@ exports.createMineur = (req, res) => {
 };
 
 exports.deleteMineur = (req, res) => {
+  if (req.user.niveau !== 2) {
+    const error = new Error("Vous ne pouvez pas supprimer un mineur");
+    error.statusCode = 401;
+    throw error;
+  }
+
   const id = req.params.mineurId;
   Mineur.deleteOne({ _id: id })
     .then(() => {
@@ -77,6 +89,12 @@ exports.deleteMineur = (req, res) => {
 };
 
 exports.updateMineur = (req, res) => {
+  if (req.user.niveau !== 2) {
+    const error = new Error("Vous ne pouvez pas modifier un mineur");
+    error.statusCode = 401;
+    throw error;
+  }
+
   const id = req.params.mineurId;
   const updatedMineur = new Mineur({
     _id: id,
