@@ -37,10 +37,17 @@ exports.createContrat = (req, res, next) => {
     throw error;
   }
 
-  const { prime, danger, ressource, quantiteRessource, dateExpiration } =
-    req.body;
+  const {
+    planeteId,
+    prime,
+    danger,
+    ressource,
+    quantiteRessource,
+    dateExpiration,
+  } = req.body;
 
   const contrat = new Contrat({
+    planeteId: planeteId,
     prime: prime,
     danger: danger,
     ressource: ressource,
@@ -94,8 +101,14 @@ exports.updateContrat = (req, res, next) => {
   }
 
   const contratId = req.params.id;
-  const { prime, danger, ressource, quantiteRessource, dateExpiration } =
-    req.body;
+  const {
+    planeteId,
+    prime,
+    danger,
+    ressource,
+    quantiteRessource,
+    dateExpiration,
+  } = req.body;
 
   Contrat.findById(contratId)
     .then((contrat) => {
@@ -104,6 +117,7 @@ exports.updateContrat = (req, res, next) => {
         error.statusCode = 404;
         throw error;
       }
+      contrat.planeteId = planeteId;
       contrat.prime = prime;
       contrat.danger = danger;
       contrat.ressource = ressource;
