@@ -2,7 +2,7 @@
 
 const Mineur = require("../models/mineur");
 
-exports.getMineurs = (_req, res) => {
+exports.getMineurs = (_req, res, next) => {
   Mineur.find()
     .then((mineurs) => {
       res.status(200).json({
@@ -10,16 +10,14 @@ exports.getMineurs = (_req, res) => {
         mineurs: mineurs,
       });
     })
-    .catch((error) => {
-      res.status(500).json({
-        message: "Erreur lors de la récupération des mineurs",
-        error: error,
-      });
+    .catch((err) => {
+      next(err);
     });
 };
 
-exports.getMineur = (req, res) => {
+exports.getMineur = (req, res, next) => {
   const id = req.params.mineurId;
+
   Mineur.findById(id)
     .then((mineur) => {
       if (mineur) {
@@ -28,15 +26,12 @@ exports.getMineur = (req, res) => {
         res.status(404).json({ message: "Le mineur n'a pas été trouvé" });
       }
     })
-    .catch((error) => {
-      res.status(500).json({
-        message: "Erreur lors de la récupération du mineur",
-        error: error,
-      });
+    .catch((err) => {
+      next(err);
     });
 };
 
-exports.createMineur = (req, res) => {
+exports.createMineur = (req, res, next) => {
   if (req.user.niveau !== 2) {
     const error = new Error("Vous ne pouvez pas créer un mineur");
     error.statusCode = 401;
@@ -58,15 +53,12 @@ exports.createMineur = (req, res) => {
         mineur: result,
       });
     })
-    .catch((error) => {
-      res.status(500).json({
-        message: "Erreur lors de la création du mineur",
-        error: error,
-      });
+    .catch((err) => {
+      next(err);
     });
 };
 
-exports.deleteMineur = (req, res) => {
+exports.deleteMineur = (req, res, next) => {
   if (req.user.niveau !== 2) {
     const error = new Error("Vous ne pouvez pas supprimer un mineur");
     error.statusCode = 401;
@@ -74,21 +66,19 @@ exports.deleteMineur = (req, res) => {
   }
 
   const id = req.params.mineurId;
+
   Mineur.deleteOne({ _id: id })
     .then(() => {
       res.status(200).json({
         message: "Le mineur a été supprimé avec succès",
       });
     })
-    .catch((error) => {
-      res.status(500).json({
-        message: "Erreur lors de la suppression du mineur",
-        error: error,
-      });
+    .catch((err) => {
+      next(err);
     });
 };
 
-exports.updateMineur = (req, res) => {
+exports.updateMineur = (req, res, next) => {
   if (req.user.niveau !== 2) {
     const error = new Error("Vous ne pouvez pas modifier un mineur");
     error.statusCode = 401;
@@ -111,10 +101,7 @@ exports.updateMineur = (req, res) => {
         mineur: updatedMineur,
       });
     })
-    .catch((error) => {
-      res.status(500).json({
-        message: "Erreur lors de la mise à jour du mineur",
-        error: error,
-      });
+    .catch((err) => {
+      next(err);
     });
 };
