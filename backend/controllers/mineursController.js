@@ -1,6 +1,7 @@
 "use strict";
 
 const Mineur = require("../models/mineur");
+const bcrypt = require("bcryptjs");
 
 exports.getMineurs = (_req, res, next) => {
   Mineur.find()
@@ -38,20 +39,23 @@ exports.createMineur = (req, res, next) => {
     throw error;
   }
 
-  const mineur = new Mineur({
-    email: req.body.email,
-    nom: req.body.nom,
-    motdepasse: req.body.motdepasse,
-    niveau: req.body.niveau,
-  });
+  const { email, nom, motdepasse, niveau } = req.body;
 
-  mineur
-    .save()
-    .then((result) => {
-      res.status(201).json({
-        message: "Le mineur a été créé avec succès",
-        mineur: result,
+  bcrypt
+    .hash(motdepasse, 12)
+    .then((hashedPassword) => {
+      const mineur = new Mineur({
+        email: email,
+        nom: nom,
+        motdepasse: hashedPassword,
+        niveau: niveau,
       });
+      return mineur.save();
+    })
+    .then((result) => {
+      res
+        .status(201)
+        .json({ message: "Le mineur a été créé avec succès!", mineur: result });
     })
     .catch((err) => {
       next(err);
@@ -85,21 +89,31 @@ exports.updateMineur = (req, res, next) => {
     throw error;
   }
 
-  const id = req.params.mineurId;
-  const updatedMineur = new Mineur({
-    _id: id,
-    email: req.body.email,
-    nom: req.body.nom,
-    motdepasse: req.body.motdepasse,
-    niveau: req.body.niveau,
-  });
+  const mineurId = req.params.mineurId;
+  const { email, nom, motdepasse, niveau } = req.body;
 
-  Mineur.findByIdAndUpdate(id, { $set: updatedMineur }, { new: true })
-    .then(() => {
-      res.status(200).json({
-        message: "Le mineur a été mis à jour avec succès",
-        mineur: updatedMineur,
-      });
+  bcrypt
+    .hash(motdepasse, 12)
+    .then((hashedPassword) => {
+      Mineur.findById(mineurId)
+        .then((mineur) => {
+          if (mineur) {
+            mineur.email = email;
+            mineur.nom = nom;
+            mineur.motdepasse = hashedPassword;
+            mineur.niveau = niveau;
+            mineur.save();
+            res.status(200).json({
+              message: "Le mineur a été modifié avec succès",
+              mineur: mineur,
+            });
+          } else {
+            res.status(404).json({ message: "Le mineur n'a pas été trouvé" });
+          }
+        })
+        .catch((err) => {
+          next(err);
+        });
     })
     .catch((err) => {
       next(err);
