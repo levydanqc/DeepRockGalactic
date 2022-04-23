@@ -69,13 +69,17 @@ exports.deleteMineur = (req, res, next) => {
     throw error;
   }
 
-  const id = req.params.mineurId;
+  const mineurId = req.params.mineurId;
 
-  Mineur.deleteOne({ _id: id })
-    .then(() => {
-      res.status(200).json({
-        message: "Le mineur a été supprimé avec succès",
-      });
+  Mineur.findByIdAndDelete(mineurId)
+    .then((mineur) => {
+      if (mineur) {
+        res.status(200).json({
+          message: "Mineur supprimé avec succès!",
+        });
+      } else {
+        res.status(404).json({ message: "Le contrat n'existe pas!" });
+      }
     })
     .catch((err) => {
       next(err);
