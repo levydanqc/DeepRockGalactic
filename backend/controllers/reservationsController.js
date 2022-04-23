@@ -36,8 +36,9 @@ exports.createReservation = (req, res, next) => {
     error.statusCode = 401;
     throw error;
   }
+  const { mineurId, contratId } = req.params;
 
-  const { mineurId, contratId, estTermine } = req.body;
+  const { estTermine } = req.body;
 
   const reservation = new Reservation({
     mineurId: mineurId,
