@@ -81,8 +81,7 @@ exports.deleteContrat = (req, res, next) => {
     .then((contrat) => {
       if (contrat) {
         res.status(200).json({
-          message: "Contrat supprimé",
-          contrat: contrat,
+          message: "Contrat supprimé avec succès!",
         });
       } else {
         res.status(404).json({ message: "Le contrat n'existe pas!" });
