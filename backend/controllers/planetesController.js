@@ -69,11 +69,19 @@ exports.deletePlanete = (req, res) => {
 
   const planeteId = req.params.planeteId;
 
-  Planete.findByIdAndRemove(planeteId).then(() => {
-    res.status(200).json({
-      message: "Planète supprimée",
+  Planete.findByIdAndDelete(planeteId)
+    .then((planete) => {
+      if (planete) {
+        res.status(200).json({
+          message: "Planète supprimée avec succès!",
+        });
+      } else {
+        res.status(404).json({ message: "La planète n'existe pas!" });
+      }
+    })
+    .catch((err) => {
+      next(err);
     });
-  });
 };
 
 exports.updatePlanete = (req, res, next) => {
@@ -89,7 +97,7 @@ exports.updatePlanete = (req, res, next) => {
   Planete.findById(planeteId)
     .then((planete) => {
       if (!planete) {
-        const error = new Error("La planète n'existe pas.");
+        const error = new Error("La planète n'existe pas!");
         error.statusCode = 404;
         throw error;
       }
