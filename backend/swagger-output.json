@@ -1,0 +1,712 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Deep Rock Galactic API",
+    "description": "API de Deep Rock Galactic, un jeu de stratégie en ligne de type RTS"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http", "https"],
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    },
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://petstore.swagger.io/oauth/authorize",
+      "flow": "implicit",
+      "scopes": {
+        "read_pets": "read your pets",
+        "write_pets": "modify pets in your account"
+      }
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["Authentification"],
+        "description": "Authentification d'un utilisateur",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Informations de connexion",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "email@exemple.com"
+                },
+                "motdepasse": {
+                  "type": "string",
+                  "example": "motdepasse123"
+                }
+              },
+              "required": ["email", "motdepasse"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token d'authentification",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "example": "json_web_token"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/signup": {
+      "post": {
+        "tags": ["Authentification"],
+        "description": "Création d'un utilisateur",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "nom": {
+                  "example": "any"
+                },
+                "motdepasse": {
+                  "example": "any"
+                },
+                "niveau": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Créé"
+          }
+        }
+      }
+    },
+    "/planetes/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nom": {
+                  "example": "any"
+                },
+                "image": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Créé"
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      }
+    },
+    "/planetes/{planeteId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "planeteId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "planeteId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nom": {
+                  "example": "any"
+                },
+                "image": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "planeteId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Non Autorisé"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      }
+    },
+    "/mineurs/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "nom": {
+                  "example": "any"
+                },
+                "motdepasse": {
+                  "example": "any"
+                },
+                "niveau": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Créé"
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      }
+    },
+    "/mineurs/{mineurId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "mineurId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "mineurId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "nom": {
+                  "example": "any"
+                },
+                "motdepasse": {
+                  "example": "any"
+                },
+                "niveau": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Non Autorisé"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "mineurId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Non Autorisé"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      }
+    },
+    "/contrats/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "planeteId": {
+                  "example": "any"
+                },
+                "prime": {
+                  "example": "any"
+                },
+                "danger": {
+                  "example": "any"
+                },
+                "ressource": {
+                  "example": "any"
+                },
+                "quantiteRessource": {
+                  "example": "any"
+                },
+                "dateExpiration": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Créé"
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      }
+    },
+    "/contrats/{contratId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "contratId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "contratId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "planeteId": {
+                  "example": "any"
+                },
+                "prime": {
+                  "example": "any"
+                },
+                "danger": {
+                  "example": "any"
+                },
+                "ressource": {
+                  "example": "any"
+                },
+                "quantiteRessource": {
+                  "example": "any"
+                },
+                "dateExpiration": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "contratId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Non Autorisé"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      }
+    },
+    "/reservation/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/reservations/{reservationId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "reservationId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "reservationId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "mineurId": {
+                  "example": "any"
+                },
+                "contratId": {
+                  "example": "any"
+                },
+                "estTermine": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "reservationId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Non Autorisé"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      }
+    },
+    "/reservations/{mineurId}/{contratId}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "mineurId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "contratId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "estTermine": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Créé"
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Mineur": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "email@exemple.com"
+        },
+        "nom": {
+          "type": "string",
+          "example": "Joe Dassin"
+        },
+        "motdepasse": {
+          "type": "string",
+          "example": "motdepasse123"
+        },
+        "niveau": {
+          "type": "number",
+          "example": 1
+        }
+      },
+      "required": ["email", "nom", "motdepasse", "niveau"]
+    },
+    "Planete": {
+      "type": "object",
+      "properties": {
+        "nom": {
+          "type": "string",
+          "example": "Terre"
+        },
+        "image": {
+          "type": "string",
+          "example": "https://picsum.photos/200"
+        }
+      },
+      "required": ["nom", "image"]
+    },
+    "Contrat": {
+      "type": "object",
+      "properties": {
+        "prime": {
+          "type": "number",
+          "example": 100
+        },
+        "danger": {
+          "type": "number",
+          "example": 1
+        },
+        "ressource": {
+          "type": "string",
+          "example": "fer"
+        },
+        "quantiteRessource": {
+          "type": "number",
+          "example": 100
+        },
+        "dateExpiration": {
+          "type": "string",
+          "example": "2022-01-01"
+        }
+      },
+      "required": [
+        "prime",
+        "danger",
+        "ressource",
+        "quantiteRessource",
+        "dateExpiration"
+      ]
+    },
+    "Reservation": {
+      "type": "object",
+      "properties": {
+        "mineurId": {
+          "$ref": "#/definitions/Mineur"
+        },
+        "planeteId": {
+          "$ref": "#/definitions/Planete"
+        },
+        "estTermine": {
+          "type": "boolean",
+          "example": false
+        }
+      },
+      "required": ["mineurId", "planeteId", "estTermine"]
+    }
+  }
+}

@@ -8,6 +8,32 @@ dotenv.config();
 const User = require("../models/mineur");
 
 exports.login = (req, res, next) => {
+  /*  #swagger.auto = false
+      
+      #swagger.tags = ['Authentification']
+      #swagger.path = '/auth/login'
+      #swagger.method = 'post'
+      #swagger.description = "Authentification d'un utilisateur"
+      #swagger.produces = ['application/json']
+      #swagger.consumes = ['application/json']
+  */
+  /*  #swagger.parameters['body'] = {
+                in: 'body',
+                description: 'Informations de connexion',
+                required: 'true',
+                schema: {
+                    $email: 'email@exemple.com',
+                    $motdepasse: 'motdepasse123',
+                }
+  } */
+  /* #swagger.responses[200] = {
+            description: "Token d'authentification",
+            schema: {
+                token: 'json_web_token'
+            }
+        }   
+    */
+
   const email = req.body.email;
   const motdepasse = req.body.motdepasse;
 
@@ -50,6 +76,10 @@ exports.login = (req, res, next) => {
 };
 
 exports.signup = (req, res, next) => {
+  /*  #swagger.tags = ['Authentification']
+      #swagger.description = "Création d'un utilisateur"
+      #swagger.path = '/auth/signup'
+  */
   const email = req.body.email;
   const nom = req.body.nom;
   const motdepasse = req.body.motdepasse;

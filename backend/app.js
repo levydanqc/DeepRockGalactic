@@ -3,6 +3,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 var hateoasLinker = require("express-hateoas-links");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json");
 const app = express();
 
 // Déclaration d'un parser pour analyser "le corps (body)" d'une 'requête entrante avec POST
@@ -14,6 +16,21 @@ app.use(express.json());
 // remplace le res.json standard avec la nouvelle version
 // qui prend en charge les liens HATEOAS
 app.use(hateoasLinker);
+
+// Génération du lien vers le document de Swagger
+var options = {
+  customCss: ".swagger-ui .topbar { display: none }",
+  customSiteTitle: "Deep Rock Galactic API",
+  customfavIcon: "/public/favicon.ico",
+};
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, options)
+);
+
+// Permet l'accès aux ressources statiques (images, css, js)
+app.use("/public", express.static(__dirname + "/assets"));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
