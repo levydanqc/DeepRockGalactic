@@ -75,9 +75,9 @@ exports.deleteContrat = (req, res, next) => {
     throw error;
   }
 
-  const id = req.params.id;
+  const contratId = req.params.contratId;
 
-  Contrat.findByIdAndDelete(id)
+  Contrat.findByIdAndDelete(contratId)
     .then((contrat) => {
       if (contrat) {
         res.status(200).json({
@@ -100,7 +100,7 @@ exports.updateContrat = (req, res, next) => {
     throw error;
   }
 
-  const contratId = req.params.id;
+  const contratId = req.params.contratId;
   const {
     planeteId,
     prime,
