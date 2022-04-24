@@ -75,9 +75,7 @@ exports.createMineur = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas créer un mineur");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
   }
 
   const { email, nom, motdepasse, niveau } = req.body;
@@ -125,9 +123,7 @@ exports.deleteMineur = (req, res, next) => {
       }
  */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas supprimer un mineur");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
   }
 
   const mineurId = req.params.mineurId;
@@ -176,9 +172,7 @@ exports.updateMineur = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas modifier un mineur");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
   }
 
   const mineurId = req.params.mineurId;
