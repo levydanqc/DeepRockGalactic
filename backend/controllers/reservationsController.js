@@ -22,7 +22,7 @@ exports.getReservation = (req, res, next) => {
       if (reservation) {
         res.status(200).json(reservation);
       } else {
-        res.status(404).json({ message: "La réservation n'existe pas" });
+        res.status(404).json({ message: "La reservation n'existe pas!" });
       }
     })
     .catch((err) => {
