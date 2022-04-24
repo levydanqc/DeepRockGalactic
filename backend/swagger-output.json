@@ -7,6 +7,16 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
+  "tags": [
+    {
+      "name": "Authentification",
+      "description": "Gestion des utilisateurs"
+    },
+    {
+      "name": "Contrats",
+      "description": "Gestion des contrats"
+    }
+  ],
   "schemes": ["http", "https"],
   "securityDefinitions": {
     "api_key": {
@@ -30,7 +40,8 @@
     "/auth/login": {
       "post": {
         "tags": ["Authentification"],
-        "description": "Authentification d'un utilisateur",
+        "summary": "Connexion d'un utilisateur",
+        "description": "Retourne un token d'authentification",
         "parameters": [
           {
             "name": "Utilisateur",
@@ -74,7 +85,8 @@
     "/auth/signup": {
       "post": {
         "tags": ["Authentification"],
-        "description": "Création d'un utilisateur",
+        "summary": "Inscription d'un utilisateur",
+        "description": "Retourne l'id de l'utilisateur",
         "parameters": [
           {
             "name": "Utilisateur",
@@ -383,7 +395,8 @@
     },
     "/contrats/": {
       "get": {
-        "description": "",
+        "tags": ["Contrats"],
+        "description": "Obtenir l'ensemble des contrats",
         "parameters": [],
         "responses": {
           "200": {

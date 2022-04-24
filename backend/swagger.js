@@ -16,12 +16,16 @@ const doc = {
   schemes: ["http", "https"],
   consumes: ["application/json"],
   produces: ["application/json"],
-  // tags: [
-  //   {
-  //     name: "Authen",
-  //     description: "Endpoints",
-  //   },
-  // ],
+  tags: [
+    {
+      name: "Authentification",
+      description: "Gestion des utilisateurs",
+    },
+    {
+      name: "Contrats",
+      description: "Gestion des contrats",
+    },
+  ],
   securityDefinitions: {
     api_key: {
       type: "apiKey",

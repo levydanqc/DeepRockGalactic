@@ -10,7 +10,8 @@ const User = require("../models/mineur");
 exports.login = (req, res, next) => {
   /* 
       #swagger.tags = ['Authentification']
-      #swagger.description = "Authentification d'un utilisateur"
+      #swagger.description = "Retourne un token d'authentification"
+      #swagger.summary = "Connexion d'un utilisateur"
   */
   /*
     #swagger.parameters["body"] = {
@@ -71,7 +72,8 @@ exports.login = (req, res, next) => {
 
 exports.signup = (req, res, next) => {
   /*  #swagger.tags = ['Authentification']
-      #swagger.description = "Création d'un utilisateur"
+      #swagger.description = "Retourne l'id de l'utilisateur"
+      #swagger.summary = "Inscription d'un utilisateur"
   */
   /*
     #swagger.parameters["body"] = {
