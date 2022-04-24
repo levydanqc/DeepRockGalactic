@@ -8,32 +8,22 @@ dotenv.config();
 const User = require("../models/mineur");
 
 exports.login = (req, res, next) => {
-  /*  #swagger.auto = false
-      
+  /* 
       #swagger.tags = ['Authentification']
-      #swagger.path = '/auth/login'
-      #swagger.method = 'post'
       #swagger.description = "Authentification d'un utilisateur"
-      #swagger.produces = ['application/json']
-      #swagger.consumes = ['application/json']
   */
-  /*  #swagger.parameters['body'] = {
-                in: 'body',
-                description: 'Informations de connexion',
-                required: 'true',
-                schema: {
-                    $email: 'email@exemple.com',
-                    $motdepasse: 'motdepasse123',
-                }
-  } */
-  /* #swagger.responses[200] = {
-            description: "Token d'authentification",
-            schema: {
-                token: 'json_web_token'
-            }
-        }   
-    */
-
+  /*
+    #swagger.parameters["body"] = {
+        "in": "body",
+        "name": "Utilisateur",
+        "description": 'Informations de l\'utilisateur',
+        "required": true,
+        "schema": {
+          "email": "email@exemple.com",
+          "motdepasse": "motdepasse123"
+        }
+    }
+  */
   const email = req.body.email;
   const motdepasse = req.body.motdepasse;
 
@@ -65,21 +55,36 @@ exports.login = (req, res, next) => {
         process.env.SECRET_JWT,
         { expiresIn: "1h" }
       );
+      /* #swagger.responses[200] = { 
+            description: "Utilisateur authentifié",
+            schema: {
+                token: "string"
+            }
+        }
+      */
       res.status(200).json({ token: token });
     })
     .catch((err) => {
-      if (!err.statusCode) err.statusCode = 500;
-      res
-        .status(err.statusCode)
-        .json({ message: err.message, statusCode: err.statusCode });
+      next(err);
     });
 };
 
 exports.signup = (req, res, next) => {
   /*  #swagger.tags = ['Authentification']
       #swagger.description = "Création d'un utilisateur"
-      #swagger.path = '/auth/signup'
   */
+  /*
+    #swagger.parameters["body"] = {
+        "in": "body",
+        "name": "Utilisateur",
+        "description": 'Informations de l\'utilisateur',
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/Mineur"
+        }
+    }
+  */
+
   const email = req.body.email;
   const nom = req.body.nom;
   const motdepasse = req.body.motdepasse;
@@ -97,6 +102,13 @@ exports.signup = (req, res, next) => {
       return user.save();
     })
     .then((result) => {
+      /* #swagger.responses[201] = { 
+            description: "Utilisateur créé",
+            schema: {
+                userId: "string"
+            }
+        }
+      */
       res
         .status(201)
         .json({ message: "Utilisateur créé !", userId: result.id });
