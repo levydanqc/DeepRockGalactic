@@ -3,12 +3,6 @@
 const Planete = require("../models/planete");
 
 exports.getPlanetes = (req, res, next) => {
-  if (req.user.level !== 2) {
-    const error = new Error("Vous ne pouvez pas...");
-    error.statusCode = 401;
-    throw error;
-  }
-
   Planete.find()
     .then((planetes) => {
       res.json({
@@ -21,18 +15,12 @@ exports.getPlanetes = (req, res, next) => {
 };
 
 exports.getPlanete = (req, res, next) => {
-  const PlaneteId = req.params.PlaneteId;
+  const planeteId = req.params.planeteId;
 
-  if (req.user.level !== 2) {
-    const error = new Error("Vous ne pouvez pas...");
-    error.statusCode = 401;
-    throw error;
-  }
-
-  Planete.findById(PlaneteId)
+  Planete.findById(planeteId)
     .then((planete) => {
       if (!planete) {
-        const error = new Error("Le planete n'existe pas.");
+        const error = new Error("La planète n'existe pas.");
         error.statusCode = 404;
         throw error;
       }
@@ -46,13 +34,13 @@ exports.getPlanete = (req, res, next) => {
 };
 
 exports.createPlanete = (req, res, next) => {
-  const { nom, image } = req.body;
-
-  if (req.user.level !== 2) {
-    const error = new Error("Vous ne pouvez pas...");
+  if (req.user.niveau !== 2) {
+    const error = new Error("Vous ne pouvez pas créer de planète");
     error.statusCode = 401;
     throw error;
   }
+
+  const { nom, image } = req.body;
 
   const planete = new Planete({
     nom: nom,
@@ -62,7 +50,7 @@ exports.createPlanete = (req, res, next) => {
   planete
     .save()
     .then(() => {
-      res.status(200).json({
+      res.status(201).json({
         message: "Planete créée",
         planete: planete,
       });
@@ -72,36 +60,44 @@ exports.createPlanete = (req, res, next) => {
     });
 };
 
-exports.deletePlanete = (req, res, next) => {
-  console.log(req.user);
-  if (req.user.level !== 2) {
-    const error = new Error("Vous ne pouvez pas supprimer");
+exports.deletePlanete = (req, res) => {
+  if (req.user.niveau !== 2) {
+    const error = new Error("Vous ne pouvez pas supprimer de planète");
     error.statusCode = 401;
     throw error;
   }
+
   const planeteId = req.params.planeteId;
-  Planete.findByIdAndRemove(planeteId).then(() => {
-    console.log("Planete supprimée");
-    res.status(200).json({
-      message: "Planete supprimée",
+
+  Planete.findByIdAndDelete(planeteId)
+    .then((planete) => {
+      if (planete) {
+        res.status(200).json({
+          message: "Planète supprimée avec succès!",
+        });
+      } else {
+        res.status(404).json({ message: "La planète n'existe pas!" });
+      }
+    })
+    .catch((err) => {
+      next(err);
     });
-  });
 };
 
 exports.updatePlanete = (req, res, next) => {
-  const planeteId = req.params.planeteId;
-  const { nom, image } = req.body;
-
-  if (req.user.level !== 2) {
-    const error = new Error("Vous ne pouvez pas...");
+  if (req.user.niveau !== 2) {
+    const error = new Error("Vous ne pouvez pas modifier de planète");
     error.statusCode = 401;
     throw error;
   }
+
+  const planeteId = req.params.planeteId;
+  const { nom, image } = req.body;
 
   Planete.findById(planeteId)
     .then((planete) => {
       if (!planete) {
-        const error = new Error("Le planete n'existe pas.");
+        const error = new Error("La planète n'existe pas!");
         error.statusCode = 404;
         throw error;
       }
@@ -111,7 +107,7 @@ exports.updatePlanete = (req, res, next) => {
     })
     .then((planete) => {
       res.status(200).json({
-        message: "Planete modifiée",
+        message: "Planète modifiée",
         planete: planete,
       });
     })
