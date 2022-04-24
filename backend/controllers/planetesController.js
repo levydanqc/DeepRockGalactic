@@ -68,7 +68,7 @@ exports.deletePlanete = (req, res) => {
   }
 
   const planeteId = req.params.planeteId;
-
+  
   Planete.findByIdAndDelete(planeteId)
     .then((planete) => {
       if (planete) {
@@ -97,7 +97,7 @@ exports.updatePlanete = (req, res, next) => {
   Planete.findById(planeteId)
     .then((planete) => {
       if (!planete) {
-        const error = new Error("La planète n'existe pas!");
+        const error = new Error("La planète n'existe pas.");
         error.statusCode = 404;
         throw error;
       }
