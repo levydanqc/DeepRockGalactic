@@ -25,21 +25,20 @@ const doc = {
       name: "Contrats",
       description: "Gestion des contrats",
     },
+    {
+      name: "Mineurs",
+      description: "Gestion des mineurs",
+    },
+    {
+      name: "Planètes",
+      description: "Gestion des planètes",
+    },
   ],
   securityDefinitions: {
-    api_key: {
-      type: "apiKey",
-      name: "api_key",
-      in: "header",
-    },
-    petstore_auth: {
-      type: "oauth2",
-      authorizationUrl: "https://petstore.swagger.io/oauth/authorize",
-      flow: "implicit",
-      scopes: {
-        read_pets: "read your pets",
-        write_pets: "modify pets in your account",
-      },
+    bearerAuth: {
+      type: "http",
+      scheme: "bearer",
+      bearerFormat: "JWT",
     },
   },
   definitions: {

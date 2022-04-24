@@ -15,23 +15,22 @@
     {
       "name": "Contrats",
       "description": "Gestion des contrats"
+    },
+    {
+      "name": "Mineurs",
+      "description": "Gestion des mineurs"
+    },
+    {
+      "name": "Planètes",
+      "description": "Gestion des planètes"
     }
   ],
   "schemes": ["http", "https"],
   "securityDefinitions": {
-    "api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
-    },
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "https://petstore.swagger.io/oauth/authorize",
-      "flow": "implicit",
-      "scopes": {
-        "read_pets": "read your pets",
-        "write_pets": "modify pets in your account"
-      }
+    "bearerAuth": {
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
     }
   },
   "consumes": ["application/json"],
@@ -91,7 +90,6 @@
           {
             "name": "Utilisateur",
             "in": "body",
-            "description": "Informations de l'utilisateur",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Mineur"
@@ -264,42 +262,57 @@
     },
     "/mineurs/": {
       "get": {
-        "description": "",
+        "tags": ["Mineurs"],
+        "summary": "Obtenir tous les mineurs",
+        "description": "Retourne la liste des mineurs",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Liste des mineurs",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Mineur"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": ["Mineurs"],
+        "summary": "Créer un mineur",
+        "description": "Nécessite d'être de niveau 2",
         "parameters": [
           {
-            "name": "body",
+            "name": "Mineur",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "nom": {
-                  "example": "any"
-                },
-                "motdepasse": {
-                  "example": "any"
-                },
-                "niveau": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Mineur"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Créé"
+            "description": "Mineur créé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Mineur créé avec succès!"
+                },
+                "mineur": {
+                  "$ref": "#/definitions/Mineur"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Non Autorisé"
@@ -309,18 +322,24 @@
     },
     "/mineurs/{mineurId}": {
       "get": {
+        "tags": ["Mineurs"],
+        "summary": "Obtenir un mineur par id",
         "description": "",
         "parameters": [
           {
             "name": "mineurId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Mineur",
+            "schema": {
+              "$ref": "#/definitions/Mineur"
+            }
           },
           "404": {
             "description": "Non Trouvé"
@@ -328,39 +347,44 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["Mineurs"],
+        "summary": "Modifier un mineur",
+        "description": "Nécessite d'être de niveau 2",
         "parameters": [
           {
             "name": "mineurId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
           },
           {
-            "name": "body",
+            "name": "Mineur",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "nom": {
-                  "example": "any"
-                },
-                "motdepasse": {
-                  "example": "any"
-                },
-                "niveau": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Mineur"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Mineur modifié",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Mineur modifié avec succès!"
+                },
+                "mineur": {
+                  "$ref": "#/definitions/Mineur"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Non Autorisé"
@@ -371,18 +395,33 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Mineurs"],
+        "summary": "Supprimer un mineur",
+        "description": "Nécessite d'être de niveau 2",
         "parameters": [
           {
             "name": "mineurId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Mineur supprimé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Mineur supprimé avec succès!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Non Autorisé"
@@ -396,48 +435,56 @@
     "/contrats/": {
       "get": {
         "tags": ["Contrats"],
-        "description": "Obtenir l'ensemble des contrats",
+        "summary": "Obtenir tous les contrats",
+        "description": "Retourne la liste des contrats",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Liste des contrats",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Contrat"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": ["Contrats"],
+        "summary": "Créer un contrat",
+        "description": "Nécessite d'être de niveau 2",
         "parameters": [
           {
-            "name": "body",
+            "name": "Contrat",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "planeteId": {
-                  "example": "any"
-                },
-                "prime": {
-                  "example": "any"
-                },
-                "danger": {
-                  "example": "any"
-                },
-                "ressource": {
-                  "example": "any"
-                },
-                "quantiteRessource": {
-                  "example": "any"
-                },
-                "dateExpiration": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Contrat"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Créé"
+            "description": "Contrat créé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Contrat créé avec succès!"
+                },
+                "contrat": {
+                  "$ref": "#/definitions/Contrat"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Non Autorisé"
@@ -447,18 +494,24 @@
     },
     "/contrats/{contratId}": {
       "get": {
+        "tags": ["Contrats"],
+        "summary": "Obtenir un contrat par id",
         "description": "",
         "parameters": [
           {
             "name": "contratId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Contrat",
+            "schema": {
+              "$ref": "#/definitions/Contrat"
+            }
           },
           "404": {
             "description": "Non Trouvé"
@@ -466,45 +519,44 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["Contrats"],
+        "summary": "Modifier un contrat",
+        "description": "Nécessite d'être de niveau 2",
         "parameters": [
           {
             "name": "contratId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
           },
           {
-            "name": "body",
+            "name": "Contrat",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "planeteId": {
-                  "example": "any"
-                },
-                "prime": {
-                  "example": "any"
-                },
-                "danger": {
-                  "example": "any"
-                },
-                "ressource": {
-                  "example": "any"
-                },
-                "quantiteRessource": {
-                  "example": "any"
-                },
-                "dateExpiration": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Contrat"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Contrat modifié",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Contrat modifié avec succès!"
+                },
+                "contrat": {
+                  "$ref": "#/definitions/Contrat"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Non Autorisé"
@@ -512,18 +564,33 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Contrats"],
+        "summary": "Supprimer un contrat",
+        "description": "Nécessite d'être de niveau 2",
         "parameters": [
           {
             "name": "contratId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Contrat supprimé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Contrat supprimé avec succès!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Non Autorisé"

@@ -79,7 +79,6 @@ exports.signup = (req, res, next) => {
     #swagger.parameters["body"] = {
         "in": "body",
         "name": "Utilisateur",
-        "description": 'Informations de l\'utilisateur',
         "required": true,
         "schema": {
           "$ref": "#/definitions/Mineur"
