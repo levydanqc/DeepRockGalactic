@@ -33,6 +33,14 @@ const doc = {
       name: "Planètes",
       description: "Gestion des planètes",
     },
+    {
+      name: "Réservations",
+      description: "Gestion des réservations",
+    },
+    {
+      name: "Recherche",
+      description: "Système de recherche",
+    },
   ],
   securityDefinitions: {
     bearerAuth: {

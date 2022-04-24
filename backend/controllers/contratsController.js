@@ -75,9 +75,7 @@ exports.createContrat = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas créer de contrat");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
   }
 
   const {
@@ -133,9 +131,7 @@ exports.deleteContrat = (req, res, next) => {
       }
  */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas supprimer de contrat");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
   }
 
   const contratId = req.params.contratId;
@@ -184,9 +180,7 @@ exports.updateContrat = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas modifier de contrat");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
   }
 
   const contratId = req.params.contratId;

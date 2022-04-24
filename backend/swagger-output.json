@@ -23,6 +23,14 @@
     {
       "name": "Planètes",
       "description": "Gestion des planètes"
+    },
+    {
+      "name": "Réservations",
+      "description": "Gestion des réservations"
+    },
+    {
+      "name": "Recherche",
+      "description": "Système de recherche"
     }
   ],
   "schemes": ["http", "https"],
@@ -117,6 +125,8 @@
     },
     "/search/{date}/{planetId}/{danger}/{prime}": {
       "get": {
+        "tags": ["Recherche"],
+        "summary": "Effectuer une recherche",
         "description": "",
         "parameters": [
           {
@@ -149,36 +159,57 @@
     },
     "/planetes/": {
       "get": {
-        "description": "",
+        "tags": ["Planètes"],
+        "summary": "Obtenir toutes les planètes",
+        "description": "Retourne la liste des planètes",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Liste des planètes",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Planete"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": ["Planètes"],
+        "summary": "Créer une planète",
+        "description": "Nécessite d'être de niveau 2",
         "parameters": [
           {
-            "name": "body",
+            "name": "Planete",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "nom": {
-                  "example": "any"
-                },
-                "image": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Planete"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Créé"
+            "description": "Planète créée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Planète créée avec succès!"
+                },
+                "planete": {
+                  "$ref": "#/definitions/Planete"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Non Autorisé"
@@ -188,49 +219,69 @@
     },
     "/planetes/{planeteId}": {
       "get": {
+        "tags": ["Planètes"],
+        "summary": "Obtenir une planète par id",
         "description": "",
         "parameters": [
           {
             "name": "planeteId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Planete",
+            "schema": {
+              "$ref": "#/definitions/Planete"
+            }
+          },
+          "404": {
+            "description": "Non Trouvé"
           }
         }
       },
       "put": {
-        "description": "",
+        "tags": ["Planètes"],
+        "summary": "Modifier une planète",
+        "description": "Nécessite d'être de niveau 2",
         "parameters": [
           {
             "name": "planeteId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
           },
           {
-            "name": "body",
+            "name": "Planete",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "nom": {
-                  "example": "any"
-                },
-                "image": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Planete"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Planète modifiée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Planète modifiée avec succès!"
+                },
+                "planète": {
+                  "$ref": "#/definitions/Planete"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Non Autorisé"
@@ -238,18 +289,33 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Planètes"],
+        "summary": "Supprimer une planète",
+        "description": "Nécessite d'être de niveau 2",
         "parameters": [
           {
             "name": "planeteId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Planète supprimée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Planète supprimée avec succès!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Non Autorisé"
@@ -603,29 +669,46 @@
     },
     "/reservation/": {
       "get": {
-        "description": "",
+        "tags": ["Réservations"],
+        "summary": "Obtenir toutes les réservations",
+        "description": "Retourne la liste des réservations",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Liste des réservations",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Reservation"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
     },
     "/reservations/{reservationId}": {
       "get": {
+        "tags": ["Réservations"],
+        "summary": "Obtenir une réservation par id",
         "description": "",
         "parameters": [
           {
             "name": "reservationId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Reservation",
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
           },
           "404": {
             "description": "Non Trouvé"
@@ -633,36 +716,44 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["Réservations"],
+        "summary": "Modifier une réservation",
+        "description": "Nécessite d'être de niveau 2",
         "parameters": [
           {
             "name": "reservationId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
           },
           {
-            "name": "body",
+            "name": "Reservation",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "mineurId": {
-                  "example": "any"
-                },
-                "contratId": {
-                  "example": "any"
-                },
-                "estTermine": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Reservation"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Réservation modifiée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Réservation modifiée avec succès!"
+                },
+                "réservation": {
+                  "$ref": "#/definitions/Reservation"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Non Autorisé"
@@ -670,18 +761,33 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Réservations"],
+        "summary": "Supprimer une réservation",
+        "description": "Nécessite d'être de niveau 2",
         "parameters": [
           {
             "name": "reservationId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Réservation supprimée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Réservation supprimée avec succès!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Non Autorisé"
@@ -694,7 +800,9 @@
     },
     "/reservations/{mineurId}/{contratId}": {
       "post": {
-        "description": "",
+        "tags": ["Réservations"],
+        "summary": "Créer une réservation",
+        "description": "Nécessite d'être de niveau 2",
         "parameters": [
           {
             "name": "mineurId",
@@ -709,21 +817,32 @@
             "type": "string"
           },
           {
-            "name": "body",
+            "name": "Reservation",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "estTermine": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Reservation"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Créé"
+            "description": "Réservation créée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Réservation créée avec succès!"
+                },
+                "reservation": {
+                  "$ref": "#/definitions/Reservation"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Non Autorisé"

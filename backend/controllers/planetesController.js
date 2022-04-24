@@ -3,9 +3,21 @@
 const Planete = require("../models/planete");
 
 exports.getPlanetes = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Planètes']
+      #swagger.description = "Retourne la liste des planètes"
+      #swagger.summary = "Obtenir toutes les planètes"
+  */
   Planete.find()
     .then((planetes) => {
-      res.json({
+      /* #swagger.responses[200] = { 
+            description: "Liste des planètes",
+            schema: [{
+                "$ref": "#/definitions/Planete"
+            }]
+        }
+      */
+      res.status(200).json({
         planetes: planetes,
       });
     })
@@ -15,18 +27,33 @@ exports.getPlanetes = (req, res, next) => {
 };
 
 exports.getPlanete = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Planètes']
+      #swagger.summary = "Obtenir une planète par id"
+  */
+  /*
+      #swagger.parameters['planeteId'] = {
+        value: '626339247fe023c3b50ba0d4'
+      }
+ */
   const planeteId = req.params.planeteId;
 
   Planete.findById(planeteId)
     .then((planete) => {
-      if (!planete) {
-        const error = new Error("La planète n'existe pas.");
-        error.statusCode = 404;
-        throw error;
+      if (planete) {
+        /* #swagger.responses[200] = { 
+            description: "Planete",
+            schema: {
+                "$ref": "#/definitions/Planete"
+            }
+        }
+      */
+        res.status(200).json({
+          planete: planete,
+        });
+      } else {
+        res.status(404).json({ message: "Planète non trouvé!" });
       }
-      res.json({
-        planete: planete,
-      });
     })
     .catch((err) => {
       next(err);
@@ -34,10 +61,23 @@ exports.getPlanete = (req, res, next) => {
 };
 
 exports.createPlanete = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Planètes']
+      #swagger.description = "Nécessite d'être de niveau 2"
+      #swagger.summary = "Créer une planète"
+  */
+  /*
+    #swagger.parameters["body"] = {
+        "in": "body",
+        "name": "Planete",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/Planete"
+        }
+    }
+  */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas créer de planète");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de planète" });
   }
 
   const { nom, image } = req.body;
@@ -50,6 +90,16 @@ exports.createPlanete = (req, res, next) => {
   planete
     .save()
     .then(() => {
+      /* #swagger.responses[201] = { 
+            description: "Planète créée",
+            schema: {
+                message: "Planète créée avec succès!",
+                planete: {
+                    "$ref": "#/definitions/Planete"
+                }
+            }
+        }
+      */
       res.status(201).json({
         message: "Planete créée",
         planete: planete,
@@ -61,10 +111,18 @@ exports.createPlanete = (req, res, next) => {
 };
 
 exports.deletePlanete = (req, res) => {
+  /* 
+      #swagger.tags = ['Planètes']
+      #swagger.description = "Nécessite d'être de niveau 2"
+      #swagger.summary = "Supprimer une planète"
+  */
+  /*
+      #swagger.parameters['planeteId'] = {
+        value: '626339247fe023c3b50ba0d4'
+      }
+ */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas supprimer de planète");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de planète" });
   }
 
   const planeteId = req.params.planeteId;
@@ -72,11 +130,18 @@ exports.deletePlanete = (req, res) => {
   Planete.findByIdAndDelete(planeteId)
     .then((planete) => {
       if (planete) {
+        /* #swagger.responses[200] = { 
+            description: "Planète supprimée",
+            schema: {
+                message: "Planète supprimée avec succès!"
+            }
+        }
+      */
         res.status(200).json({
           message: "Planète supprimée avec succès!",
         });
       } else {
-        res.status(404).json({ message: "La planète n'existe pas!" });
+        res.status(404).json({ message: "Planète non trouvé!" });
       }
     })
     .catch((err) => {
@@ -85,10 +150,28 @@ exports.deletePlanete = (req, res) => {
 };
 
 exports.updatePlanete = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Planètes']
+      #swagger.description = "Nécessite d'être de niveau 2"
+      #swagger.summary = "Modifier une planète"
+  */
+  /*
+      #swagger.parameters['planeteId'] = {
+        value: '626339247fe023c3b50ba0d4'
+      }
+ */
+  /*
+      #swagger.parameters["body"] = {
+        "in": "body",
+        "name": "Planete",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/Planete"
+        }
+    }
+  */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas modifier de planète");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de planète" });
   }
 
   const planeteId = req.params.planeteId;
@@ -97,7 +180,7 @@ exports.updatePlanete = (req, res, next) => {
   Planete.findById(planeteId)
     .then((planete) => {
       if (!planete) {
-        const error = new Error("La planète n'existe pas!");
+        const error = new Error("Planète non trouvé!");
         error.statusCode = 404;
         throw error;
       }
@@ -106,8 +189,18 @@ exports.updatePlanete = (req, res, next) => {
       return planete.save();
     })
     .then((planete) => {
+      /* #swagger.responses[200] = { 
+            description: "Planète modifiée",
+            schema: {
+                message: "Planète modifiée avec succès!",
+                planète: {
+                    "$ref": "#/definitions/Planete"
+                }
+            }
+        }
+      */
       res.status(200).json({
-        message: "Planète modifiée",
+        message: "Planète modifiée avec succès!",
         planete: planete,
       });
     })
