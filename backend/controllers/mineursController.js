@@ -4,10 +4,21 @@ const Mineur = require("../models/mineur");
 const bcrypt = require("bcryptjs");
 
 exports.getMineurs = (_req, res, next) => {
+  /* 
+      #swagger.tags = ['Mineurs']
+      #swagger.description = "Retourne la liste des mineurs"
+      #swagger.summary = "Obtenir tous les mineurs"
+  */
   Mineur.find()
     .then((mineurs) => {
+      /* #swagger.responses[200] = { 
+            description: "Liste des mineurs",
+            schema: [{
+                "$ref": "#/definitions/Mineur"
+            }]
+        }
+      */
       res.status(200).json({
-        message: "Les mineurs ont été récupérés avec succès",
         mineurs: mineurs,
       });
     })
@@ -17,14 +28,29 @@ exports.getMineurs = (_req, res, next) => {
 };
 
 exports.getMineur = (req, res, next) => {
-  const id = req.params.mineurId;
+  /* 
+      #swagger.tags = ['Mineurs']
+      #swagger.summary = "Obtenir un mineur par id"
+  */
+  /*
+      #swagger.parameters['mineurId'] = {
+        value: '626339247fe023c3b50ba0d4'
+      }
+ */ const id = req.params.mineurId;
 
   Mineur.findById(id)
     .then((mineur) => {
       if (mineur) {
+        /* #swagger.responses[200] = { 
+            description: "Mineur",
+            schema: {
+                "$ref": "#/definitions/Mineur"
+            }
+        }
+      */
         res.status(200).json(mineur);
       } else {
-        res.status(404).json({ message: "Le mineur n'a pas été trouvé" });
+        res.status(404).json({ message: "Mineur non trouvé" });
       }
     })
     .catch((err) => {
@@ -33,10 +59,23 @@ exports.getMineur = (req, res, next) => {
 };
 
 exports.createMineur = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Mineurs']
+      #swagger.description = "Nécessite d'être de niveau 2"
+      #swagger.summary = "Créer un mineur"
+  */
+  /*
+    #swagger.parameters["body"] = {
+        "in": "body",
+        "name": "Mineur",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/Mineur"
+        }
+    }
+  */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas créer un mineur");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
   }
 
   const { email, nom, motdepasse, niveau } = req.body;
@@ -52,10 +91,20 @@ exports.createMineur = (req, res, next) => {
       });
       return mineur.save();
     })
-    .then((result) => {
+    .then((mineur) => {
+      /* #swagger.responses[201] = { 
+            description: "Mineur créé",
+            schema: {
+                message: "Mineur créé avec succès!",
+                mineur: {
+                    "$ref": "#/definitions/Mineur"
+                }
+            }
+        }
+      */
       res
         .status(201)
-        .json({ message: "Le mineur a été créé avec succès!", mineur: result });
+        .json({ message: "Mineur créé avec succès!", mineur: mineur });
     })
     .catch((err) => {
       next(err);
@@ -63,10 +112,18 @@ exports.createMineur = (req, res, next) => {
 };
 
 exports.deleteMineur = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Mineurs']
+      #swagger.description = "Nécessite d'être de niveau 2"
+      #swagger.summary = "Supprimer un mineur"
+  */
+  /*
+      #swagger.parameters['mineurId'] = {
+        value: '626339247fe023c3b50ba0d4'
+      }
+ */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas supprimer un mineur");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
   }
 
   const mineurId = req.params.mineurId;
@@ -74,11 +131,18 @@ exports.deleteMineur = (req, res, next) => {
   Mineur.findByIdAndDelete(mineurId)
     .then((mineur) => {
       if (mineur) {
+        /* #swagger.responses[200] = { 
+            description: "Mineur supprimé",
+            schema: {
+                message: "Mineur supprimé avec succès!"
+            }
+        }
+      */
         res.status(200).json({
           message: "Mineur supprimé avec succès!",
         });
       } else {
-        res.status(404).json({ message: "Le contrat n'existe pas!" });
+        res.status(404).json({ message: "Mineur non trouvé" });
       }
     })
     .catch((err) => {
@@ -87,10 +151,28 @@ exports.deleteMineur = (req, res, next) => {
 };
 
 exports.updateMineur = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Mineurs']
+      #swagger.description = "Nécessite d'être de niveau 2"
+      #swagger.summary = "Modifier un mineur"
+  */
+  /*
+      #swagger.parameters['mineurId'] = {
+        value: '626339247fe023c3b50ba0d4'
+      }
+ */
+  /*
+      #swagger.parameters["body"] = {
+        "in": "body",
+        "name": "Mineur",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/Mineur"
+        }
+    }
+  */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas modifier un mineur");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
   }
 
   const mineurId = req.params.mineurId;
@@ -107,12 +189,22 @@ exports.updateMineur = (req, res, next) => {
             mineur.motdepasse = hashedPassword;
             mineur.niveau = niveau;
             mineur.save();
+            /*  #swagger.responses[200] = { 
+                  description: "Mineur modifié",
+                  schema: {
+                      message: "Mineur modifié avec succès!",
+                      mineur: {
+                          "$ref": "#/definitions/Mineur"
+                      }
+                  }
+              }
+            */
             res.status(200).json({
-              message: "Le mineur a été modifié avec succès",
+              message: "Mineur modifié avec succès",
               mineur: mineur,
             });
           } else {
-            res.status(404).json({ message: "Le mineur n'a pas été trouvé" });
+            res.status(404).json({ message: "Mineur non trouvé" });
           }
         })
         .catch((err) => {

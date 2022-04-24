@@ -3,8 +3,20 @@
 const Reservation = require("../models/reservation");
 
 exports.getReservations = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Réservations']
+      #swagger.description = "Retourne la liste des réservations"
+      #swagger.summary = "Obtenir toutes les réservations"
+  */
   Reservation.find()
     .then((reservations) => {
+      /* #swagger.responses[200] = { 
+            description: "Liste des réservations",
+            schema: [{
+                "$ref": "#/definitions/Reservation"
+            }]
+        }
+      */
       res.status(200).json({
         reservations: reservations,
       });
@@ -15,14 +27,30 @@ exports.getReservations = (req, res, next) => {
 };
 
 exports.getReservation = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Réservations']
+      #swagger.summary = "Obtenir une réservation par id"
+  */
+  /*
+      #swagger.parameters['reservationId'] = {
+        value: '626339247fe023c3b50ba0d4'
+      }
+ */
   const reservationId = req.params.reservationId;
 
   Reservation.findById(reservationId)
     .then((reservation) => {
       if (reservation) {
+        /* #swagger.responses[200] = { 
+            description: "Reservation",
+            schema: {
+                "$ref": "#/definitions/Reservation"
+            }
+        }
+      */
         res.status(200).json(reservation);
       } else {
-        res.status(404).json({ message: "La reservation n'existe pas!" });
+        res.status(404).json({ message: "Réservation non trouvé" });
       }
     })
     .catch((err) => {
@@ -31,10 +59,25 @@ exports.getReservation = (req, res, next) => {
 };
 
 exports.createReservation = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Réservations']
+      #swagger.description = "Nécessite d'être de niveau 2"
+      #swagger.summary = "Créer une réservation"
+  */
+  /*
+    #swagger.parameters["body"] = {
+        "in": "body",
+        "name": "Reservation",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/Reservation"
+        }
+    }
+  */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas créer de réservation");
-    error.statusCode = 401;
-    throw error;
+    res
+      .status(401)
+      .json({ message: "Vous ne pouvez pas créer de réservation" });
   }
   const { mineurId, contratId } = req.params;
 
@@ -49,6 +92,16 @@ exports.createReservation = (req, res, next) => {
   reservation
     .save()
     .then(() => {
+      /* #swagger.responses[201] = { 
+            description: "Réservation créée",
+            schema: {
+                message: "Réservation créée avec succès!",
+                reservation: {
+                    "$ref": "#/definitions/Reservation"
+                }
+            }
+        }
+      */
       res.status(201).json({
         message: "Réservation créée",
         reservation: reservation,
@@ -60,16 +113,39 @@ exports.createReservation = (req, res, next) => {
 };
 
 exports.deleteReservation = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Réservations']
+      #swagger.description = "Nécessite d'être de niveau 2"
+      #swagger.summary = "Supprimer une réservation"
+  */
+  /*
+      #swagger.parameters['reservationId'] = {
+        value: '626339247fe023c3b50ba0d4'
+      }
+ */
+  if (req.user.niveau !== 2) {
+    res
+      .status(401)
+      .json({ message: "Vous ne pouvez pas créer de réservation" });
+  }
+
   const reservationId = req.params.reservationId;
 
   Reservation.findByIdAndDelete(reservationId)
     .then((reservation) => {
       if (reservation) {
+        /* #swagger.responses[200] = { 
+            description: "Réservation supprimée",
+            schema: {
+                message: "Réservation supprimée avec succès!"
+            }
+        }
+      */
         res.status(200).json({
           message: "Réservation supprimée avec succès!",
         });
       } else {
-        res.status(404).json({ message: "La réservation n'existe pas" });
+        res.status(404).json({ message: "Réservation non trouvé" });
       }
     })
     .catch((err) => {
@@ -78,10 +154,30 @@ exports.deleteReservation = (req, res, next) => {
 };
 
 exports.updateReservation = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Réservations']
+      #swagger.description = "Nécessite d'être de niveau 2"
+      #swagger.summary = "Modifier une réservation"
+  */
+  /*
+      #swagger.parameters['reservationId'] = {
+        value: '626339247fe023c3b50ba0d4'
+      }
+ */
+  /*
+      #swagger.parameters["body"] = {
+        "in": "body",
+        "name": "Reservation",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/Reservation"
+        }
+    }
+  */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas modifier de planète");
-    error.statusCode = 401;
-    throw error;
+    res
+      .status(401)
+      .json({ message: "Vous ne pouvez pas créer de réservation" });
   }
 
   const reservationId = req.params.reservationId;
@@ -90,7 +186,7 @@ exports.updateReservation = (req, res, next) => {
   Reservation.findById(reservationId)
     .then((reservation) => {
       if (!reservation) {
-        const error = new Error("La réservation n'existe pas.");
+        const error = new Error("Réservation non trouvé.");
         error.statusCode = 404;
         throw error;
       }
@@ -100,6 +196,16 @@ exports.updateReservation = (req, res, next) => {
       return reservation.save();
     })
     .then((reservation) => {
+      /* #swagger.responses[200] = { 
+            description: "Réservation modifiée",
+            schema: {
+                message: "Réservation modifiée avec succès!",
+                réservation: {
+                    "$ref": "#/definitions/Reservation"
+                }
+            }
+        }
+      */
       res.status(200).json({
         message: "Réservation modifiée avec succès!",
         reservation: reservation,

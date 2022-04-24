@@ -3,8 +3,20 @@
 const Contrat = require("../models/contrat");
 
 exports.getContrats = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Contrats']
+      #swagger.description = "Retourne la liste des contrats"
+      #swagger.summary = "Obtenir tous les contrats"
+  */
   Contrat.find()
     .then((contrats) => {
+      /* #swagger.responses[200] = { 
+            description: "Liste des contrats",
+            schema: [{
+                "$ref": "#/definitions/Contrat"
+            }]
+        }
+      */
       res.status(200).json({
         contrats: contrats,
       });
@@ -15,14 +27,30 @@ exports.getContrats = (req, res, next) => {
 };
 
 exports.getContrat = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Contrats']
+      #swagger.summary = "Obtenir un contrat par id"
+  */
+  /*
+      #swagger.parameters['contratId'] = {
+        value: '626339247fe023c3b50ba0d4'
+      }
+ */
   const id = req.params.id;
 
   Contrat.findById(id)
     .then((contrat) => {
       if (contrat) {
+        /* #swagger.responses[200] = { 
+            description: "Contrat",
+            schema: {
+                "$ref": "#/definitions/Contrat"
+            }
+        }
+      */
         res.status(200).json(contrat);
       } else {
-        res.status(404).json({ message: "Le contrat n'existe pas!" });
+        res.status(404).json({ message: "Contrat non trouvé" });
       }
     })
     .catch((err) => {
@@ -31,10 +59,23 @@ exports.getContrat = (req, res, next) => {
 };
 
 exports.createContrat = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Contrats']
+      #swagger.description = "Nécessite d'être de niveau 2"
+      #swagger.summary = "Créer un contrat"
+  */
+  /*
+    #swagger.parameters["body"] = {
+        "in": "body",
+        "name": "Contrat",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/Contrat"
+        }
+    }
+  */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas créer de contrat");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
   }
 
   const {
@@ -58,8 +99,18 @@ exports.createContrat = (req, res, next) => {
   contrat
     .save()
     .then(() => {
+      /* #swagger.responses[201] = { 
+            description: "Contrat créé",
+            schema: {
+                message: "Contrat créé avec succès!",
+                contrat: {
+                    "$ref": "#/definitions/Contrat"
+                }
+            }
+        }
+      */
       res.status(201).json({
-        message: "Contrat créé",
+        message: "Contrat créé avec succès!",
         contrat: contrat,
       });
     })
@@ -69,10 +120,18 @@ exports.createContrat = (req, res, next) => {
 };
 
 exports.deleteContrat = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Contrats']
+      #swagger.description = "Nécessite d'être de niveau 2"
+      #swagger.summary = "Supprimer un contrat"
+  */
+  /*
+      #swagger.parameters['contratId'] = {
+        value: '626339247fe023c3b50ba0d4'
+      }
+ */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas supprimer de contrat");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
   }
 
   const contratId = req.params.contratId;
@@ -80,11 +139,18 @@ exports.deleteContrat = (req, res, next) => {
   Contrat.findByIdAndDelete(contratId)
     .then((contrat) => {
       if (contrat) {
+        /* #swagger.responses[200] = { 
+            description: "Contrat supprimé",
+            schema: {
+                message: "Contrat supprimé avec succès!"
+            }
+        }
+      */
         res.status(200).json({
           message: "Contrat supprimé avec succès!",
         });
       } else {
-        res.status(404).json({ message: "Le contrat n'existe pas!" });
+        res.status(404).json({ message: "Contrat non trouvé" });
       }
     })
     .catch((err) => {
@@ -93,10 +159,28 @@ exports.deleteContrat = (req, res, next) => {
 };
 
 exports.updateContrat = (req, res, next) => {
+  /* 
+      #swagger.tags = ['Contrats']
+      #swagger.description = "Nécessite d'être de niveau 2"
+      #swagger.summary = "Modifier un contrat"
+  */
+  /*
+      #swagger.parameters['contratId'] = {
+        value: '626339247fe023c3b50ba0d4'
+      }
+ */
+  /*
+      #swagger.parameters["body"] = {
+        "in": "body",
+        "name": "Contrat",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/Contrat"
+        }
+    }
+  */
   if (req.user.niveau !== 2) {
-    const error = new Error("Vous ne pouvez pas modifier de contrat");
-    error.statusCode = 401;
-    throw error;
+    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
   }
 
   const contratId = req.params.contratId;
@@ -112,7 +196,7 @@ exports.updateContrat = (req, res, next) => {
   Contrat.findById(contratId)
     .then((contrat) => {
       if (!contrat) {
-        const error = new Error("Le contrat n'existe pas!");
+        const error = new Error("Contrat non trouvé");
         error.statusCode = 404;
         throw error;
       }
@@ -126,8 +210,18 @@ exports.updateContrat = (req, res, next) => {
       return contrat.save();
     })
     .then((contrat) => {
+      /* #swagger.responses[200] = { 
+            description: "Contrat modifié",
+            schema: {
+                message: "Contrat modifié avec succès!",
+                contrat: {
+                    "$ref": "#/definitions/Contrat"
+                }
+            }
+        }
+      */
       res.status(200).json({
-        message: "Contrat modifié",
+        message: "Contrat modifié avec succès!",
         contrat: contrat,
       });
     })

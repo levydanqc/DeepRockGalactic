@@ -1,0 +1,940 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Deep Rock Galactic API",
+    "description": "API de Deep Rock Galactic, un jeu de stratégie en ligne de type RTS"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Authentification",
+      "description": "Gestion des utilisateurs"
+    },
+    {
+      "name": "Contrats",
+      "description": "Gestion des contrats"
+    },
+    {
+      "name": "Mineurs",
+      "description": "Gestion des mineurs"
+    },
+    {
+      "name": "Planètes",
+      "description": "Gestion des planètes"
+    },
+    {
+      "name": "Réservations",
+      "description": "Gestion des réservations"
+    },
+    {
+      "name": "Recherche",
+      "description": "Système de recherche"
+    }
+  ],
+  "schemes": ["http", "https"],
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Authentification"],
+        "summary": "Connexion d'un utilisateur",
+        "description": "Retourne un token d'authentification",
+        "parameters": [
+          {
+            "name": "Utilisateur",
+            "in": "body",
+            "description": "Informations de l'utilisateur",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "email@exemple.com"
+                },
+                "motdepasse": {
+                  "type": "string",
+                  "example": "motdepasse123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Utilisateur authentifié",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "example": "string"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "tags": ["Authentification"],
+        "summary": "Inscription d'un utilisateur",
+        "description": "Retourne l'id de l'utilisateur",
+        "parameters": [
+          {
+            "name": "Utilisateur",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Mineur"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Utilisateur créé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "string"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/{date}/{planetId}/{danger}/{prime}": {
+      "get": {
+        "tags": ["Recherche"],
+        "summary": "Effectuer une recherche",
+        "description": "",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "planetId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "danger",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "prime",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/planetes/": {
+      "get": {
+        "tags": ["Planètes"],
+        "summary": "Obtenir toutes les planètes",
+        "description": "Retourne la liste des planètes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Liste des planètes",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Planete"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Planètes"],
+        "summary": "Créer une planète",
+        "description": "Nécessite d'être de niveau 2",
+        "parameters": [
+          {
+            "name": "Planete",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Planete"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Planète créée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Planète créée avec succès!"
+                },
+                "planete": {
+                  "$ref": "#/definitions/Planete"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      }
+    },
+    "/planetes/{planeteId}": {
+      "get": {
+        "tags": ["Planètes"],
+        "summary": "Obtenir une planète par id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "planeteId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Planete",
+            "schema": {
+              "$ref": "#/definitions/Planete"
+            }
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Planètes"],
+        "summary": "Modifier une planète",
+        "description": "Nécessite d'être de niveau 2",
+        "parameters": [
+          {
+            "name": "planeteId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
+          },
+          {
+            "name": "Planete",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Planete"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Planète modifiée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Planète modifiée avec succès!"
+                },
+                "planète": {
+                  "$ref": "#/definitions/Planete"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Planètes"],
+        "summary": "Supprimer une planète",
+        "description": "Nécessite d'être de niveau 2",
+        "parameters": [
+          {
+            "name": "planeteId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Planète supprimée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Planète supprimée avec succès!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      }
+    },
+    "/mineurs/": {
+      "get": {
+        "tags": ["Mineurs"],
+        "summary": "Obtenir tous les mineurs",
+        "description": "Retourne la liste des mineurs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Liste des mineurs",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Mineur"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Mineurs"],
+        "summary": "Créer un mineur",
+        "description": "Nécessite d'être de niveau 2",
+        "parameters": [
+          {
+            "name": "Mineur",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Mineur"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Mineur créé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Mineur créé avec succès!"
+                },
+                "mineur": {
+                  "$ref": "#/definitions/Mineur"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      }
+    },
+    "/mineurs/{mineurId}": {
+      "get": {
+        "tags": ["Mineurs"],
+        "summary": "Obtenir un mineur par id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "mineurId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mineur",
+            "schema": {
+              "$ref": "#/definitions/Mineur"
+            }
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Mineurs"],
+        "summary": "Modifier un mineur",
+        "description": "Nécessite d'être de niveau 2",
+        "parameters": [
+          {
+            "name": "mineurId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
+          },
+          {
+            "name": "Mineur",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Mineur"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mineur modifié",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Mineur modifié avec succès!"
+                },
+                "mineur": {
+                  "$ref": "#/definitions/Mineur"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Mineurs"],
+        "summary": "Supprimer un mineur",
+        "description": "Nécessite d'être de niveau 2",
+        "parameters": [
+          {
+            "name": "mineurId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mineur supprimé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Mineur supprimé avec succès!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      }
+    },
+    "/contrats/": {
+      "get": {
+        "tags": ["Contrats"],
+        "summary": "Obtenir tous les contrats",
+        "description": "Retourne la liste des contrats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Liste des contrats",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Contrat"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Contrats"],
+        "summary": "Créer un contrat",
+        "description": "Nécessite d'être de niveau 2",
+        "parameters": [
+          {
+            "name": "Contrat",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Contrat"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Contrat créé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Contrat créé avec succès!"
+                },
+                "contrat": {
+                  "$ref": "#/definitions/Contrat"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      }
+    },
+    "/contrats/{contratId}": {
+      "get": {
+        "tags": ["Contrats"],
+        "summary": "Obtenir un contrat par id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "contratId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contrat",
+            "schema": {
+              "$ref": "#/definitions/Contrat"
+            }
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Contrats"],
+        "summary": "Modifier un contrat",
+        "description": "Nécessite d'être de niveau 2",
+        "parameters": [
+          {
+            "name": "contratId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
+          },
+          {
+            "name": "Contrat",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Contrat"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contrat modifié",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Contrat modifié avec succès!"
+                },
+                "contrat": {
+                  "$ref": "#/definitions/Contrat"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Contrats"],
+        "summary": "Supprimer un contrat",
+        "description": "Nécessite d'être de niveau 2",
+        "parameters": [
+          {
+            "name": "contratId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contrat supprimé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Contrat supprimé avec succès!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      }
+    },
+    "/reservation/": {
+      "get": {
+        "tags": ["Réservations"],
+        "summary": "Obtenir toutes les réservations",
+        "description": "Retourne la liste des réservations",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Liste des réservations",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Reservation"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservations/{reservationId}": {
+      "get": {
+        "tags": ["Réservations"],
+        "summary": "Obtenir une réservation par id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "reservationId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reservation",
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Réservations"],
+        "summary": "Modifier une réservation",
+        "description": "Nécessite d'être de niveau 2",
+        "parameters": [
+          {
+            "name": "reservationId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
+          },
+          {
+            "name": "Reservation",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Réservation modifiée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Réservation modifiée avec succès!"
+                },
+                "réservation": {
+                  "$ref": "#/definitions/Reservation"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Réservations"],
+        "summary": "Supprimer une réservation",
+        "description": "Nécessite d'être de niveau 2",
+        "parameters": [
+          {
+            "name": "reservationId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "value": "626339247fe023c3b50ba0d4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Réservation supprimée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Réservation supprimée avec succès!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
+      }
+    },
+    "/reservations/{mineurId}/{contratId}": {
+      "post": {
+        "tags": ["Réservations"],
+        "summary": "Créer une réservation",
+        "description": "Nécessite d'être de niveau 2",
+        "parameters": [
+          {
+            "name": "mineurId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "contratId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Reservation",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Réservation créée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Réservation créée avec succès!"
+                },
+                "reservation": {
+                  "$ref": "#/definitions/Reservation"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Mineur": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "email@exemple.com"
+        },
+        "nom": {
+          "type": "string",
+          "example": "Joe Dassin"
+        },
+        "motdepasse": {
+          "type": "string",
+          "example": "motdepasse123"
+        },
+        "niveau": {
+          "type": "number",
+          "example": 1
+        }
+      },
+      "required": ["email", "nom", "motdepasse", "niveau"]
+    },
+    "Planete": {
+      "type": "object",
+      "properties": {
+        "nom": {
+          "type": "string",
+          "example": "Terre"
+        },
+        "image": {
+          "type": "string",
+          "example": "https://picsum.photos/200"
+        }
+      },
+      "required": ["nom", "image"]
+    },
+    "Contrat": {
+      "type": "object",
+      "properties": {
+        "prime": {
+          "type": "number",
+          "example": 100
+        },
+        "danger": {
+          "type": "number",
+          "example": 1
+        },
+        "ressource": {
+          "type": "string",
+          "example": "fer"
+        },
+        "quantiteRessource": {
+          "type": "number",
+          "example": 100
+        },
+        "dateExpiration": {
+          "type": "string",
+          "example": "2022-01-01"
+        }
+      },
+      "required": [
+        "prime",
+        "danger",
+        "ressource",
+        "quantiteRessource",
+        "dateExpiration"
+      ]
+    },
+    "Reservation": {
+      "type": "object",
+      "properties": {
+        "mineurId": {
+          "$ref": "#/definitions/Mineur"
+        },
+        "planeteId": {
+          "$ref": "#/definitions/Planete"
+        },
+        "estTermine": {
+          "type": "boolean",
+          "example": false
+        }
+      },
+      "required": ["mineurId", "planeteId", "estTermine"]
+    }
+  }
+}
