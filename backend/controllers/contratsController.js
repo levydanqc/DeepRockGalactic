@@ -18,7 +18,7 @@ exports.getContrats = (req, res, next) => {
         }
       */
       res.status(200).json({
-        contrats: contrats,
+        contrats,
       });
     })
     .catch((err) => {

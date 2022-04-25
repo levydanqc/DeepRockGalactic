@@ -19,7 +19,7 @@ exports.getMineurs = (_req, res, next) => {
         }
       */
       res.status(200).json({
-        mineurs: mineurs,
+        mineurs,
       });
     })
     .catch((err) => {

@@ -18,7 +18,7 @@ exports.getPlanetes = (req, res, next) => {
         }
       */
       res.status(200).json({
-        planetes: planetes,
+        planetes,
       });
     })
     .catch((err) => {
