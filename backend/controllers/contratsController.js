@@ -87,32 +87,53 @@ exports.createContrat = (req, res, next) => {
     dateExpiration,
   } = req.body;
 
-  const contrat = new Contrat({
+  Contrat.findOne({
     planeteId: planeteId,
-    prime: prime,
-    danger: danger,
     ressource: ressource,
-    quantiteRessource: quantiteRessource,
     dateExpiration: dateExpiration,
-  });
-
-  contrat
-    .save()
-    .then(() => {
-      /* #swagger.responses[201] = { 
-            description: "Contrat créé",
-            schema: {
-                message: "Contrat créé avec succès!",
-                contrat: {
-                    "$ref": "#/definitions/Contrat"
-                }
-            }
+    danger: danger,
+    quantiteRessource: quantiteRessource,
+    prime: prime,
+  })
+    .then((contrat) => {
+      if (contrat) {
+        /* #swagger.responses[409] = {
+            description: "Contrat existant",
         }
-      */
-      res.status(201).json({
-        message: "Contrat créé avec succès!",
-        contrat: contrat,
-      });
+        */
+        res.status(409).json({ message: "Contrat existant" });
+      } else {
+        const contrat = new Contrat({
+          planeteId: planeteId,
+          prime: prime,
+          danger: danger,
+          ressource: ressource,
+          quantiteRessource: quantiteRessource,
+          dateExpiration: dateExpiration,
+        });
+
+        contrat
+          .save()
+          .then(() => {
+            /* #swagger.responses[201] = { 
+              description: "Contrat créé",
+              schema: {
+                  message: "Contrat créé avec succès!",
+                  contrat: {
+                      "$ref": "#/definitions/Contrat"
+                  }
+              }
+          }
+        */
+            res.status(201).json({
+              message: "Contrat créé avec succès!",
+              contrat: contrat,
+            });
+          })
+          .catch((err) => {
+            next(err);
+          });
+      }
     })
     .catch((err) => {
       next(err);

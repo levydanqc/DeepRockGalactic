@@ -42,28 +42,31 @@ exports.login = (req, res, next) => {
     })
     .then((isEqual) => {
       if (!isEqual) {
-        const error = new Error("Mauvais mot de passe !");
-        error.statusCode = 401;
-        throw error;
-      }
-      const token = jwt.sign(
-        {
-          email: loadedUser.email,
-          nom: loadedUser.nom,
-          userId: loadedUser._id.toString(),
-          niveau: loadedUser.niveau,
-        },
-        process.env.SECRET_JWT,
-        { expiresIn: "1h" }
-      );
-      /* #swagger.responses[200] = { 
+        /* #swagger.responses[401] = {
+            description: "Email ou mot de passe invalide",
+        }
+        */
+        res.status(401).json({ message: "Email ou mot de passe invalide" });
+      } else {
+        const token = jwt.sign(
+          {
+            email: loadedUser.email,
+            nom: loadedUser.nom,
+            userId: loadedUser._id.toString(),
+            niveau: loadedUser.niveau,
+          },
+          process.env.SECRET_JWT,
+          { expiresIn: "1h" }
+        );
+        /* #swagger.responses[200] = { 
             description: "Utilisateur authentifié",
             schema: {
                 token: "string"
             }
         }
       */
-      res.status(200).json({ token: token });
+        res.status(200).json({ token: token });
+      }
     })
     .catch((err) => {
       next(err);
@@ -91,30 +94,40 @@ exports.signup = (req, res, next) => {
   const motdepasse = req.body.motdepasse;
   const niveau = req.body.niveau;
 
-  bcrypt
-    .hash(motdepasse, 12)
-    .then((hashedPassword) => {
-      const user = new User({
-        email: email,
-        nom: nom,
-        motdepasse: hashedPassword,
-        niveau: niveau,
-      });
-      return user.save();
-    })
-    .then((result) => {
-      /* #swagger.responses[201] = { 
-            description: "Utilisateur créé",
-            schema: {
-                userId: "string"
-            }
+  Mineur.findOne({ email }).then((mineur) => {
+    if (mineur) {
+      /* #swagger.responses[409] = {
+            description: "Utilisateur existant",
         }
       */
-      res
-        .status(201)
-        .json({ message: "Utilisateur créé !", userId: result.id });
-    })
-    .catch((err) => {
-      next(err);
-    });
+      res.status(400).json({ message: "Utilisateur existant" });
+    } else {
+      bcrypt
+        .hash(motdepasse, 12)
+        .then((hashedPassword) => {
+          const user = new User({
+            email: email,
+            nom: nom,
+            motdepasse: hashedPassword,
+            niveau: niveau,
+          });
+          return user.save();
+        })
+        .then((result) => {
+          /* #swagger.responses[201] = { 
+              description: "Utilisateur créé",
+              schema: {
+                  userId: "string"
+              }
+          }
+        */
+          res
+            .status(201)
+            .json({ message: "Utilisateur créé !", userId: result.id });
+        })
+        .catch((err) => {
+          next(err);
+        });
+    }
+  });
 };
