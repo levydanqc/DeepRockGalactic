@@ -18,7 +18,7 @@ exports.getReservations = (req, res, next) => {
         }
       */
       res.status(200).json({
-        reservations: reservations,
+        reservations,
       });
     })
     .catch((err) => {
