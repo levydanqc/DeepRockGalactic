@@ -19,7 +19,7 @@ exports.getMineurs = (_req, res, next) => {
         }
       */
       res.status(200).json({
-        mineurs: mineurs,
+        mineurs,
       });
     })
     .catch((err) => {
@@ -80,35 +80,45 @@ exports.createMineur = (req, res, next) => {
 
   const { email, nom, motdepasse, niveau } = req.body;
 
-  bcrypt
-    .hash(motdepasse, 12)
-    .then((hashedPassword) => {
-      const mineur = new Mineur({
-        email: email,
-        nom: nom,
-        motdepasse: hashedPassword,
-        niveau: niveau,
-      });
-      return mineur.save();
-    })
-    .then((mineur) => {
-      /* #swagger.responses[201] = { 
-            description: "Mineur créé",
-            schema: {
-                message: "Mineur créé avec succès!",
-                mineur: {
-                    "$ref": "#/definitions/Mineur"
-                }
-            }
+  Mineur.findOne({ email }).then((mineur) => {
+    if (mineur) {
+      /* #swagger.responses[409] = {
+            description: "Mineur existant",
         }
       */
-      res
-        .status(201)
-        .json({ message: "Mineur créé avec succès!", mineur: mineur });
-    })
-    .catch((err) => {
-      next(err);
-    });
+      res.status(400).json({ message: "Mineur existant" });
+    } else {
+      bcrypt
+        .hash(motdepasse, 12)
+        .then((hashedPassword) => {
+          const mineur = new Mineur({
+            email: email,
+            nom: nom,
+            motdepasse: hashedPassword,
+            niveau: niveau,
+          });
+          return mineur.save();
+        })
+        .then((mineur) => {
+          /* #swagger.responses[201] = { 
+                description: "Mineur créé",
+                schema: {
+                    message: "Mineur créé avec succès!",
+                    mineur: {
+                        "$ref": "#/definitions/Mineur"
+                    }
+                }
+            }
+          */
+          res
+            .status(201)
+            .json({ message: "Mineur créé avec succès!", mineur: mineur });
+        })
+        .catch((err) => {
+          next(err);
+        });
+    }
+  });
 };
 
 exports.deleteMineur = (req, res, next) => {
