@@ -130,6 +130,18 @@
         "description": "",
         "parameters": [
           {
+            "name": "dangers",
+            "in": "query",
+            "description": "Niveaux de dangers recherchés, séparés par des virgules",
+            "type": "string"
+          },
+          {
+            "name": "planetesId",
+            "in": "query",
+            "description": "Niveaux de dangers recherchés, séparés par des virgules",
+            "type": "string"
+          },
+          {
             "name": "minDate",
             "in": "query",
             "type": "string"
@@ -150,19 +162,23 @@
             "type": "string"
           },
           {
-            "name": "dangers",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "planetId",
+            "name": "planetsId",
             "in": "query",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Liste des contrats",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Contrat"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "404": {
             "description": "Non Trouvé"
