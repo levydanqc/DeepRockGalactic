@@ -82,32 +82,42 @@ exports.createPlanete = (req, res, next) => {
 
   const { nom, image } = req.body;
 
-  const planete = new Planete({
-    nom: nom,
-    image: image,
-  });
-
-  planete
-    .save()
-    .then(() => {
-      /* #swagger.responses[201] = { 
-            description: "Planète créée",
-            schema: {
-                message: "Planète créée avec succès!",
-                planete: {
-                    "$ref": "#/definitions/Planete"
-                }
-            }
+  Planete.findOne({ nom: nom }).then((planeteFound) => {
+    if (planeteFound) {
+      /* #swagger.responses[409] = {
+            description: "Planète existante",
         }
       */
-      res.status(201).json({
-        message: "Planete créée",
-        planete: planete,
+      res.status(409).json({ message: "Planète existante!" });
+    } else {
+      const planete = new Planete({
+        nom: nom,
+        image: image,
       });
-    })
-    .catch((err) => {
-      next(err);
-    });
+
+      planete
+        .save()
+        .then(() => {
+          /* #swagger.responses[201] = { 
+                description: "Planète créée",
+                schema: {
+                    message: "Planète créée avec succès!",
+                    planete: {
+                        "$ref": "#/definitions/Planete"
+                    }
+                }
+            }
+          */
+          res.status(201).json({
+            message: "Planete créée",
+            planete: planete,
+          });
+        })
+        .catch((err) => {
+          next(err);
+        });
+    }
+  });
 };
 
 exports.deletePlanete = (req, res) => {

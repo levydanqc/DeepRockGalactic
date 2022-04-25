@@ -81,35 +81,45 @@ exports.createReservation = (req, res, next) => {
   }
   const { mineurId, contratId } = req.params;
 
-  const { estTermine } = req.body;
-
-  const reservation = new Reservation({
-    mineurId: mineurId,
-    contratId: contratId,
-    estTermine: estTermine,
-  });
-
-  reservation
-    .save()
-    .then(() => {
-      /* #swagger.responses[201] = { 
-            description: "Réservation créée",
-            schema: {
-                message: "Réservation créée avec succès!",
-                reservation: {
-                    "$ref": "#/definitions/Reservation"
-                }
+  Reservation.findOne({ mineurId, contratId }).then((reservation) => {
+    if (reservation) {
+      /* #swagger.responses[409] = { 
+            description: "Réservation existante",
             }
-        }
+          }
       */
-      res.status(201).json({
-        message: "Réservation créée",
-        reservation: reservation,
+      res.status(409).json({ message: "Réservation existante" });
+    } else {
+      const { estTermine } = req.body;
+
+      const reservation = new Reservation({
+        mineurId: mineurId,
+        contratId: contratId,
+        estTermine: estTermine,
       });
-    })
-    .catch((err) => {
-      next(err);
-    });
+
+      reservation
+        .save()
+        .then(() => {
+          /* #swagger.responses[201] = { 
+              description: "Réservation créée",
+              schema: {
+                  message: "Réservation créée avec succès!",
+                  reservation: {
+                      "$ref": "#/definitions/Reservation"
+                  }
+              }
+          }*/
+          res.status(201).json({
+            message: "Réservation créée",
+            reservation: reservation,
+          });
+        })
+        .catch((err) => {
+          next(err);
+        });
+    }
+  });
 };
 
 exports.deleteReservation = (req, res, next) => {
