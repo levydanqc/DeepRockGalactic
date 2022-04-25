@@ -123,38 +123,67 @@
         }
       }
     },
-    "/search/{date}/{planetId}/{danger}/{prime}": {
+    "/search": {
       "get": {
         "tags": ["Recherche"],
         "summary": "Effectuer une recherche",
         "description": "",
         "parameters": [
           {
-            "name": "date",
-            "in": "path",
-            "required": true,
+            "name": "dangers",
+            "in": "query",
+            "description": "Niveaux de dangers recherchés, séparés par des virgules",
             "type": "string"
           },
           {
-            "name": "planetId",
-            "in": "path",
-            "required": true,
+            "name": "planetesId",
+            "in": "query",
+            "description": "Niveaux de dangers recherchés, séparés par des virgules",
             "type": "string"
           },
           {
-            "name": "danger",
-            "in": "path",
-            "required": true,
+            "name": "minDate",
+            "in": "query",
             "type": "string"
           },
           {
-            "name": "prime",
-            "in": "path",
-            "required": true,
+            "name": "maxDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "minPrime",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "maxPrime",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "planetsId",
+            "in": "query",
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Liste des contrats",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Contrat"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Non Trouvé"
+          }
+        }
       }
     },
     "/planetes/": {
