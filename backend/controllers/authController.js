@@ -37,7 +37,6 @@ exports.login = (req, res, next) => {
         throw error;
       }
       loadedUser = user;
-      console.log("loadedUser", loadedUser);
       return bcrypt.compare(motdepasse, user.motdepasse);
     })
     .then((isEqual) => {
