@@ -19,7 +19,6 @@ router.get(
 // /reservation/ => POST
 router.post(
   "/reservations/:mineurId/:contratId",
-  isAuth,
   reservationsController.createReservation
 );
 

@@ -61,7 +61,6 @@ exports.getReservation = (req, res, next) => {
 exports.createReservation = (req, res, next) => {
   /* 
       #swagger.tags = ['Réservations']
-      #swagger.description = "Nécessite d'être de niveau 2"
       #swagger.summary = "Créer une réservation"
   */
   /*
@@ -74,11 +73,6 @@ exports.createReservation = (req, res, next) => {
         }
     }
   */
-  if (req.user.niveau !== 2) {
-    res
-      .status(401)
-      .json({ message: "Vous ne pouvez pas créer de réservation" });
-  }
   const { mineurId, contratId } = req.params;
 
   Reservation.findOne({ mineurId, contratId }).then((reservation) => {
