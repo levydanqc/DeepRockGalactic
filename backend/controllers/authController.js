@@ -93,7 +93,7 @@ exports.signup = (req, res, next) => {
   const motdepasse = req.body.motdepasse;
   const niveau = req.body.niveau;
 
-  Mineur.findOne({ email }).then((mineur) => {
+  User.findOne({ email }).then((mineur) => {
     if (mineur) {
       /* #swagger.responses[409] = {
             description: "Utilisateur existant",
