@@ -136,7 +136,7 @@ exports.deleteReservation = (req, res, next) => {
   Reservation.findByIdAndDelete(reservationId)
     .then((reservation) => {
       if (reservation) {
-        /* #swagger.responses[200] = { Ç
+        /* #swagger.responses[200] = {
             description: "Réservation supprimée",
             schema: {
                 message: "Réservation supprimée avec succès!"
