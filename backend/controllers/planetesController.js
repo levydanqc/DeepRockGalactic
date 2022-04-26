@@ -77,7 +77,7 @@ exports.createPlanete = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    res.status(401).json({ message: "Vous ne pouvez pas créer de planète" });
+    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
   }
 
   const { nom, image } = req.body;
@@ -132,7 +132,7 @@ exports.deletePlanete = (req, res) => {
       }
  */
   if (req.user.niveau !== 2) {
-    res.status(401).json({ message: "Vous ne pouvez pas créer de planète" });
+    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
   }
 
   const planeteId = req.params.planeteId;
@@ -181,7 +181,7 @@ exports.updatePlanete = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    res.status(401).json({ message: "Vous ne pouvez pas créer de planète" });
+    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
   }
 
   const planeteId = req.params.planeteId;

@@ -128,9 +128,7 @@ exports.deleteReservation = (req, res, next) => {
       }
  */
   if (req.user.niveau !== 2) {
-    res
-      .status(401)
-      .json({ message: "Vous ne pouvez pas créer de réservation" });
+    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
   }
 
   const reservationId = req.params.reservationId;
@@ -138,7 +136,7 @@ exports.deleteReservation = (req, res, next) => {
   Reservation.findByIdAndDelete(reservationId)
     .then((reservation) => {
       if (reservation) {
-        /* #swagger.responses[200] = { 
+        /* #swagger.responses[200] = { Ç
             description: "Réservation supprimée",
             schema: {
                 message: "Réservation supprimée avec succès!"
@@ -179,9 +177,7 @@ exports.updateReservation = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    res
-      .status(401)
-      .json({ message: "Vous ne pouvez pas créer de réservation" });
+    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
   }
 
   const reservationId = req.params.reservationId;

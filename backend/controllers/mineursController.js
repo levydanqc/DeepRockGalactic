@@ -75,7 +75,7 @@ exports.createMineur = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
+    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
   }
 
   const { email, nom, motdepasse, niveau } = req.body;
@@ -133,7 +133,7 @@ exports.deleteMineur = (req, res, next) => {
       }
  */
   if (req.user.niveau !== 2) {
-    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
+    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
   }
 
   const mineurId = req.params.mineurId;
@@ -182,7 +182,7 @@ exports.updateMineur = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    res.status(401).json({ message: "Vous ne pouvez pas créer de contrat" });
+    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
   }
 
   const mineurId = req.params.mineurId;
