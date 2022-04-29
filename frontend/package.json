@@ -23,6 +23,7 @@
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
+    "@popperjs/core": "^2.11.5",
     "@types/webfontloader": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
