@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+cd "$(dirname "$0")"
+
+# Reset database
+mongoimport --db deepRockGalactic --collection contrats --drop --file database/collections/contrats.json --jsonArray
+mongoimport --db deepRockGalactic --collection mineurs --drop --file database/collections/mineurs.json --jsonArray
+mongoimport --db deepRockGalactic --collection planetes --drop --file database/collections/planetes.json --jsonArray
+mongoimport --db deepRockGalactic --collection reservations --drop --file database/collections/reservations.json --jsonArray
+
+# Run tests
+newman run database/postman/tests.postman_collection.json -e database/postman/deepRockGalactic.postman_environment.json
