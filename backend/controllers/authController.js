@@ -32,9 +32,7 @@ exports.login = (req, res, next) => {
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
-        const error = new Error("Utilisateur non trouvée");
-        error.statusCode = 404;
-        throw error;
+        throw new Error();
       }
       loadedUser = user;
       return bcrypt.compare(motdepasse, user.motdepasse);
@@ -45,7 +43,7 @@ exports.login = (req, res, next) => {
             description: "Email ou mot de passe invalide",
         }
         */
-        res.status(401).json({ message: "Email ou mot de passe invalide" });
+        throw new Error();
       } else {
         const token = jwt.sign(
           {
@@ -67,8 +65,8 @@ exports.login = (req, res, next) => {
         res.status(200).json({ token: token });
       }
     })
-    .catch((err) => {
-      next(err);
+    .catch(() => {
+      res.status(401).json({ message: "Email ou mot de passe invalide" });
     });
 };
 
@@ -125,7 +123,7 @@ exports.signup = (req, res, next) => {
             .json({ message: "Utilisateur créé !", userId: result.id });
         })
         .catch((err) => {
-          next(err);
+          res.status(400).json(err);
         });
     }
   });

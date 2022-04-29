@@ -75,7 +75,9 @@ exports.createContrat = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
+    return res
+      .status(403)
+      .json({ message: "Vous ne pouvez pas effectuer cette action." });
   }
 
   const {
@@ -152,7 +154,9 @@ exports.deleteContrat = (req, res, next) => {
       }
  */
   if (req.user.niveau !== 2) {
-    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
+    return res
+      .status(403)
+      .json({ message: "Vous ne pouvez pas effectuer cette action." });
   }
 
   const contratId = req.params.contratId;
@@ -201,7 +205,9 @@ exports.updateContrat = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
+    return res
+      .status(403)
+      .json({ message: "Vous ne pouvez pas effectuer cette action." });
   }
 
   const contratId = req.params.contratId;
