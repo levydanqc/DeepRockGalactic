@@ -13,7 +13,7 @@
   "scripts": {
     "prepare": "husky install",
     "postinstall": "(cd frontend && yarn install) && (cd backend && yarn install)",
-    "start": "concurrently \"cd frontend && yarn run start\" \"cd backend && yarn run start\""
+    "start": "concurrently \"cd frontend && yarn run serve\" \"cd backend && yarn run start\""
   },
   "dependencies": {
     "prettier": "^2.6.2"
