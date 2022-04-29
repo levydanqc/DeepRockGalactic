@@ -77,7 +77,9 @@ exports.createPlanete = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
+    return res
+      .status(403)
+      .json({ message: "Vous ne pouvez pas effectuer cette action." });
   }
 
   const { nom, image } = req.body;
@@ -99,22 +101,22 @@ exports.createPlanete = (req, res, next) => {
         .save()
         .then(() => {
           /* #swagger.responses[201] = { 
-                description: "Planète créée",
-                schema: {
-                    message: "Planète créée avec succès!",
-                    planete: {
-                        "$ref": "#/definitions/Planete"
-                    }
-                }
+          description: "Planète créée",
+          schema: {
+            message: "Planète créée avec succès!",
+            planete: {
+              "$ref": "#/definitions/Planete"
             }
-          */
+          }
+        }
+        */
           res.status(201).json({
             message: "Planete créée",
             planete: planete,
           });
         })
         .catch((err) => {
-          next(err);
+          res.status(400).json(err);
         });
     }
   });
@@ -132,7 +134,9 @@ exports.deletePlanete = (req, res) => {
       }
  */
   if (req.user.niveau !== 2) {
-    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
+    return res
+      .status(403)
+      .json({ message: "Vous ne pouvez pas effectuer cette action." });
   }
 
   const planeteId = req.params.planeteId;
@@ -181,7 +185,9 @@ exports.updatePlanete = (req, res, next) => {
     }
   */
   if (req.user.niveau !== 2) {
-    res.status(401).json({ message: "Vous ne pouvez pas cette action." });
+    return res
+      .status(403)
+      .json({ message: "Vous ne pouvez pas effectuer cette action." });
   }
 
   const planeteId = req.params.planeteId;
