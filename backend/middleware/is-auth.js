@@ -9,7 +9,7 @@ dotenv.config();
 module.exports = (req, res, next) => {
   const authHeader = req.get("Authorization");
   if (!authHeader) {
-    res.status(401).send({ error: "Non authentifié.." });
+    return res.status(401).send({ message: "Non authentifié" });
   }
   const token = authHeader.split(" ")[1];
   let decodedToken;
@@ -20,9 +20,7 @@ module.exports = (req, res, next) => {
     throw err;
   }
   if (!decodedToken) {
-    const error = new Error("Non authentifié.");
-    error.statusCode = 401;
-    throw error;
+    return res.status(401).send({ message: "Non authentifié" });
   }
   // Passe le token décodé dans la requête pour pouvoir l'utiliser ailleurs
   req.user = decodedToken;
