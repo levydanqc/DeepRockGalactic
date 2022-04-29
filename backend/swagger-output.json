@@ -85,6 +85,9 @@
                 "name": "main"
               }
             }
+          },
+          "401": {
+            "description": "Email ou mot de passe invalide"
           }
         }
       }
@@ -119,6 +122,12 @@
                 "name": "main"
               }
             }
+          },
+          "400": {
+            "description": "Mauvaise Requête"
+          },
+          "409": {
+            "description": "Utilisateur existant"
           }
         }
       }
@@ -242,6 +251,9 @@
           },
           "401": {
             "description": "Non Autorisé"
+          },
+          "409": {
+            "description": "Planète existante"
           }
         }
       }
@@ -409,8 +421,14 @@
               }
             }
           },
+          "400": {
+            "description": "Mauvaise Requête"
+          },
           "401": {
             "description": "Non Autorisé"
+          },
+          "409": {
+            "description": "Mineur existant"
           }
         }
       }
@@ -583,6 +601,9 @@
           },
           "401": {
             "description": "Non Autorisé"
+          },
+          "409": {
+            "description": "Contrat existant"
           }
         }
       }
@@ -831,7 +852,7 @@
       "post": {
         "tags": ["Réservations"],
         "summary": "Créer une réservation",
-        "description": "Nécessite d'être de niveau 2",
+        "description": "",
         "parameters": [
           {
             "name": "mineurId",
@@ -873,8 +894,8 @@
               }
             }
           },
-          "401": {
-            "description": "Non Autorisé"
+          "409": {
+            "description": "Réservation existante"
           }
         }
       }
