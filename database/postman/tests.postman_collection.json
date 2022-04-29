@@ -1,0 +1,893 @@
+{
+  "info": {
+    "_postman_id": "c697628c-d3d2-4b4d-8476-1b54a0569148",
+    "name": "Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "FAIL Reservation (Unauthenticate)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 401\"] = responseCode.code === 401;",
+              "",
+              "tests[\"Non authentifié\"] = JSON.parse(responseBody).message == \"Non authentifié\";"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"estTermine\": \"false\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/reservations/:mineurId/:contratId",
+          "host": ["{{localUrl}}"],
+          "path": ["reservations", ":mineurId", ":contratId"],
+          "variable": [
+            {
+              "key": "mineurId",
+              "value": "{{id_user1_created}}"
+            },
+            {
+              "key": "contratId",
+              "value": "{{id_contrat_searched}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create user niv1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 201\"] = responseCode.code === 201;",
+              "",
+              "tests[\"Utilisateur créé avec succès\"] = JSON.parse(responseBody).message == \"Utilisateur créé !\";",
+              "",
+              "const requestBody = JSON.parse(pm.request.body.raw);",
+              "",
+              "postman.setEnvironmentVariable(\"email_created\", requestBody.email.toString());",
+              "postman.setEnvironmentVariable(\"password_created\", requestBody.motdepasse.toString());",
+              "postman.setEnvironmentVariable(\"id_user1_created\", JSON.parse(responseBody).userId.toString());",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\" : \"{{$randomEmail}}\",\n    \"nom\" : \"{{$randomUserName}}\",\n    \"motdepasse\" : \"{{$randomPassword}}\",\n    \"niveau\" : \"1\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/auth/signup",
+          "host": ["{{localUrl}}"],
+          "path": ["auth", "signup"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FAIL Create user niv1 (ø nom)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 400\"] = responseCode.code === 400;",
+              "",
+              "tests[\"Message d'erreur attribut 'nom'\"] = JSON.parse(responseBody).errors.nom.message == \"Path `nom` is required.\";"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\" : \"{{$randomEmail}}\",\n    \"nom\" : \"\",\n    \"motdepasse\" : \"{{$randomPassword}}\",\n    \"niveau\" : \"1\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/auth/signup",
+          "host": ["{{localUrl}}"],
+          "path": ["auth", "signup"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login user niv1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "",
+              "const response = JSON.parse(responseBody);",
+              "",
+              "tests[\"Utilisateur authentifié avec succès\"] = response.token.length > 0;",
+              "",
+              "postman.setEnvironmentVariable(\"token_created\", response.token.toString());",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\" : \"{{email_created}}\",\n    \"motdepasse\" : \"{{password_created}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/auth/login",
+          "host": ["{{localUrl}}"],
+          "path": ["auth", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FAIL Login user niv1 (wrong email)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 401\"] = responseCode.code === 401;",
+              "",
+              "tests[\"Message d'erreur\"] = JSON.parse(responseBody).message == \"Email ou mot de passe invalide\";"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\" : \"wrong@email.com\",\n    \"motdepasse\" : \"{{password_created}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/auth/login",
+          "host": ["{{localUrl}}"],
+          "path": ["auth", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FAIL Create Planete (Unauthorized)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 403\"] = responseCode.code === 403;",
+              "",
+              "tests[\"Non autorisé\"] = JSON.parse(responseBody).message == \"Vous ne pouvez pas effectuer cette action.\";"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_created}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"nom\": \"{{$randomDomainWord}}\",\n    \"image\": \"{{$randomImageUrl}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/planetes",
+          "host": ["{{localUrl}}"],
+          "path": ["planetes"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search (aucun filtre)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "",
+              "const contrats = JSON.parse(responseBody);",
+              "",
+              "const schemaContrat = JSON.parse(environment.schemaContrat);",
+              "",
+              "tests[\"JSON respecte le schéma pour un contrat\"] = tv4.validate(contrats[0], schemaContrat);",
+              "if (tv4.error !== null)",
+              "   console.log(\"Message de validation schéma JSON contrat) : \", tv4.error);",
+              "",
+              "const nbAttendus = 20;",
+              "tests[\"Nb de contrats retournés\"] = contrats.length === nbAttendus;",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/search",
+          "host": ["{{localUrl}}"],
+          "path": ["search"],
+          "query": [
+            {
+              "key": "minDate",
+              "value": "{{$randomDatePast}}",
+              "disabled": true
+            },
+            {
+              "key": "maxDate",
+              "value": "{{$randomDateFuture}}",
+              "disabled": true
+            },
+            {
+              "key": "dangers",
+              "value": "1,2,3",
+              "disabled": true
+            },
+            {
+              "key": "planetsId",
+              "value": "",
+              "disabled": true
+            },
+            {
+              "key": "minPrime",
+              "value": "0",
+              "disabled": true
+            },
+            {
+              "key": "maxPrime",
+              "value": "100000",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "",
+              "const contrats = JSON.parse(responseBody);",
+              "",
+              "const schemaContrat = JSON.parse(environment.schemaContrat);",
+              "",
+              "tests[\"JSON respecte le schéma pour un contrat\"] = tv4.validate(contrats[0], schemaContrat);",
+              "if (tv4.error !== null)",
+              "   console.log(\"Message de validation schéma JSON contrat) : \", tv4.error);",
+              "",
+              "const nbAttendus = 12;",
+              "tests[\"Nb de contrats retournés\"] = contrats.length === nbAttendus;",
+              "",
+              "postman.setEnvironmentVariable(\"id_contrat_searched\", contrats[0]._id.toString());"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/search?minDate={{$randomDatePast}}&dangers=1,2,3&minPrime=0",
+          "host": ["{{localUrl}}"],
+          "path": ["search"],
+          "query": [
+            {
+              "key": "minDate",
+              "value": "{{$randomDatePast}}"
+            },
+            {
+              "key": "maxDate",
+              "value": "{{$randomDateFuture}}",
+              "disabled": true
+            },
+            {
+              "key": "dangers",
+              "value": "1,2,3"
+            },
+            {
+              "key": "planetsId",
+              "value": "",
+              "disabled": true
+            },
+            {
+              "key": "minPrime",
+              "value": "0"
+            },
+            {
+              "key": "maxPrime",
+              "value": "100000",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Reservation",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 201\"] = responseCode.code === 201;",
+              "",
+              "const reservation = JSON.parse(responseBody);",
+              "",
+              "const schemaReservation = JSON.parse(environment.schemaReservation);",
+              "",
+              "tests[\"JSON respecte le schéma pour une réservation\"] = tv4.validate(reservation.reservation, schemaReservation);",
+              "if (tv4.error !== null)",
+              "   console.log(\"Message de validation schéma JSON réservation) : \", tv4.error);",
+              "",
+              "tests[\"Réservation créée avec succès\"] = reservation.message == \"Réservation créée\";",
+              "",
+              "postman.setEnvironmentVariable(\"id_reservation_created\", JSON.parse(responseBody).reservation._id.toString());",
+              "",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "pm.sendRequest({",
+              "            url: environment.localUrl + \"/mineurs\", ",
+              "            method: 'GET',",
+              "        }, function (err, res) {",
+              "            if(err) {",
+              "                throw new Error(err);",
+              "            } else {",
+              "                pm.collectionVariables.set(\"id_mineur\", res.json().mineurs[0]._id);",
+              "            }",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_created}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"estTermine\": \"false\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/reservations/:mineurId/:contratId",
+          "host": ["{{localUrl}}"],
+          "path": ["reservations", ":mineurId", ":contratId"],
+          "variable": [
+            {
+              "key": "mineurId",
+              "value": "{{id_mineur}}"
+            },
+            {
+              "key": "contratId",
+              "value": "{{id_contrat_searched}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FAIL Reservation (ø mineurId)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 404\"] = responseCode.code === 404;",
+              "",
+              "tests[\"Message d'erreur\"] = JSON.parse(responseBody).pageTitle == \"Page introuvable !\";",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_created}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"estTermine\": \"false\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/reservations/:mineurId/:contratId",
+          "host": ["{{localUrl}}"],
+          "path": ["reservations", ":mineurId", ":contratId"],
+          "variable": [
+            {
+              "key": "mineurId",
+              "value": ""
+            },
+            {
+              "key": "contratId",
+              "value": "{{id_contrat_searched}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create user niv2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 201\"] = responseCode.code === 201;",
+              "",
+              "tests[\"Utilisateur créé avec succès\"] = JSON.parse(responseBody).message == \"Utilisateur créé !\";",
+              "",
+              "const requestBody = JSON.parse(pm.request.body.raw);",
+              "",
+              "postman.setEnvironmentVariable(\"email_created\", requestBody.email.toString());",
+              "postman.setEnvironmentVariable(\"password_created\", requestBody.motdepasse.toString());",
+              "postman.setEnvironmentVariable(\"id_user2_created\", JSON.parse(responseBody).userId.toString());",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\" : \"{{$randomEmail}}\",\n    \"nom\" : \"{{$randomUserName}}\",\n    \"motdepasse\" : \"{{$randomPassword}}\",\n    \"niveau\" : \"2\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/auth/signup",
+          "host": ["{{localUrl}}"],
+          "path": ["auth", "signup"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login user niv2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "",
+              "const response = JSON.parse(responseBody);",
+              "",
+              "tests[\"Utilisateur authentifié avec succès\"] = response.token.length > 0;",
+              "",
+              "postman.setEnvironmentVariable(\"token_created\", response.token.toString());"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\" : \"{{email_created}}\",\n    \"motdepasse\" : \"{{password_created}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/auth/login",
+          "host": ["{{localUrl}}"],
+          "path": ["auth", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Planete",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 201\"] = responseCode.code === 201;",
+              "",
+              "tests[\"Planete créée avec succès\"] = JSON.parse(responseBody).message == \"Planete créée\";",
+              "",
+              "const planete = JSON.parse(responseBody).planete;",
+              "",
+              "const schemaPlanete = JSON.parse(environment.schemaPlanete);",
+              "",
+              "tests[\"JSON respecte le schéma pour une planete\"] = tv4.validate(planete, schemaPlanete);",
+              "if (tv4.error !== null)",
+              "   console.log(\"Message de validation schéma JSON planete) : \", tv4.error);",
+              "",
+              "postman.setEnvironmentVariable(\"id_planete_created\", JSON.parse(responseBody).planete._id.toString());"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_created}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"nom\": \"{{$randomDomainWord}}\",\n    \"image\": \"{{$randomImageUrl}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/planetes",
+          "host": ["{{localUrl}}"],
+          "path": ["planetes"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FAIL Create Planete (ø  image)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 400\"] = responseCode.code === 400;",
+              "",
+              "tests[\"Message d'erreur attribut 'image'\"] = JSON.parse(responseBody).errors.image.message == \"Path `image` is required.\";"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_created}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"nom\": \"{{$randomDomainWord}}\",\n    \"image\": \"\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/planetes",
+          "host": ["{{localUrl}}"],
+          "path": ["planetes"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Planete",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "",
+              "tests[\"Planete supprimée avec succès\"] = JSON.parse(responseBody).message == \"Planète supprimée avec succès!\";"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_created}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{localUrl}}/planetes/:planeteId",
+          "host": ["{{localUrl}}"],
+          "path": ["planetes", ":planeteId"],
+          "variable": [
+            {
+              "key": "planeteId",
+              "value": "{{id_planete_created}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Reset Db",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "pm.sendRequest(",
+              "    {",
+              "        url: environment.localUrl + \"/mineurs/\" + environment.id_user2_created,",
+              "        header: {",
+              "            'Authorization': 'Bearer ' + environment.token_created,",
+              "        },",
+              "        method: 'DELETE',",
+              "    }, function (err, res) {",
+              "        if(err) {",
+              "            throw new Error(err);",
+              "        }",
+              "    }",
+              ");",
+              "",
+              "pm.sendRequest(",
+              "    {",
+              "        url: environment.localUrl + \"/reservations/\" + environment.id_reservation_created,",
+              "        header: {",
+              "            'Authorization': 'Bearer ' + environment.token_created,",
+              "        },",
+              "        method: 'DELETE',",
+              "    }, function (err, res) {",
+              "        if(err) {",
+              "            throw new Error(err);",
+              "        }",
+              "    }",
+              ");"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "",
+              "tests[\"Base de données réinitialisée\"] = JSON.parse(responseBody).message == \"Mineur supprimé avec succès!\";"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token_created}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{localUrl}}/mineurs/:mineurId",
+          "host": ["{{localUrl}}"],
+          "path": ["mineurs", ":mineurId"],
+          "variable": [
+            {
+              "key": "mineurId",
+              "value": "{{id_user1_created}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "id_mineur",
+      "value": ""
+    }
+  ]
+}
