@@ -46,9 +46,10 @@
 export default {
   data: () => {
     return {
-      courriel: "",
-      password: "",
+      email: "",
+      motdepasse: "",
       nom: "",
+      niveau: 0,
       erreurs: [],
     };
   },
@@ -60,16 +61,19 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          courriel: this.courriel,
+          email: this.email,
           nom: this.nom,
-          password: this.password,
+          motdepasse: this.motdepasse,
+          niveau: this.niveau,
         }),
       })
         .then((response) => {
           if (response.status === 200) {
             return response.json();
+          } else if (response.status === 400) {
+            this.erreurs.push("Ce courriel est déjà pris!");
           } else {
-            this.erreurs.push("Erreur!");
+            this.erreurs.push("Erreur !");
           }
         })
         .then((data) => {
