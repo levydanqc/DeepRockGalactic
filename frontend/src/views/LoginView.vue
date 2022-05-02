@@ -12,15 +12,15 @@
       <input
         class="text-center p-1 my-3 rounded"
         style="background-color: #e3e3e3"
-        v-model="courriel"
+        v-model="email"
         placeholder="Courriel"
       />
       <div style="width: 100%"></div>
       <input
         class="text-center p-1 rounded"
         style="background-color: #e3e3e3"
-        v-model="password"
-        placeholder="password"
+        v-model="motdepasse"
+        placeholder="Mot de passe"
         type="password"
       />
       <div style="width: 100%"></div>
@@ -39,8 +39,8 @@
 export default {
   data: () => {
     return {
-      courriel: "",
-      password: "",
+      email: "",
+      motdepasse: "",
       erreurs: [],
     };
   },
@@ -52,15 +52,15 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          courriel: this.courriel,
-          password: this.password,
+          email: this.email,
+          motdepasse: this.motdepasse,
         }),
       })
         .then((response) => {
           if (response.status === 200) {
             return response.json();
           } else {
-            this.erreurs.push("Erreur!");
+            this.erreurs.push("Erreur !");
           }
         })
         .then((data) => {
