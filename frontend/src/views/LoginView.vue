@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     login() {
-      fetch("http://localhost:3000/login", {
+      fetch("http://localhost:3000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
