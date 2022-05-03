@@ -34,7 +34,7 @@
       <button class="btn btn-success px-5" type="submit">Créer</button>
       <div class="my-3" style="width: 100%"></div>
       <router-link
-        to="/login"
+        to="/auth/login"
         class="text-secondary"
         style="text-decoration: none"
         >J'ai déjà un compte</router-link
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     signup() {
-      fetch("http://localhost:3000/signup", {
+      fetch("http://localhost:3000/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
