@@ -12,19 +12,24 @@
           />
         </expansion-panel>
         <expansion-panel title="Prime">
-          <v-text-field
-            label="Min."
-            v-model="startPrime"
-            prepend-inner-icon="mdi-currency-usd"
-            class="me-1"
-            @keypress="isNumber($event, this.startPrime)"
-          ></v-text-field>
-          <v-text-field
-            label="Max."
-            v-model="endPrime"
-            prepend-inner-icon="mdi-currency-usd"
-            @keypress="isNumber($event, this.endPrime)"
-          ></v-text-field>
+          <v-row>
+            <v-text-field
+              label="Min."
+              v-model="startPrime"
+              prepend-inner-icon="mdi-currency-usd"
+              class="me-1"
+              @keypress="isNumber($event, startPrime)"
+            ></v-text-field>
+            <v-text-field
+              label="Max."
+              v-model="endPrime"
+              prepend-inner-icon="mdi-currency-usd"
+              @keypress="isNumber($event, endPrime)"
+            ></v-text-field>
+          </v-row>
+          <v-row>
+            <v-btn>Appliquer</v-btn>
+          </v-row>
         </expansion-panel>
         <expansion-panel title="Planètes">
           <v-combobox
@@ -68,8 +73,19 @@
         </expansion-panel>
       </v-col>
 
-      <v-col cols="7" class="mx-auto">
-        <contrat-card></contrat-card>
+      <v-col v-if="contrats.length" cols="7" class="mx-auto">
+        <contrat-card
+          class="my-3"
+          v-for="contrat in contrats"
+          :key="contrat._id"
+          :title="contrat.planeteNom"
+          :src="contrat.planeteImage"
+          :prime="contrat.prime"
+          :danger="contrat.danger"
+          :ressource="contrat.ressource"
+          :qte="contrat.quantiteRessource"
+          :date="contrat.dateExpiration"
+        ></contrat-card>
       </v-col>
     </v-row>
   </v-container>
@@ -86,25 +102,16 @@ import { getPlanetes, getContrats } from "../services/requests";
 export default defineComponent({
   name: "SearchComponent",
   data: () => ({
-    contrats: [],
-    startPrime: null,
-    endPrime: null,
+    contrats: [] as any[],
+    startPrime: "",
+    endPrime: "",
     dates: [],
     dangers: [],
     chips: [],
-    planets: [
-      "Mercure",
-      "Venus",
-      "Terre",
-      "Mars",
-      "Jupiter",
-      "Saturne",
-      "Uranus",
-      "Neptune",
-    ],
+    planets: [],
   }),
   async created() {
-    this.contrats = await getContrats();
+    this.loadContrats();
     this.planets = await getPlanetes();
   },
   components: {
@@ -112,12 +119,21 @@ export default defineComponent({
     Datepicker,
     ContratCard,
   },
-  computed: {
-    filteredDates() {
-      return this.dates.join(" ~ ");
+  watch: {
+    dates() {
+      this.loadContrats();
+    },
+    dangers(newValue: number[]) {
+      this.loadContrats();
+    },
+    chips(newValue: string[]) {
+      this.loadContrats();
     },
   },
   methods: {
+    async loadContrats() {
+      this.contrats = await getContrats();
+    },
     isNumber(event: KeyboardEvent, value: string) {
       const charCode = event.which ? event.which : event.keyCode;
       if (
@@ -125,11 +141,14 @@ export default defineComponent({
         (charCode < 48 || charCode > 57) &&
         (charCode !== 46 || value.indexOf(".") !== -1)
       ) {
-        console.log(value);
         event.preventDefault();
         return false;
       }
       return true;
+    },
+    remove(item: any) {
+      this.chips.splice(this.chips.indexOf(item as never), 1);
+      this.chips = [...this.chips];
     },
   },
 });

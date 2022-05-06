@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 export async function getPlanetes() {
   const response = await fetch("http://localhost:3000/planetes", {
     method: "GET",
@@ -9,28 +10,51 @@ export async function getPlanetes() {
   return data.planetes.map((planet: any) => planet.nom);
 }
 
-export async function getContrats() {
-  const response = await fetch("http://localhost:3000/contrats", {
+export async function getContrats(
+  minDate?: string,
+  maxDate?: string,
+  minPrime?: number,
+  maxPrime?: number,
+  dangers?: string[],
+  planetIds?: string[]
+) {
+  const url = new URL("http://localhost:3000/search");
+  const params: { [key: string]: string } = {
+    minDate: minDate || "",
+    maxDate: maxDate || "",
+    minPrime: minPrime?.toString() || "",
+    maxPrime: maxPrime?.toString() || "",
+    dangers: dangers?.join(",") || "",
+    planetIds: planetIds?.join(",") || "",
+  };
+  Object.entries(params).forEach(([key, value]) =>
+    url.searchParams.append(key, value)
+  );
+  const response = await fetch(url.toString(), {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   });
   const data = await response.json();
-  console.log(data);
-  data.contrats.forEach(async (contrat: any) => {
-    const request = await fetch(
-      "http://localhost:3000/planetes/" + contrat.planeteId,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const planete = await request.json();
-    console.log(planete.image);
-    contrat.planeteId = planete.image;
-  });
+
+  for (let i = 0; i < data.length; i++) {
+    const contrat = data[i];
+    const planete = await getPlanetesById(contrat.planeteId);
+    contrat.planeteImage = planete.image;
+    contrat.planeteNom = planete.nom;
+  }
+
   return data;
+}
+
+async function getPlanetesById(id: number) {
+  const response = await fetch(`http://localhost:3000/planetes/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  return { image: data.planete.image, nom: data.planete.nom };
 }
