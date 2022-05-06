@@ -108,6 +108,7 @@
           class="my-3"
           v-for="contrat in contrats"
           :key="contrat._id"
+          :id="contrat._id"
           :title="contrat.planeteNom"
           :src="contrat.planeteImage"
           :prime="contrat.prime"

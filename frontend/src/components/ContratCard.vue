@@ -46,7 +46,7 @@
         <v-card-actions class="w-100">
           <v-spacer></v-spacer>
           <v-btn
-            @click="clicked = true"
+            @click="reserver"
             rounded="lg"
             :prepend-icon="clicked ? 'mdi-note-check' : 'mdi-note-plus-outline'"
             color="deep-purple accent-4"
@@ -62,6 +62,7 @@
 </template>
 
 <script lang="ts">
+import { reserverContrat } from "@/services/requests";
 import moment from "moment";
 import { defineComponent } from "vue";
 
@@ -69,6 +70,10 @@ export default defineComponent({
   name: "ContratCard",
   props: {
     title: {
+      type: String,
+      required: true,
+    },
+    id: {
       type: String,
       required: true,
     },
@@ -103,6 +108,12 @@ export default defineComponent({
   computed: {
     expiration() {
       return moment(this.date).format("DD/MM/YYYY");
+    },
+  },
+  methods: {
+    reserver() {
+      this.clicked = true;
+      reserverContrat(this.id);
     },
   },
 });
