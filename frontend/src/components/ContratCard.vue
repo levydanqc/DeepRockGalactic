@@ -148,6 +148,6 @@ export default defineComponent({
 }
 
 .Vue-Toastification__toast--default.my-custom-toast-class {
-  /* background-color: map-get($primary, lighten-4); */
+  background-color: var(--primary-color);
 }
 </style>
