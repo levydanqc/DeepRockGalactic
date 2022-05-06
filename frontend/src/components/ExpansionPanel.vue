@@ -8,9 +8,7 @@
         :icon="isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'"
       ></v-icon>
     </v-row>
-    <v-row v-if="isOpen" class="mt-2">
-      <slot></slot>
-    </v-row>
+    <slot v-if="isOpen" class="mt-2"></slot>
   </v-container>
 </template>
 

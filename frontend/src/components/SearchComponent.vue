@@ -12,24 +12,26 @@
           />
         </expansion-panel>
         <expansion-panel title="Prime">
-          <v-row>
-            <v-text-field
-              label="Min."
-              v-model="startPrime"
-              prepend-inner-icon="mdi-currency-usd"
-              class="me-1"
-              @keypress="isNumber($event, startPrime)"
-            ></v-text-field>
-            <v-text-field
-              label="Max."
-              v-model="endPrime"
-              prepend-inner-icon="mdi-currency-usd"
-              @keypress="isNumber($event, endPrime)"
-            ></v-text-field>
-          </v-row>
-          <v-row>
-            <v-btn>Appliquer</v-btn>
-          </v-row>
+          <v-container>
+            <v-row>
+              <v-text-field
+                label="Min."
+                v-model="startPrime"
+                prepend-inner-icon="mdi-currency-usd"
+                class="me-1"
+                @keypress="isNumber($event, startPrime)"
+              ></v-text-field>
+              <v-text-field
+                label="Max."
+                v-model="endPrime"
+                prepend-inner-icon="mdi-currency-usd"
+                @keypress="isNumber($event, endPrime)"
+              ></v-text-field>
+            </v-row>
+            <v-row>
+              <v-btn>Appliquer</v-btn>
+            </v-row>
+          </v-container>
         </expansion-panel>
         <expansion-panel title="Planètes">
           <v-combobox
