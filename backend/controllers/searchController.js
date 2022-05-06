@@ -21,10 +21,14 @@ exports.createSearch = (req, res, next) => {
   const query = {};
 
   if (minDate) {
-    query.dateExpiration = { $gte: new Date(minDate) };
+    query.dateExpiration
+      ? (query.dateExpiration.$gte = new Date(minDate))
+      : (query.dateExpiration = { $gte: new Date(minDate) });
   }
   if (maxDate) {
-    query.dateExpiration = { $lte: new Date(maxDate) };
+    query.dateExpiration
+      ? (query.dateExpiration.$lte = new Date(maxDate))
+      : (query.dateExpiration = { $lte: new Date(maxDate) });
   }
   if (minPrime) {
     query.prime = { $gte: minPrime };

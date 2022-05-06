@@ -9,73 +9,101 @@
             range
             :enableTimePicker="false"
             placeholder="Dates"
+            @cleared="loadContrats()"
           />
         </expansion-panel>
         <expansion-panel title="Prime">
           <v-container>
-            <v-row>
+            <v-row class="w-100">
               <v-text-field
                 label="Min."
-                v-model="startPrime"
+                v-model="minPrime"
                 prepend-inner-icon="mdi-currency-usd"
                 class="me-1"
-                @keypress="isNumber($event, startPrime)"
+                @keypress="isNumber($event, minPrime)"
               ></v-text-field>
               <v-text-field
                 label="Max."
-                v-model="endPrime"
+                v-model="maxPrime"
                 prepend-inner-icon="mdi-currency-usd"
-                @keypress="isNumber($event, endPrime)"
+                @keypress="isNumber($event, maxPrime)"
               ></v-text-field>
             </v-row>
-            <v-row>
-              <v-btn>Appliquer</v-btn>
+            <v-row class="w-100">
+              <v-btn
+                @click="loadContrats"
+                variant="outlined"
+                color="primary"
+                class="w-100"
+              >
+                Appliquer
+              </v-btn>
             </v-row>
           </v-container>
         </expansion-panel>
         <expansion-panel title="Planètes">
-          <v-combobox
-            v-model="chips"
-            :items="planets"
-            chips
-            clearable
-            label="Choix"
-            multiple
-            solo
-            readonly
-          >
-            <template v-slot:selection="{ attrs, item, select, selected }">
-              <v-chip
-                v-bind="attrs"
-                :input-value="selected"
-                close
-                @click="select"
-                @click:close="remove(item)"
+          <v-container>
+            <v-row class="w-100">
+              <v-combobox
+                v-model="chips"
+                :items="planetsNames"
+                chips
+                clearable
+                label="Choix"
+                multiple
+                outlined
+                hide-selected
+                readonly
               >
-                <strong>{{ item }}</strong
-                >&nbsp;
-                <span>(interest)</span>
-              </v-chip>
-            </template>
-          </v-combobox>
+                <template v-slot:selection="{ attrs, item, select, selected }">
+                  <v-chip
+                    v-bind="attrs"
+                    :key="item"
+                    :input-value="selected"
+                    close
+                    label
+                    small
+                    @click="select"
+                    @click:close="remove(item)"
+                  >
+                    <strong>{{ item }}</strong>
+                  </v-chip>
+                </template>
+              </v-combobox>
+            </v-row>
+            <v-row class="w-100">
+              <v-btn
+                @click="loadContrats"
+                variant="outlined"
+                color="primary"
+                class="w-100"
+              >
+                Appliquer
+              </v-btn>
+            </v-row>
+          </v-container>
         </expansion-panel>
         <expansion-panel title="Danger">
-          <v-checkbox
-            v-for="i in 5"
-            :key="i"
-            :value="i"
-            :label="i.toString()"
-            :false-icon="'mdi-alert-octagon-outline'"
-            color="red"
-            :true-icon="'mdi-alert-octagon'"
-            v-model="dangers"
-            :checked="dangers.includes(i)"
-          >
-          </v-checkbox>
+          <v-row>
+            <v-checkbox
+              v-for="i in 5"
+              :key="i"
+              :value="i"
+              :label="i.toString()"
+              :false-icon="'mdi-alert-octagon-outline'"
+              color="red"
+              :true-icon="'mdi-alert-octagon'"
+              v-model="dangers"
+              :checked="dangers.includes(i)"
+            >
+            </v-checkbox>
+          </v-row>
         </expansion-panel>
       </v-col>
 
-      <v-col v-if="contrats.length" cols="7" class="mx-auto">
+      <v-col cols="7" class="mx-auto">
+        <p class="h4 text-start">{{ contrats.length }} contrats trouvés</p>
+        <v-divider></v-divider>
         <contrat-card
           class="my-3"
           v-for="contrat in contrats"
@@ -105,13 +133,26 @@ export default defineComponent({
   name: "SearchComponent",
   data: () => ({
     contrats: [] as any[],
-    startPrime: "",
-    endPrime: "",
+    minPrime: "",
+    maxPrime: "",
     dates: [],
     dangers: [],
     chips: [],
     planets: [],
   }),
+  computed: {
+    planetsNames() {
+      return this.planets.map((planet: any) => planet.nom);
+    },
+    planetsIds(): string[] {
+      const planets = this.chips.map((c: any) =>
+        this.planets?.find((obj: any) => {
+          return obj?.nom === c;
+        })
+      );
+      return planets?.map((p) => p?.["_id"]) as unknown as string[];
+    },
+  },
   async created() {
     this.loadContrats();
     this.planets = await getPlanetes();
@@ -125,16 +166,24 @@ export default defineComponent({
     dates() {
       this.loadContrats();
     },
-    dangers(newValue: number[]) {
-      this.loadContrats();
-    },
-    chips(newValue: string[]) {
+    dangers() {
       this.loadContrats();
     },
   },
   methods: {
     async loadContrats() {
-      this.contrats = await getContrats();
+      this.contrats = await getContrats(
+        this.dates && this.dates.length
+          ? new Date(this.dates[0]).toISOString()
+          : undefined,
+        this.dates && this.dates.length
+          ? new Date(this.dates[1]).toISOString()
+          : undefined,
+        this.minPrime,
+        this.maxPrime,
+        this.dangers,
+        this.planetsIds
+      );
     },
     isNumber(event: KeyboardEvent, value: string) {
       const charCode = event.which ? event.which : event.keyCode;

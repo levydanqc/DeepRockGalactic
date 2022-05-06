@@ -7,14 +7,14 @@ export async function getPlanetes() {
     },
   });
   const data = await response.json();
-  return data.planetes.map((planet: any) => planet.nom);
+  return data.planetes;
 }
 
 export async function getContrats(
   minDate?: string,
   maxDate?: string,
-  minPrime?: number,
-  maxPrime?: number,
+  minPrime?: string,
+  maxPrime?: string,
   dangers?: string[],
   planetIds?: string[]
 ) {
@@ -30,6 +30,7 @@ export async function getContrats(
   Object.entries(params).forEach(([key, value]) =>
     url.searchParams.append(key, value)
   );
+
   const response = await fetch(url.toString(), {
     method: "GET",
     headers: {
