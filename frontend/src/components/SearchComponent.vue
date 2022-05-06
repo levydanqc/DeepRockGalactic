@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="3" class="border-end">
+      <v-col cols="4" class="border-end">
         <expansion-panel title="Date d'échéance">
           <Datepicker
             class="w-100"
@@ -17,6 +17,8 @@
             <v-row class="w-100">
               <v-text-field
                 label="Min."
+                color="secondary"
+                variant="outlined"
                 v-model="minPrime"
                 prepend-inner-icon="mdi-currency-usd"
                 class="me-1"
@@ -24,6 +26,8 @@
               ></v-text-field>
               <v-text-field
                 label="Max."
+                color="secondary"
+                variant="outlined"
                 v-model="maxPrime"
                 prepend-inner-icon="mdi-currency-usd"
                 @keypress="isNumber($event, maxPrime)"
@@ -51,8 +55,8 @@
                 clearable
                 label="Choix"
                 multiple
-                outlined
                 hide-selected
+                color="secondary"
                 readonly
               >
                 <template v-slot:selection="{ attrs, item, select, selected }">
@@ -101,7 +105,7 @@
         </expansion-panel>
       </v-col>
 
-      <v-col cols="7" class="mx-auto">
+      <v-col cols="8" class="mx-auto">
         <p class="h4 text-start">{{ contrats.length }} contrats trouvés</p>
         <v-divider></v-divider>
         <contrat-card

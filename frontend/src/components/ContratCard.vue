@@ -2,7 +2,11 @@
   <v-card class="mx-auto">
     <div class="d-flex flex-no-wrap">
       <v-avatar class="p-0" size="300" rounded="0">
-        <v-img class="w-100 h-100" cover :src="src"></v-img>
+        <v-img
+          class="w-100 h-100"
+          cover
+          :src="require(`@/assets/planets/${src}`)"
+        ></v-img>
       </v-avatar>
 
       <div class="d-flex flex-column flex-fill">
@@ -10,7 +14,7 @@
           <small class="h3 mb-0 pb-0"> {{ title }}</small>
           <small class="h6 p-0 m-0 text-grey"> {{ expiration }}</small>
         </v-card-title>
-        <v-divider class="mt-1 mb-0"></v-divider>
+        <v-divider color="primary" class="mt-1 mb-0"></v-divider>
         <v-card-subtitle>
           <v-container class="d-flex flex-column ps-2 pt-1 p-0">
             <v-row class="my-1">
@@ -49,7 +53,7 @@
             @click="reserver"
             rounded="lg"
             :prepend-icon="clicked ? 'mdi-note-check' : 'mdi-note-plus-outline'"
-            color="deep-purple accent-4"
+            color="primary"
             class="align-self-end"
             :disabled="clicked"
           >
@@ -65,6 +69,7 @@
 import { reserverContrat } from "@/services/requests";
 import moment from "moment";
 import { defineComponent } from "vue";
+import { POSITION, useToast } from "vue-toastification";
 
 export default defineComponent({
   name: "ContratCard",
@@ -114,6 +119,24 @@ export default defineComponent({
     reserver() {
       this.clicked = true;
       reserverContrat(this.id);
+      this.toast("Reservation effectuée");
+    },
+    toast(message: string) {
+      useToast()(message, {
+        position: POSITION.TOP_RIGHT,
+        timeout: 3016,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 1,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+        rtl: false,
+        toastClassName: "my-custom-toast-class",
+      });
     },
   },
 });
@@ -122,5 +145,9 @@ export default defineComponent({
 <style>
 .v-icon {
   vertical-align: sub;
+}
+
+.Vue-Toastification__toast--default.my-custom-toast-class {
+  /* background-color: map-get($primary, lighten-4); */
 }
 </style>
