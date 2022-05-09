@@ -331,7 +331,7 @@
               "disabled": true
             },
             {
-              "key": "planetsId",
+              "key": "planetIds",
               "value": "",
               "disabled": true
             },
@@ -417,7 +417,7 @@
               "value": "1,2,3"
             },
             {
-              "key": "planetsId",
+              "key": "planetIds",
               "value": "",
               "disabled": true
             },

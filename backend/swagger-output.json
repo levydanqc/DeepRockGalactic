@@ -145,9 +145,9 @@
             "type": "string"
           },
           {
-            "name": "planetesId",
+            "name": "planetIds",
             "in": "query",
-            "description": "Niveaux de dangers recherchés, séparés par des virgules",
+            "description": "Id des planètes recherchées, séparés par des virgules",
             "type": "string"
           },
           {
@@ -167,11 +167,6 @@
           },
           {
             "name": "maxPrime",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "planetsId",
             "in": "query",
             "type": "string"
           }
