@@ -1,36 +1,25 @@
 <template>
   <div>
     <h1>S'Inscrire</h1>
-    <form
-      @submit.prevent="signup"
-      style="border: solid 1px black; width: 25vw; min-width: 300px"
-      class="mx-auto p-3"
-    >
+    <form @submit.prevent="signup" class="mx-auto p-3">
       <div class="bg-danger text-white p-1 mx-4 rounded" v-if="erreurs.length">
         <span v-for="erreur in erreurs" :key="erreur">{{ erreur }}</span>
       </div>
       <input
         class="text-center p-1 my-3 rounded"
-        style="background-color: #e3e3e3"
         v-model="courriel"
         placeholder="Courriel"
       />
-      <div style="width: 100%"></div>
-      <input
-        class="text-center p-1 rounded"
-        style="background-color: #e3e3e3"
-        v-model="nom"
-        placeholder="Nom"
-      />
-      <div style="width: 100%"></div>
+      <div class="w-100"></div>
+      <input class="text-center p-1 rounded" v-model="nom" placeholder="Nom" />
+      <div class="w-100"></div>
       <input
         class="text-center p-1 my-3 rounded"
-        style="background-color: #e3e3e3"
         v-model="password"
         placeholder="Mot de passe"
         type="password"
       />
-      <div style="width: 100%"></div>
+      <div class="w-100"></div>
       <button class="btn btn-success px-5" type="submit">Créer</button>
       <div class="my-3" style="width: 100%"></div>
       <router-link
@@ -77,7 +66,6 @@ export default {
           }
         })
         .then((data) => {
-          console.log("data", data);
           localStorage.setItem("token", data.token);
           this.$router.push("/");
         });
@@ -85,3 +73,13 @@ export default {
   },
 };
 </script>
+<style lang="css">
+form {
+  border: solid 1px black;
+  width: 25vw;
+  min-width: 300px;
+}
+input {
+  background-color: #e3e3e3;
+}
+</style>
