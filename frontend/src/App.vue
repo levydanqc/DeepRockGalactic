@@ -8,32 +8,20 @@
         height="200"
       />
     </header>
-    <nav class="navbar navbar-dark bg-secondary border">
-      <router-link style="color: #e0ff2f" class="nav-item nav-link" to="/"
+    <nav class="navbar border">
+      <router-link class="router-link nav-item nav-link" to="/"
         >Home</router-link
       >
-      <router-link
-        style="color: #e0ff2f"
-        class="nav-item nav-link"
-        to="/planetes"
+      <router-link class="router-link nav-item nav-link" to="/planetes"
         >Planètes</router-link
       >
-      <router-link
-        style="color: #e0ff2f"
-        class="nav-item nav-link"
-        to="/reservations"
+      <router-link class="router-link nav-item nav-link" to="/reservations"
         >Réserver</router-link
       >
-      <router-link
-        style="color: #e0ff2f"
-        class="nav-item nav-link"
-        to="/contrats"
+      <router-link class="router-link nav-item nav-link" to="/contrats"
         >Contrats</router-link
       >
-      <router-link
-        style="color: #e0ff2f"
-        class="nav-item nav-link"
-        to="/auth/login"
+      <router-link class="router-link nav-item nav-link" to="/auth/login"
         >Se Connecter</router-link
       >
     </nav>
@@ -41,7 +29,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="css">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -53,13 +41,11 @@ nav {
   width: 75vw;
   font-size: 1.5vw;
   margin: auto;
-  a {
-    font-weight: bold;
-    color: #e0ff2f;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  background-color: #686868;
+}
+.router-link {
+  font-weight: bold;
+  color: #e0ff2f;
 }
 </style>
 
