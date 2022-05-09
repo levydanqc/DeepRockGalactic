@@ -73,14 +73,14 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-@import "./assets/styles/variables.css";
+<style lang="css">
+@import "../assets/styles/variables.css";
 form {
   border: solid 1px black;
   width: 25vw;
   min-width: 300px;
 }
 input {
-  background-color: var(--secondary-color);
+  background: var(--background-color);
 }
 </style>
