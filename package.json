@@ -14,7 +14,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "postinstall": "(cd frontend && yarn install) && (cd backend && yarn install)",
+    "postinstall": "concurrently \"cd frontend && yarn install\" \"cd backend && yarn install\"",
     "start": "concurrently \"cd frontend && yarn run serve\" \"cd backend && yarn run start\"",
     "test": "newman run database/postman/tests.postman_collection.json -e database/postman/deepRockGalactic.postman_environment.json",
     "pretest": "yarn run reset-contrats && yarn run reset-mineurs && yarn run reset-planetes && yarn run reset-reservations",

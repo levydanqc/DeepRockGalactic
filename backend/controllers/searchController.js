@@ -11,20 +11,24 @@ exports.createSearch = (req, res, next) => {
             in: 'query',
             description: 'Niveaux de dangers recherchés, séparés par des virgules',
   } */
-  /*  #swagger.parameters['planetesId'] = {
+  /*  #swagger.parameters['planetIds'] = {
             in: 'query',
-            description: 'Niveaux de dangers recherchés, séparés par des virgules',
+            description: 'Id des planètes recherchées, séparés par des virgules',
   } */
 
-  const { minDate, maxDate, minPrime, maxPrime, dangers, planetsId } =
+  const { minDate, maxDate, minPrime, maxPrime, dangers, planetIds } =
     req.query;
   const query = {};
 
   if (minDate) {
-    query.dateExpiration = { $gte: new Date(minDate) };
+    query.dateExpiration
+      ? (query.dateExpiration.$gte = new Date(minDate))
+      : (query.dateExpiration = { $gte: new Date(minDate) });
   }
   if (maxDate) {
-    query.dateExpiration = { $lte: new Date(maxDate) };
+    query.dateExpiration
+      ? (query.dateExpiration.$lte = new Date(maxDate))
+      : (query.dateExpiration = { $lte: new Date(maxDate) });
   }
   if (minPrime) {
     query.prime = { $gte: minPrime };
@@ -35,25 +39,22 @@ exports.createSearch = (req, res, next) => {
   if (dangers) {
     query.danger = { $in: dangers.split(",") };
   }
-  if (planetsId) {
-    query.planeteId = { $in: planetsId.split(",") };
+  if (planetIds) {
+    query.planeteId = { $in: planetIds.split(",") };
   }
 
-  Contrat.find(query)
-    .populate("planeteId")
-    .exec(function (err, contrats) {
-      if (err) return handleError(err);
-      if (contrats) {
-        /* #swagger.responses[200] = { 
+  Contrat.find(query).then((contrats) => {
+    if (contrats) {
+      /* #swagger.responses[200] = { 
             description: "Liste des contrats",
             schema: [{
                 "$ref": "#/definitions/Contrat",
             }]
         }
       */
-        res.status(200).json(contrats);
-      } else {
-        res.status(404).json({ message: "Aucun contrat trouvé" });
-      }
-    });
+      res.status(200).json(contrats);
+    } else {
+      res.status(404).json({ message: "Aucun contrat trouvé" });
+    }
+  });
 };
