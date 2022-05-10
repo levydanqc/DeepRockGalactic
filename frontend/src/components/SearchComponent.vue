@@ -105,7 +105,7 @@
         </expansion-panel>
       </v-col>
 
-      <v-col cols="8" class="mx-auto">
+      <v-col cols="7" class="mx-auto">
         <p class="h4 text-start">{{ contrats.length }} contrats trouvés</p>
         <v-divider></v-divider>
         <contrat-card
