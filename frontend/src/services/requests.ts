@@ -59,3 +59,15 @@ async function getPlanetesById(id: number) {
   const data = await response.json();
   return { image: data.planete.image, nom: data.planete.nom };
 }
+
+export async function reserverContrat(id: string) {
+  const response = await fetch(`http://localhost:3000/reservation/${id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+}
