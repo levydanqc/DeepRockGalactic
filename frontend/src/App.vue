@@ -29,7 +29,8 @@
   </div>
 </template>
 
-<style lang="css">
+<style lang="scss">
+@import "./assets/styles/variables.css";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -46,6 +47,7 @@ nav {
 .router-link {
   font-weight: bold;
   color: #e0ff2f;
+
 }
 </style>
 
