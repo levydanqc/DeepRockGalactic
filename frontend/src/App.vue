@@ -47,7 +47,6 @@ nav {
 .router-link {
   font-weight: bold;
   color: #e0ff2f;
-
 }
 </style>
 
