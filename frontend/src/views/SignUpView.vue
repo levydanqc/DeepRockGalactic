@@ -21,9 +21,9 @@
       />
       <div class="w-100"></div>
       <button class="btn btn-success px-5" type="submit">Créer</button>
-      <div class="my-3" style="width: 100%"></div>
+      <div class="my-3 w-100"></div>
       <router-link
-        to="/auth/login"
+        to="/login"
         class="text-secondary"
         style="text-decoration: none"
         >J'ai déjà un compte</router-link
