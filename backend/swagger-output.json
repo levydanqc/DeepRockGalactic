@@ -742,7 +742,7 @@
         }
       }
     },
-    "/reservation/": {
+    "/reservations/": {
       "get": {
         "tags": ["Réservations"],
         "summary": "Obtenir toutes les réservations",
@@ -760,6 +760,9 @@
                 "name": "main"
               }
             }
+          },
+          "401": {
+            "description": "Non Autorisé"
           }
         }
       }

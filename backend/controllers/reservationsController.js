@@ -1,6 +1,7 @@
 "use strict";
 
 const Reservation = require("../models/reservation");
+const jwt = require("jsonwebtoken");
 
 exports.getReservations = (req, res, next) => {
   /* 
@@ -8,7 +9,9 @@ exports.getReservations = (req, res, next) => {
       #swagger.description = "Retourne la liste des réservations"
       #swagger.summary = "Obtenir toutes les réservations"
   */
-  Reservation.find()
+
+  const query = { mineurId: req.user.userId, estTermine: true };
+  Reservation.find(query)
     .then((reservations) => {
       /* #swagger.responses[200] = { 
             description: "Liste des réservations",
