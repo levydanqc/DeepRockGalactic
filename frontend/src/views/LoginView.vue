@@ -65,7 +65,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="css">
 @import "../assets/styles/variables.css";
 form {
   border: solid 1px black;

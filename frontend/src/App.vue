@@ -21,7 +21,7 @@
       <router-link class="router-link nav-item nav-link" to="/contrats"
         >Contrats</router-link
       >
-      <router-link class="router-link nav-item nav-link" to="/auth/login"
+      <router-link class="router-link nav-item nav-link" to="/login"
         >Se Connecter</router-link
       >
     </nav>
@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="css">
 @import "./assets/styles/variables.css";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

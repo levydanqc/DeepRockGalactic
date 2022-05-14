@@ -9,7 +9,7 @@ import { defineComponent } from "vue";
 import StatComponent from "../components/StatComponent.vue";
 
 export default defineComponent({
-  name: "Statistiques",
+  name: "StatistiquesView",
 
   components: {
     StatComponent,
