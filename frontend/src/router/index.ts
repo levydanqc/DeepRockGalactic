@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
-import HomeView from "../views/HomeView.vue";
 import SignUpView from "../views/SignUpView.vue";
 import LoginView from "../views/LoginView.vue";
 import SearchView from "../views/SearchView.vue";
