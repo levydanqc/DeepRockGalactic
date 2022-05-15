@@ -7,9 +7,6 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger-output.json");
 const app = express();
 
-// Déclaration d'un parser pour analyser "le corps (body)" d'une 'requête entrante avec POST
-// Permet donc d'analyser
-
 // parse application/json
 app.use(express.json());
 
@@ -72,11 +69,14 @@ app.use(function (err, req, res, next) {
     .json({ message: err.message, statusCode: err.statusCode });
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
 mongoose
-  .connect("mongodb://127.0.0.1:27017/deepRockGalactic")
+  .connect(
+    process.env.MONGO_URL || "mongodb://127.0.0.1:27017/deepRockGalactic"
+  )
   .then(() => {
-    app.listen(3000, () => {
+    app.listen(PORT, () => {
       console.log("Node.js est à l'écoute sur le port %s ", PORT);
     });
   })

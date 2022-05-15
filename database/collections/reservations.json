@@ -1,1 +1,8 @@
-[{}]
+[
+  {
+    "_id": { "$oid": "62633e8bce6292a4090a9127" },
+    "mineurId": { "$oid": "62672524a951a48d6c401911" },
+    "contratId": { "$oid": "6266c0f52383df77bc881d7e" },
+    "estTermine": false
+  }
+]

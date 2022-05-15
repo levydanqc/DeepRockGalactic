@@ -6,10 +6,7 @@
     "danger": 1,
     "ressource": "Fresh",
     "quantiteRessource": 171,
-    "dateExpiration": { "$date": "2023-03-19T11:42:17Z" },
-    "createdAt": { "$date": "2022-04-25T01:20:05.905Z" },
-    "updatedAt": { "$date": "2022-04-25T01:20:05.905Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2023-03-19T11:42:17Z" }
   },
   {
     "_id": { "$oid": "6265f747995a50c7205fae3f" },
@@ -18,10 +15,7 @@
     "danger": 1,
     "ressource": "Frozen",
     "quantiteRessource": 357,
-    "dateExpiration": { "$date": "2022-10-26T03:14:21Z" },
-    "createdAt": { "$date": "2022-04-25T01:20:07.479Z" },
-    "updatedAt": { "$date": "2022-04-25T01:20:07.479Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-10-26T03:14:21Z" }
   },
   {
     "_id": { "$oid": "6265f749995a50c7205fae41" },
@@ -30,10 +24,7 @@
     "danger": 2,
     "ressource": "Fresh",
     "quantiteRessource": 12,
-    "dateExpiration": { "$date": "2022-09-08T02:51:00Z" },
-    "createdAt": { "$date": "2022-04-25T01:20:09.453Z" },
-    "updatedAt": { "$date": "2022-04-25T01:20:09.453Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-09-08T02:51:00Z" }
   },
   {
     "_id": { "$oid": "6265f74b995a50c7205fae43" },
@@ -42,10 +33,7 @@
     "danger": 4,
     "ressource": "Metal",
     "quantiteRessource": 262,
-    "dateExpiration": { "$date": "2022-09-16T00:49:53Z" },
-    "createdAt": { "$date": "2022-04-25T01:20:11.273Z" },
-    "updatedAt": { "$date": "2022-04-25T01:20:11.273Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-09-16T00:49:53Z" }
   },
   {
     "_id": { "$oid": "6265f74f995a50c7205fae47" },
@@ -54,10 +42,7 @@
     "danger": 4,
     "ressource": "Soft",
     "quantiteRessource": 732,
-    "dateExpiration": { "$date": "2022-12-21T23:54:12Z" },
-    "createdAt": { "$date": "2022-04-25T01:20:15.288Z" },
-    "updatedAt": { "$date": "2022-04-25T01:20:15.288Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-12-21T23:54:12Z" }
   },
   {
     "_id": { "$oid": "6265f74f995a50c7205fae49" },
@@ -66,10 +51,7 @@
     "danger": 4,
     "ressource": "Rubber",
     "quantiteRessource": 952,
-    "dateExpiration": { "$date": "2022-10-24T16:41:21Z" },
-    "createdAt": { "$date": "2022-04-25T01:20:15.857Z" },
-    "updatedAt": { "$date": "2022-04-25T01:20:15.857Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-10-24T16:41:21Z" }
   },
   {
     "_id": { "$oid": "6265f750995a50c7205fae4b" },
@@ -78,10 +60,7 @@
     "danger": 2,
     "ressource": "Plastic",
     "quantiteRessource": 189,
-    "dateExpiration": { "$date": "2023-02-18T23:17:49Z" },
-    "createdAt": { "$date": "2022-04-25T01:20:16.425Z" },
-    "updatedAt": { "$date": "2022-04-25T01:20:16.425Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2023-02-18T23:17:49Z" }
   },
   {
     "_id": { "$oid": "6265f753995a50c7205fae4d" },
@@ -90,10 +69,7 @@
     "danger": 3,
     "ressource": "Plastic",
     "quantiteRessource": 284,
-    "dateExpiration": { "$date": "2023-04-21T09:45:36Z" },
-    "createdAt": { "$date": "2022-04-25T01:20:19.403Z" },
-    "updatedAt": { "$date": "2022-04-25T01:20:19.403Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2023-04-21T09:45:36Z" }
   },
   {
     "_id": { "$oid": "6265f757995a50c7205fae51" },
@@ -102,10 +78,7 @@
     "danger": 4,
     "ressource": "Wooden",
     "quantiteRessource": 283,
-    "dateExpiration": { "$date": "2022-10-08T03:18:49Z" },
-    "createdAt": { "$date": "2022-04-25T01:20:23.165Z" },
-    "updatedAt": { "$date": "2022-04-25T01:20:23.165Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-10-08T03:18:49Z" }
   },
   {
     "_id": { "$oid": "6265f757995a50c7205fae53" },
@@ -114,10 +87,7 @@
     "danger": 1,
     "ressource": "Fresh",
     "quantiteRessource": 534,
-    "dateExpiration": { "$date": "2022-11-24T00:09:02Z" },
-    "createdAt": { "$date": "2022-04-25T01:20:23.7Z" },
-    "updatedAt": { "$date": "2022-04-25T01:20:23.7Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-11-24T00:09:02Z" }
   },
   {
     "_id": { "$oid": "6265f758995a50c7205fae55" },
@@ -126,10 +96,7 @@
     "danger": 1,
     "ressource": "Rubber",
     "quantiteRessource": 263,
-    "dateExpiration": { "$date": "2023-03-08T16:36:21Z" },
-    "createdAt": { "$date": "2022-04-25T01:20:24.217Z" },
-    "updatedAt": { "$date": "2022-04-25T01:20:24.217Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2023-03-08T16:36:21Z" }
   },
   {
     "_id": { "$oid": "6266c0e92383df77bc881d6a" },
@@ -138,10 +105,7 @@
     "danger": 3,
     "ressource": "Granite",
     "quantiteRessource": 285,
-    "dateExpiration": { "$date": "2022-06-17T13:28:22Z" },
-    "createdAt": { "$date": "2022-04-25T15:40:25.91Z" },
-    "updatedAt": { "$date": "2022-04-25T15:40:25.91Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-06-17T13:28:22Z" }
   },
   {
     "_id": { "$oid": "6266c0ea2383df77bc881d6c" },
@@ -150,10 +114,7 @@
     "danger": 4,
     "ressource": "Metal",
     "quantiteRessource": 616,
-    "dateExpiration": { "$date": "2022-07-21T17:44:28Z" },
-    "createdAt": { "$date": "2022-04-25T15:40:26.543Z" },
-    "updatedAt": { "$date": "2022-04-25T15:40:26.543Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-07-21T17:44:28Z" }
   },
   {
     "_id": { "$oid": "6266c0ea2383df77bc881d6e" },
@@ -162,10 +123,7 @@
     "danger": 2,
     "ressource": "Granite",
     "quantiteRessource": 686,
-    "dateExpiration": { "$date": "2022-08-13T19:54:32Z" },
-    "createdAt": { "$date": "2022-04-25T15:40:26.972Z" },
-    "updatedAt": { "$date": "2022-04-25T15:40:26.972Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-08-13T19:54:32Z" }
   },
   {
     "_id": { "$oid": "6266c0f02383df77bc881d72" },
@@ -174,10 +132,7 @@
     "danger": 1,
     "ressource": "Cotton",
     "quantiteRessource": 779,
-    "dateExpiration": { "$date": "2022-06-06T15:42:51Z" },
-    "createdAt": { "$date": "2022-04-25T15:40:32.528Z" },
-    "updatedAt": { "$date": "2022-04-25T15:40:32.528Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-06-06T15:42:51Z" }
   },
   {
     "_id": { "$oid": "6266c0f02383df77bc881d74" },
@@ -186,10 +141,7 @@
     "danger": 4,
     "ressource": "Wooden",
     "quantiteRessource": 394,
-    "dateExpiration": { "$date": "2023-01-27T05:59:28Z" },
-    "createdAt": { "$date": "2022-04-25T15:40:32.882Z" },
-    "updatedAt": { "$date": "2022-04-25T15:40:32.882Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2023-01-27T05:59:28Z" }
   },
   {
     "_id": { "$oid": "6266c0f42383df77bc881d78" },
@@ -198,10 +150,7 @@
     "danger": 4,
     "ressource": "Concrete",
     "quantiteRessource": 348,
-    "dateExpiration": { "$date": "2022-06-07T01:15:14Z" },
-    "createdAt": { "$date": "2022-04-25T15:40:36.558Z" },
-    "updatedAt": { "$date": "2022-04-25T15:40:36.558Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-06-07T01:15:14Z" }
   },
   {
     "_id": { "$oid": "6266c0f42383df77bc881d7a" },
@@ -210,10 +159,7 @@
     "danger": 3,
     "ressource": "Fresh",
     "quantiteRessource": 875,
-    "dateExpiration": { "$date": "2022-06-19T07:27:44Z" },
-    "createdAt": { "$date": "2022-04-25T15:40:36.928Z" },
-    "updatedAt": { "$date": "2022-04-25T15:40:36.928Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-06-19T07:27:44Z" }
   },
   {
     "_id": { "$oid": "6266c0f52383df77bc881d7c" },
@@ -222,10 +168,7 @@
     "danger": 4,
     "ressource": "Metal",
     "quantiteRessource": 565,
-    "dateExpiration": { "$date": "2022-04-26T20:26:09Z" },
-    "createdAt": { "$date": "2022-04-25T15:40:37.266Z" },
-    "updatedAt": { "$date": "2022-04-25T15:40:37.266Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-04-26T20:26:09Z" }
   },
   {
     "_id": { "$oid": "6266c0f52383df77bc881d7e" },
@@ -234,9 +177,6 @@
     "danger": 1,
     "ressource": "Metal",
     "quantiteRessource": 433,
-    "dateExpiration": { "$date": "2022-05-04T06:36:21Z" },
-    "createdAt": { "$date": "2022-04-25T15:40:37.708Z" },
-    "updatedAt": { "$date": "2022-04-25T15:40:37.708Z" },
-    "__v": 0
+    "dateExpiration": { "$date": "2022-05-04T06:36:21Z" }
   }
 ]
