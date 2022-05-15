@@ -253,28 +253,11 @@ exports.updateReservation = (req, res, next) => {
 function formated(obj) {
   const url = process.env.URL || "http://localhost:3000";
 
-  const links = [
-    {
-      rel: "self",
-      method: "GET",
-      href: `${url}/reservations/${obj._id}`,
-    },
-    {
-      rel: "create",
-      method: "POST",
-      href: `${url}/reservations/`,
-    },
-    {
-      rel: "update",
-      method: "PUT",
-      href: `${url}/reservations/${obj._id}`,
-    },
-    {
-      rel: "delete",
-      method: "DELETE",
-      href: `${url}/reservations/${obj._id}`,
-    },
-  ];
+  const links = {
+    self: `${url}/reservations/${obj._id}`,
+    collection: `${url}/reservations`,
+  };
+
   const relationships = {
     mineur: {
       links: {

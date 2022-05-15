@@ -122,7 +122,7 @@ exports.createPlanete = (req, res, next) => {
   });
 };
 
-exports.deletePlanete = (req, res) => {
+exports.deletePlanete = (req, res, next) => {
   /* 
       #swagger.tags = ['Planètes']
       #swagger.description = "Nécessite d'être de niveau 2"
@@ -228,28 +228,11 @@ exports.updatePlanete = (req, res, next) => {
 function formated(obj) {
   const url = process.env.URL || "http://localhost:3000";
 
-  const links = [
-    {
-      rel: "self",
-      method: "GET",
-      href: `${url}/planetes/${obj._id}`,
-    },
-    {
-      rel: "create",
-      method: "POST",
-      href: `${url}/planetes/`,
-    },
-    {
-      rel: "update",
-      method: "PUT",
-      href: `${url}/planetes/${obj._id}`,
-    },
-    {
-      rel: "delete",
-      method: "DELETE",
-      href: `${url}/planetes/${obj._id}`,
-    },
-  ];
+  const links = {
+    self: `${url}/planetes/${obj._id}`,
+    collection: `${url}/planetes`,
+  };
+
   const relationships = {};
 
   if (obj.length > 0) {

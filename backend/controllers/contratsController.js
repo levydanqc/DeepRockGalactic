@@ -258,36 +258,15 @@ exports.updateContrat = (req, res, next) => {
     });
 };
 
-function formated(obj) {
+exports.formated = (obj) => {
   const url = process.env.URL || "http://localhost:3000";
 
-  const links = [
-    {
-      rel: "self",
-      method: "GET",
-      href: `${url}/contrats/${obj._id}`,
-    },
-    {
-      rel: "create",
-      method: "POST",
-      href: `${url}/contrats/`,
-    },
-    {
-      rel: "update",
-      method: "PUT",
-      href: `${url}/contrats/${obj._id}`,
-    },
-    {
-      rel: "delete",
-      method: "DELETE",
-      href: `${url}/contrats/${obj._id}`,
-    },
-    {
-      rel: "reserve",
-      method: "POST",
-      href: `${url}/reservations/${obj._id}`,
-    },
-  ];
+  const links = {
+    self: `${url}/contrats/${obj._id}`,
+    collection: `${url}/contrats`,
+    reserve: `${url}/reservations/${obj._id}`,
+  };
+
   const relationships = {
     planete: {
       links: {
@@ -297,12 +276,12 @@ function formated(obj) {
   };
 
   if (obj.length > 0) {
-    const obj = [];
+    const objs = [];
     for (let i = 0; i < obj.length; i++) {
-      obj.push(formated(obj[i]));
+      objs.push(this.formated(obj[i]));
     }
-    return obj;
+    return objs;
   }
 
   return { attributes: obj, links, relationships };
-}
+};
