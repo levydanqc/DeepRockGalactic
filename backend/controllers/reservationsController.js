@@ -128,7 +128,6 @@ exports.deleteReservation = (req, res, next) => {
         value: '626339247fe023c3b50ba0d4'
       }
  */
-  console.log(req.user.niveau);
   if (req.user.niveau !== 2) {
     return res
       .status(403)

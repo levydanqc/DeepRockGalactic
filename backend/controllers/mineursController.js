@@ -19,7 +19,7 @@ exports.getMineurs = (_req, res, next) => {
         }
       */
       res.status(200).json({
-        mineurs,
+        data: formated(mineurs),
       });
     })
     .catch((err) => {
@@ -48,7 +48,9 @@ exports.getMineur = (req, res, next) => {
             }
         }
       */
-        res.status(200).json(mineur);
+        res.status(200).json({
+          data: formated(mineurs),
+        });
       } else {
         res.status(404).json({ message: "Mineur non trouvé" });
       }
@@ -112,9 +114,10 @@ exports.createMineur = (req, res, next) => {
                 }
             }
           */
-          res
-            .status(201)
-            .json({ message: "Mineur créé avec succès!", mineur: mineur });
+          res.status(201).json({
+            message: "Mineur créé avec succès!",
+            data: formated(mineur),
+          });
         })
         .catch((err) => {
           next(err);
@@ -217,7 +220,7 @@ exports.updateMineur = (req, res, next) => {
             */
             res.status(200).json({
               message: "Mineur modifié avec succès",
-              mineur: mineur,
+              data: formated(mineur),
             });
           } else {
             res.status(404).json({ message: "Mineur non trouvé" });
@@ -231,3 +234,46 @@ exports.updateMineur = (req, res, next) => {
       next(err);
     });
 };
+
+function formated(obj) {
+  const url = process.env.URL || "http://localhost:3000";
+
+  const links = [
+    {
+      rel: "self",
+      method: "GET",
+      href: `${url}/mineurs/${obj._id}`,
+    },
+    {
+      rel: "create",
+      method: "POST",
+      href: `${url}/mineurs/`,
+    },
+    {
+      rel: "update",
+      method: "PUT",
+      href: `${url}/mineurs/${obj._id}`,
+    },
+    {
+      rel: "delete",
+      method: "DELETE",
+      href: `${url}/mineurs/${obj._id}`,
+    },
+    {
+      rel: "reserve",
+      method: "POST",
+      href: `${url}/reservations/${obj._id}`,
+    },
+  ];
+  const relationships = {};
+
+  if (obj.length > 0) {
+    const contrats = [];
+    for (let i = 0; i < obj.length; i++) {
+      contrats.push(formated(obj[i]));
+    }
+    return contrats;
+  }
+
+  return { attributes: obj, links, relationships };
+}

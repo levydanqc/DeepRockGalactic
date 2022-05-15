@@ -31,7 +31,6 @@ exports.login = (req, res, next) => {
   let loadedUser;
   User.findOne({ email: email })
     .then((user) => {
-      console.log(user);
       if (!user) {
         throw new Error();
       }
@@ -39,7 +38,6 @@ exports.login = (req, res, next) => {
       return bcrypt.compare(motdepasse, user.motdepasse);
     })
     .then((isEqual) => {
-      console.log(isEqual);
       if (!isEqual) {
         /* #swagger.responses[401] = {
             description: "Email ou mot de passe invalide",

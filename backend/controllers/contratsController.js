@@ -250,7 +250,7 @@ exports.updateContrat = (req, res, next) => {
       */
       res.status(200).json({
         message: "Contrat modifié avec succès!",
-        contrat: formated(contrat),
+        data: formated(contrat),
       });
     })
     .catch((err) => {
