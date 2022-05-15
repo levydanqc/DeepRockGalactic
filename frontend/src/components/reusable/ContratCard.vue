@@ -57,7 +57,9 @@
             class="align-self-end"
             :disabled="clicked"
           >
-            <small v-if="!clicked" class="label">Réserver</small>
+            <small @click="reserver()" v-if="!clicked" class="label"
+              >Réserver</small
+            >
           </v-btn>
         </v-card-actions>
       </div>
@@ -78,7 +80,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    id: {
+    url: {
       type: String,
       required: true,
     },
@@ -118,7 +120,7 @@ export default defineComponent({
   methods: {
     reserver() {
       this.clicked = true;
-      reserverContrat(this.id);
+      const res = reserverContrat(this.url);
       this.toast("Reservation effectuée");
     },
     toast(message: string) {

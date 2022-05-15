@@ -100,7 +100,7 @@
           class="my-3"
           v-for="contrat in contrats"
           :key="contrat.attributes._id"
-          :id="contrat.attributes._id"
+          :url="contrat.links.reserve"
           :title="contrat.planeteNom"
           :src="contrat.planeteImage"
           :prime="contrat.attributes.prime"

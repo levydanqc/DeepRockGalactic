@@ -56,8 +56,8 @@ async function getPlanete(url: string) {
   return { image: data.attributes.image, nom: data.attributes.nom };
 }
 
-export async function reserverContrat(id: string) {
-  const response = await fetch(`http://localhost:3000/reservation/${id}`, {
+export async function reserverContrat(url: string) {
+  const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
