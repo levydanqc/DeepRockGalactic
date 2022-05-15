@@ -49,7 +49,7 @@ exports.getMineur = (req, res, next) => {
         }
       */
         res.status(200).json({
-          data: formated(mineurs),
+          data: formated(mineur),
         });
       } else {
         res.status(404).json({ message: "Mineur non trouvé" });
@@ -259,20 +259,15 @@ function formated(obj) {
       method: "DELETE",
       href: `${url}/mineurs/${obj._id}`,
     },
-    {
-      rel: "reserve",
-      method: "POST",
-      href: `${url}/reservations/${obj._id}`,
-    },
   ];
   const relationships = {};
 
   if (obj.length > 0) {
-    const contrats = [];
+    const objs = [];
     for (let i = 0; i < obj.length; i++) {
-      contrats.push(formated(obj[i]));
+      objs.push(formated(obj[i]));
     }
-    return contrats;
+    return objs;
   }
 
   return { attributes: obj, links, relationships };

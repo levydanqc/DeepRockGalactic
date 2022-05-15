@@ -18,7 +18,7 @@ exports.getPlanetes = (req, res, next) => {
         }
       */
       res.status(200).json({
-        planetes,
+        data: formated(planetes),
       });
     })
     .catch((err) => {
@@ -49,7 +49,7 @@ exports.getPlanete = (req, res, next) => {
         }
       */
         res.status(200).json({
-          planete: planete,
+          data: formated(planete),
         });
       } else {
         res.status(404).json({ message: "Planète non trouvé!" });
@@ -112,7 +112,7 @@ exports.createPlanete = (req, res, next) => {
         */
           res.status(201).json({
             message: "Planete créée",
-            planete: planete,
+            data: formated(planete),
           });
         })
         .catch((err) => {
@@ -217,10 +217,48 @@ exports.updatePlanete = (req, res, next) => {
       */
       res.status(200).json({
         message: "Planète modifiée avec succès!",
-        planete: planete,
+        data: formated(planete),
       });
     })
     .catch((err) => {
       next(err);
     });
 };
+
+function formated(obj) {
+  const url = process.env.URL || "http://localhost:3000";
+
+  const links = [
+    {
+      rel: "self",
+      method: "GET",
+      href: `${url}/planetes/${obj._id}`,
+    },
+    {
+      rel: "create",
+      method: "POST",
+      href: `${url}/planetes/`,
+    },
+    {
+      rel: "update",
+      method: "PUT",
+      href: `${url}/planetes/${obj._id}`,
+    },
+    {
+      rel: "delete",
+      method: "DELETE",
+      href: `${url}/planetes/${obj._id}`,
+    },
+  ];
+  const relationships = {};
+
+  if (obj.length > 0) {
+    const objs = [];
+    for (let i = 0; i < obj.length; i++) {
+      objs.push(formated(obj[i]));
+    }
+    return objs;
+  }
+
+  return { attributes: obj, links, relationships };
+}

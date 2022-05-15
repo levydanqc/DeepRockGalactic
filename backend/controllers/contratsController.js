@@ -297,11 +297,11 @@ function formated(obj) {
   };
 
   if (obj.length > 0) {
-    const contrats = [];
+    const obj = [];
     for (let i = 0; i < obj.length; i++) {
-      contrats.push(formated(obj[i]));
+      obj.push(formated(obj[i]));
     }
-    return contrats;
+    return obj;
   }
 
   return { attributes: obj, links, relationships };
