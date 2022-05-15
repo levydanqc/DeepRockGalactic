@@ -1,7 +1,6 @@
 "use strict";
 
 const Reservation = require("../models/reservation");
-const jwt = require("jsonwebtoken");
 
 exports.getReservations = (req, res, next) => {
   /* 
