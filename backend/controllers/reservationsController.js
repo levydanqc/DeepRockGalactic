@@ -50,7 +50,7 @@ exports.getReservation = (req, res, next) => {
             }
         }
       */
-        res.status(200).json({ data: formated(reservation) });
+        res.status(200).json(formated(reservation));
       } else {
         res.status(404).json({ message: "Réservation non trouvé" });
       }

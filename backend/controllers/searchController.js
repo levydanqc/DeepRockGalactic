@@ -33,10 +33,14 @@ exports.createSearch = (req, res, next) => {
       : (query.dateExpiration = { $lte: new Date(maxDate) });
   }
   if (minPrime) {
-    query.prime = { $gte: minPrime };
+    query.prime
+      ? (query.prime.$gte = minPrime)
+      : (query.prime = { $gte: minPrime });
   }
   if (maxPrime) {
-    query.prime = { $lte: maxPrime };
+    query.prime
+      ? (query.prime.$lte = maxPrime)
+      : (query.prime = { $lte: maxPrime });
   }
   if (dangers) {
     query.danger = { $in: dangers.split(",") };
