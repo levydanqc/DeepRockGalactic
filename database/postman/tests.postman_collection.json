@@ -6,61 +6,6 @@
   },
   "item": [
     {
-      "name": "FAIL Reservation (Unauthenticate)",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "tests[\"Status code is 401\"] = responseCode.code === 401;",
-              "",
-              "tests[\"Non authentifié\"] = JSON.parse(responseBody).message == \"Non authentifié\";"
-            ],
-            "type": "text/javascript"
-          }
-        },
-        {
-          "listen": "prerequest",
-          "script": {
-            "exec": [""],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"estTermine\": \"false\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{localUrl}}/reservations/:mineurId/:contratId",
-          "host": ["{{localUrl}}"],
-          "path": ["reservations", ":mineurId", ":contratId"],
-          "variable": [
-            {
-              "key": "mineurId",
-              "value": "{{id_user1_created}}"
-            },
-            {
-              "key": "contratId",
-              "value": "{{id_contrat_searched}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
       "name": "Create user niv1",
       "event": [
         {
@@ -69,14 +14,13 @@
             "exec": [
               "tests[\"Status code is 201\"] = responseCode.code === 201;",
               "",
-              "tests[\"Utilisateur créé avec succès\"] = JSON.parse(responseBody).message == \"Utilisateur créé !\";",
+              "tests[\"Utilisateur créé avec succès\"] = JSON.parse(responseBody).message == \"Utilisateur créé avec succès!\";",
               "",
               "const requestBody = JSON.parse(pm.request.body.raw);",
               "",
-              "postman.setEnvironmentVariable(\"email_created\", requestBody.email.toString());",
-              "postman.setEnvironmentVariable(\"password_created\", requestBody.motdepasse.toString());",
-              "postman.setEnvironmentVariable(\"id_user1_created\", JSON.parse(responseBody).userId.toString());",
-              ""
+              "pm.collectionVariables.set(\"email_created\", requestBody.email);",
+              "pm.collectionVariables.set(\"password_created\", requestBody.motdepasse);",
+              "pm.collectionVariables.set(\"id_user1_created\", JSON.parse(responseBody).userId);"
             ],
             "type": "text/javascript"
           }
@@ -156,7 +100,7 @@
               "",
               "tests[\"Utilisateur authentifié avec succès\"] = response.token.length > 0;",
               "",
-              "postman.setEnvironmentVariable(\"token_created\", response.token.toString());",
+              "pm.collectionVariables.set(\"token_created\", response.token);",
               ""
             ],
             "type": "text/javascript"
@@ -279,9 +223,9 @@
             "exec": [
               "tests[\"Status code is 200\"] = responseCode.code === 200;",
               "",
-              "const contrats = JSON.parse(responseBody);",
+              "const contrats = JSON.parse(responseBody).data;",
               "",
-              "const schemaContrat = JSON.parse(environment.schemaContrat);",
+              "const schemaContrat = JSON.parse(pm.collectionVariables.get(\"schemaContrat\"));",
               "",
               "tests[\"JSON respecte le schéma pour un contrat\"] = tv4.validate(contrats[0], schemaContrat);",
               "if (tv4.error !== null)",
@@ -368,16 +312,17 @@
               "",
               "const contrats = JSON.parse(responseBody);",
               "",
-              "const schemaContrat = JSON.parse(environment.schemaContrat);",
+              "const schemaContrat = JSON.parse(pm.collectionVariables.get(\"schemaContrat\"));",
               "",
-              "tests[\"JSON respecte le schéma pour un contrat\"] = tv4.validate(contrats[0], schemaContrat);",
+              "tests[\"JSON respecte le schéma pour un contrat\"] = tv4.validate(contrats.data[0], schemaContrat);",
               "if (tv4.error !== null)",
               "   console.log(\"Message de validation schéma JSON contrat) : \", tv4.error);",
               "",
               "const nbAttendus = 12;",
-              "tests[\"Nb de contrats retournés\"] = contrats.length === nbAttendus;",
+              "tests[\"Nb de contrats retournés\"] = contrats.data.length === nbAttendus;",
               "",
-              "postman.setEnvironmentVariable(\"id_contrat_searched\", contrats[0]._id.toString());"
+              "pm.collectionVariables.set(\"id_contrat_searched\", contrats.data[0].attributes._id);",
+              ""
             ],
             "type": "text/javascript"
           }
@@ -446,15 +391,15 @@
               "",
               "const reservation = JSON.parse(responseBody);",
               "",
-              "const schemaReservation = JSON.parse(environment.schemaReservation);",
+              "const schemaReservation = JSON.parse(pm.collectionVariables.get(\"schemaReservation\"));",
               "",
-              "tests[\"JSON respecte le schéma pour une réservation\"] = tv4.validate(reservation.reservation, schemaReservation);",
+              "tests[\"JSON respecte le schéma pour une réservation\"] = tv4.validate(reservation.data, schemaReservation);",
               "if (tv4.error !== null)",
               "   console.log(\"Message de validation schéma JSON réservation) : \", tv4.error);",
               "",
-              "tests[\"Réservation créée avec succès\"] = reservation.message == \"Réservation créée\";",
+              "tests[\"Réservation créée avec succès\"] = reservation.message == \"Réservation créée avec succès!\";",
               "",
-              "postman.setEnvironmentVariable(\"id_reservation_created\", JSON.parse(responseBody).reservation._id.toString());",
+              "pm.collectionVariables.set(\"id_reservation_created\", JSON.parse(responseBody).data.attributes._id);",
               "",
               ""
             ],
@@ -466,13 +411,14 @@
           "script": {
             "exec": [
               "pm.sendRequest({",
-              "            url: environment.localUrl + \"/mineurs\", ",
+              "            url: pm.collectionVariables.get(\"localUrl\") + \"/mineurs\", ",
               "            method: 'GET',",
               "        }, function (err, res) {",
               "            if(err) {",
               "                throw new Error(err);",
               "            } else {",
-              "                pm.collectionVariables.set(\"id_mineur\", res.json().mineurs[0]._id);",
+              "                console.log(res.json().data[0].attributes._id);",
+              "                pm.collectionVariables.set(\"id_mineur\", res.json().data[0].attributes._id);",
               "            }",
               "});"
             ],
@@ -510,6 +456,61 @@
             {
               "key": "mineurId",
               "value": "{{id_mineur}}"
+            },
+            {
+              "key": "contratId",
+              "value": "{{id_contrat_searched}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FAIL Reservation (Unauthenticate)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "tests[\"Status code is 401\"] = responseCode.code === 401;",
+              "",
+              "tests[\"Non authentifié\"] = JSON.parse(responseBody).message == \"Non authentifié\";"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"estTermine\": \"false\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{localUrl}}/reservations/:mineurId/:contratId",
+          "host": ["{{localUrl}}"],
+          "path": ["reservations", ":mineurId", ":contratId"],
+          "variable": [
+            {
+              "key": "mineurId",
+              "value": "{{id_user1_created}}"
             },
             {
               "key": "contratId",
@@ -592,13 +593,13 @@
             "exec": [
               "tests[\"Status code is 201\"] = responseCode.code === 201;",
               "",
-              "tests[\"Utilisateur créé avec succès\"] = JSON.parse(responseBody).message == \"Utilisateur créé !\";",
+              "tests[\"Utilisateur créé avec succès\"] = JSON.parse(responseBody).message == \"Utilisateur créé avec succès!\";",
               "",
               "const requestBody = JSON.parse(pm.request.body.raw);",
               "",
-              "postman.setEnvironmentVariable(\"email_created\", requestBody.email.toString());",
-              "postman.setEnvironmentVariable(\"password_created\", requestBody.motdepasse.toString());",
-              "postman.setEnvironmentVariable(\"id_user2_created\", JSON.parse(responseBody).userId.toString());",
+              "pm.collectionVariables.set(\"email_created\", requestBody.email);",
+              "pm.collectionVariables.set(\"password_created\", requestBody.motdepasse);",
+              "pm.collectionVariables.set(\"id_user2_created\", JSON.parse(responseBody).userId);",
               ""
             ],
             "type": "text/javascript"
@@ -638,7 +639,8 @@
               "",
               "tests[\"Utilisateur authentifié avec succès\"] = response.token.length > 0;",
               "",
-              "postman.setEnvironmentVariable(\"token_created\", response.token.toString());"
+              "pm.collectionVariables.set(\"token_created\", response.token);",
+              ""
             ],
             "type": "text/javascript"
           }
@@ -673,17 +675,17 @@
             "exec": [
               "tests[\"Status code is 201\"] = responseCode.code === 201;",
               "",
-              "tests[\"Planete créée avec succès\"] = JSON.parse(responseBody).message == \"Planete créée\";",
+              "const planete = JSON.parse(responseBody);",
               "",
-              "const planete = JSON.parse(responseBody).planete;",
+              "tests[\"Planete créée avec succès\"] = planete.message == \"Planète créée avec succès!\";",
               "",
-              "const schemaPlanete = JSON.parse(environment.schemaPlanete);",
+              "const schemaPlanete = JSON.parse(pm.collectionVariables.get(\"schemaPlanete\"));",
               "",
-              "tests[\"JSON respecte le schéma pour une planete\"] = tv4.validate(planete, schemaPlanete);",
+              "tests[\"JSON respecte le schéma pour une planete\"] = tv4.validate(planete.data, schemaPlanete);",
               "if (tv4.error !== null)",
               "   console.log(\"Message de validation schéma JSON planete) : \", tv4.error);",
               "",
-              "postman.setEnvironmentVariable(\"id_planete_created\", JSON.parse(responseBody).planete._id.toString());"
+              "pm.collectionVariables.set(\"id_planete_created\", JSON.parse(responseBody).data.attributes._id);"
             ],
             "type": "text/javascript"
           }
@@ -815,9 +817,9 @@
             "exec": [
               "pm.sendRequest(",
               "    {",
-              "        url: environment.localUrl + \"/mineurs/\" + environment.id_user2_created,",
+              "        url: pm.collectionVariables.get(\"localUrl\") + \"/mineurs/\" + pm.collectionVariables.get(\"id_user2_created\"),",
               "        header: {",
-              "            'Authorization': 'Bearer ' + environment.token_created,",
+              "            'Authorization': 'Bearer ' + pm.collectionVariables.get(\"token_created\"),",
               "        },",
               "        method: 'DELETE',",
               "    }, function (err, res) {",
@@ -829,9 +831,9 @@
               "",
               "pm.sendRequest(",
               "    {",
-              "        url: environment.localUrl + \"/reservations/\" + environment.id_reservation_created,",
+              "        url: pm.collectionVariables.get(\"localUrl\") + \"/reservations/\" + pm.collectionVariables.get(\"id_reservation_created\"),",
               "        header: {",
-              "            'Authorization': 'Bearer ' + environment.token_created,",
+              "            'Authorization': 'Bearer ' + pm.collectionVariables.get(\"token_created\"),",
               "        },",
               "        method: 'DELETE',",
               "    }, function (err, res) {",
@@ -884,9 +886,61 @@
       "response": []
     }
   ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
   "variable": [
     {
+      "key": "localUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "schemaPlanete",
+      "value": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"attributes\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"_id\": {\n          \"type\": \"string\"\n        },\n        \"nom\": {\n          \"type\": \"string\"\n        },\n        \"image\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\"_id\", \"nom\", \"image\"]\n    },\n    \"links\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"self\": {\n          \"type\": \"string\"\n        },\n        \"collection\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\"self\", \"collection\"]\n    }\n  },\n  \"required\": [\"attributes\"]\n}\n",
+      "type": "string"
+    },
+    {
+      "key": "schemaContrat",
+      "value": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"attributes\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"_id\": {\n          \"type\": \"string\"\n        },\n        \"prime\": {\n          \"type\": \"integer\"\n        },\n        \"danger\": {\n          \"type\": \"integer\"\n        },\n        \"ressource\": {\n          \"type\": \"string\"\n        },\n        \"quantiteRessource\": {\n          \"type\": \"integer\"\n        },\n        \"dateExpiration\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\n        \"_id\",\n        \"prime\",\n        \"danger\",\n        \"ressource\",\n        \"quantiteRessource\",\n        \"dateExpiration\"\n      ]\n    },\n    \"links\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"self\": {\n          \"type\": \"string\"\n        },\n        \"collection\": {\n          \"type\": \"string\"\n        },\n        \"reserve\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\"self\", \"collection\", \"reserve\"]\n    }\n  },\n  \"required\": [\"attributes\"]\n}\n",
+      "type": "string"
+    },
+    {
+      "key": "schemaReservation",
+      "value": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"attributes\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"_id\": {\n          \"type\": \"string\"\n        },\n        \"mineurId\": {\n          \"type\": \"string\"\n        },\n        \"contratId\": {\n          \"type\": \"string\"\n        },\n        \"estTermine\": {\n          \"type\": \"boolean\"\n        }\n      },\n      \"required\": [ \"_id\", \"mineurId\", \"contratId\", \"estTermine\" ]  \n    },\n    \"links\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"self\": {\n          \"type\": \"string\"\n        },\n        \"collection\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\"self\", \"collection\" ]\n    }\n  },\n  \"required\": [\"attributes\"]\n}\n",
+      "type": "string"
+    },
+    {
+      "key": "email_created",
+      "value": ""
+    },
+    {
+      "key": "password_created",
+      "value": ""
+    },
+    {
+      "key": "id_user1_created",
+      "value": ""
+    },
+    {
       "key": "id_mineur",
+      "value": ""
+    },
+    {
+      "key": "token_created",
       "value": ""
     }
   ]
