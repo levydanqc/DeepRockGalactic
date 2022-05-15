@@ -130,7 +130,7 @@ exports.createContrat = (req, res, next) => {
         */
             res.status(201).json({
               message: "Contrat créé avec succès!",
-              contrat: contrat,
+              data: formated(contrat),
             });
           })
           .catch((err) => {
@@ -250,7 +250,7 @@ exports.updateContrat = (req, res, next) => {
       */
       res.status(200).json({
         message: "Contrat modifié avec succès!",
-        contrat: contrat,
+        contrat: formated(contrat),
       });
     })
     .catch((err) => {
@@ -297,13 +297,11 @@ function formated(obj) {
   };
 
   if (obj.length > 0) {
-    const a = obj.foreach((contrat) => {
-      const contratFormated = formated(contrat);
-      return contratFormated;
-    });
-    return a;
-  } else {
-    null;
+    const contrats = [];
+    for (let i = 0; i < obj.length; i++) {
+      contrats.push(formated(obj[i]));
+    }
+    return contrats;
   }
 
   return { attributes: obj, links, relationships };

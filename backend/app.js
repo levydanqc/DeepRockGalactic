@@ -69,13 +69,14 @@ app.use(function (err, req, res, next) {
     .json({ message: err.message, statusCode: err.statusCode });
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
 mongoose
   .connect(
     process.env.MONGO_URL || "mongodb://127.0.0.1:27017/deepRockGalactic"
   )
   .then(() => {
-    app.listen(process.env.PORT || 3000, () => {
+    app.listen(PORT, () => {
       console.log("Node.js est à l'écoute sur le port %s ", PORT);
     });
   })
