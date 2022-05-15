@@ -2,24 +2,13 @@
 
 import ROUTES from "./routes";
 
-export async function getPlanetes() {
-  const response = await fetch("http://localhost:3000/planetes", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const data = await response.json();
-  return data.planetes;
-}
-
 export async function getContrats(
   minDate?: string,
   maxDate?: string,
   minPrime?: string,
   maxPrime?: string,
   dangers?: number[],
-  planetIds?: string[]
+  planets?: string[]
 ) {
   const url = new URL(ROUTES.SEARCH);
   const params: { [key: string]: string } = {
@@ -28,7 +17,7 @@ export async function getContrats(
     minPrime: minPrime?.toString() || "",
     maxPrime: maxPrime?.toString() || "",
     dangers: dangers?.join(",") || "",
-    planetIds: planetIds?.join(",") || "",
+    planets: planets?.join(",") || "",
   };
   Object.entries(params).forEach(([key, value]) =>
     url.searchParams.append(key, value)
@@ -40,6 +29,9 @@ export async function getContrats(
       "Content-Type": "application/json",
     },
   });
+  if (response.status === 404) {
+    return [];
+  }
   const res = await response.json();
   const data = res.data;
   for (let i = 0; i < data.length; i++) {
@@ -50,7 +42,6 @@ export async function getContrats(
     contrat.planeteImage = planete.image;
     contrat.planeteNom = planete.nom;
   }
-  console.log(data);
   return data;
 }
 
@@ -63,17 +54,6 @@ async function getPlanete(url: string) {
   });
   const data = await response.json();
   return { image: data.attributes.image, nom: data.attributes.nom };
-}
-
-async function getPlanetesById(id: number) {
-  const response = await fetch(`http://localhost:3000/planetes/${id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const data = await response.json();
-  return { image: data.planete.image, nom: data.planete.nom };
 }
 
 export async function reserverContrat(id: string) {

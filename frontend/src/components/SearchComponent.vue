@@ -43,7 +43,7 @@
             <v-row class="w-100">
               <v-combobox
                 v-model="chips"
-                :items="planetsNames"
+                :items="planets"
                 chips
                 clearable
                 label="Choix"
@@ -120,7 +120,7 @@ import ExpansionPanel from "./reusable/ExpansionPanel.vue";
 import ContratCard from "./reusable/ContratCard.vue";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-import { getPlanetes, getContrats } from "../services/requests";
+import { getContrats } from "../services/requests";
 import ButtonComponent from "./reusable/ButtonComponent.vue";
 
 export default defineComponent({
@@ -134,22 +134,11 @@ export default defineComponent({
     chips: [] as Array<string>,
     planets: [] as Array<string>,
   }),
-  computed: {
-    planetsNames() {
-      return this.planets.map((planet: any) => planet.nom);
-    },
-    planetsIds(): string[] {
-      const planets = this.chips.map((c: any) =>
-        this.planets?.find((obj: any) => {
-          return obj?.nom === c;
-        })
-      );
-      return planets?.map((p: any) => p?.["_id"]) as unknown as string[];
-    },
-  },
   async created() {
-    this.loadContrats();
-    this.planets = await getPlanetes();
+    await this.loadContrats();
+    this.planets = this.contrats
+      .map((contrat: any) => contrat.planeteNom)
+      .filter((value, index, self) => self.indexOf(value) === index);
   },
   components: {
     ExpansionPanel,
@@ -177,7 +166,7 @@ export default defineComponent({
         this.minPrime,
         this.maxPrime,
         this.dangers,
-        this.planetsIds
+        this.chips
       );
     },
     isNumber(event: KeyboardEvent, value: string) {
