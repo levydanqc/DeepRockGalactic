@@ -1,3 +1,5 @@
-const SEARCH = "localhost:3000/search";
-const LOGIN = "localhost:3000/auth/login";
-const REGISTER = "localhost:3000/auth/signup";
+export default {
+  SEARCH: "http://127.0.0.1:3000/search",
+  LOGIN: "http://127.0.0.1:3000/auth/login",
+  REGISTER: "http://127.0.0.1:3000/auth/signup",
+};

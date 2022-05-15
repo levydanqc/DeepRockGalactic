@@ -99,15 +99,15 @@
         <contrat-card
           class="my-3"
           v-for="contrat in contrats"
-          :key="contrat._id"
-          :id="contrat._id"
+          :key="contrat.attributes._id"
+          :id="contrat.attributes._id"
           :title="contrat.planeteNom"
           :src="contrat.planeteImage"
-          :prime="contrat.prime"
-          :danger="contrat.danger"
-          :ressource="contrat.ressource"
-          :qte="contrat.quantiteRessource"
-          :date="contrat.dateExpiration"
+          :prime="contrat.attributes.prime"
+          :danger="contrat.attributes.danger"
+          :ressource="contrat.attributes.ressource"
+          :qte="contrat.attributes.quantiteRessource"
+          :date="contrat.attributes.dateExpiration"
         ></contrat-card>
       </v-col>
     </v-row>
