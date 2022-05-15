@@ -1,5 +1,6 @@
 "use strict";
 
+const { format } = require("prettier");
 const Contrat = require("../models/contrat");
 
 exports.getContrats = (req, res, next) => {
@@ -18,7 +19,7 @@ exports.getContrats = (req, res, next) => {
         }
       */
       res.status(200).json({
-        contrats,
+        data: formated(contrats),
       });
     })
     .catch((err) => {
@@ -36,7 +37,7 @@ exports.getContrat = (req, res, next) => {
         value: '626339247fe023c3b50ba0d4'
       }
  */
-  const id = req.params.id;
+  const id = req.params.contratId;
 
   Contrat.findById(id)
     .then((contrat) => {
@@ -48,7 +49,7 @@ exports.getContrat = (req, res, next) => {
             }
         }
       */
-        res.status(200).json(contrat);
+        res.json(formated(contrat));
       } else {
         res.status(404).json({ message: "Contrat non trouvé" });
       }
@@ -256,3 +257,54 @@ exports.updateContrat = (req, res, next) => {
       next(err);
     });
 };
+
+function formated(obj) {
+  const url = process.env.URL || "http://localhost:3000";
+
+  const links = [
+    {
+      rel: "self",
+      method: "GET",
+      href: `${url}/contrats/${obj._id}`,
+    },
+    {
+      rel: "create",
+      method: "POST",
+      href: `${url}/contrats/`,
+    },
+    {
+      rel: "update",
+      method: "PUT",
+      href: `${url}/contrats/${obj._id}`,
+    },
+    {
+      rel: "delete",
+      method: "DELETE",
+      href: `${url}/contrats/${obj._id}`,
+    },
+    {
+      rel: "reserve",
+      method: "POST",
+      href: `${url}/reservations/${obj._id}`,
+    },
+  ];
+  const relationships = {
+    planete: {
+      links: {
+        related: `${url}/planetes/${obj.planeteId}`,
+      },
+    },
+  };
+
+  if (obj.length > 0) {
+    const a = obj.foreach((contrat) => {
+      const contratFormated = formated(contrat);
+      return contratFormated;
+    });
+    return a;
+  } else {
+    null;
+  }
+
+  return { attributes: obj, links, relationships };
+}
