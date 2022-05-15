@@ -8,18 +8,12 @@
         height="200"
       />
     </header>
-    <nav class="navbar border">
+    <nav class="navbar border px-5">
       <router-link class="router-link nav-item nav-link" to="/"
         >Home</router-link
       >
-      <router-link class="router-link nav-item nav-link" to="/planetes"
-        >Planètes</router-link
-      >
-      <router-link class="router-link nav-item nav-link" to="/reservations"
-        >Réserver</router-link
-      >
-      <router-link class="router-link nav-item nav-link" to="/contrats"
-        >Contrats</router-link
+      <router-link class="router-link nav-item nav-link" to="/statistiques"
+        >Statistiques</router-link
       >
       <router-link class="router-link nav-item nav-link" to="/login"
         >Se Connecter</router-link
@@ -29,7 +23,7 @@
   </div>
 </template>
 
-<style lang="css">
+<style lang="scss">
 @import "./assets/styles/variables.css";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -39,7 +33,7 @@
   color: #2c3e50;
 }
 nav {
-  width: 75vw;
+  width: 60vw;
   font-size: 1.5vw;
   margin: auto;
   background-color: #686868;

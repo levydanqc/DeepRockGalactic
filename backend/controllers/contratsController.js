@@ -36,7 +36,7 @@ exports.getContrat = (req, res, next) => {
         value: '626339247fe023c3b50ba0d4'
       }
  */
-  const id = req.params.id;
+  const id = req.params.contratId;
 
   Contrat.findById(id)
     .then((contrat) => {

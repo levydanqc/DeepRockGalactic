@@ -49,7 +49,7 @@ export async function getContrats(
   return data;
 }
 
-async function getPlanetesById(id: number) {
+export async function getPlanetesById(id: number) {
   const response = await fetch(`http://localhost:3000/planetes/${id}`, {
     method: "GET",
     headers: {
@@ -73,7 +73,7 @@ export async function reserverContrat(id: string) {
 }
 
 export async function getReservations() {
-  const response = await fetch(`http://localhost:3000/reseravtions`, {
+  const response = await fetch(`http://localhost:3000/reservations`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -84,7 +84,7 @@ export async function getReservations() {
   return data.reservations;
 }
 
-export async function getContratByID(id: number) {
+export async function getContratByID(id: string) {
   const response = await fetch(`http://localhost:3000/contrats/${id}`, {
     method: "GET",
     headers: {
@@ -92,5 +92,5 @@ export async function getContratByID(id: number) {
     },
   });
   const data = await response.json();
-  return data.contrat;
+  return data;
 }
