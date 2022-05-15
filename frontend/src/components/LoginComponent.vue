@@ -32,6 +32,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import ROUTES from "../services/routes";
 
 export default defineComponent({
   data: () => {
@@ -43,7 +44,7 @@ export default defineComponent({
   },
   methods: {
     login() {
-      fetch("http://localhost:3000/auth/login", {
+      fetch(ROUTES.LOGIN, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
