@@ -111,7 +111,7 @@ exports.createPlanete = (req, res, next) => {
         }
         */
           res.status(201).json({
-            message: "Planete créée",
+            message: "Planète créée avec succès!",
             data: formated(planete),
           });
         })

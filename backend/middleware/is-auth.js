@@ -16,8 +16,7 @@ module.exports = (req, res, next) => {
   try {
     decodedToken = jwt.verify(token, process.env.SECRET_JWT);
   } catch (err) {
-    err.statusCode = 401;
-    throw err;
+    return res.status(401).send({ message: "Non authentifié" });
   }
   if (!decodedToken) {
     return res.status(401).send({ message: "Non authentifié" });

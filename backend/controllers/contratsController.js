@@ -19,7 +19,7 @@ exports.getContrats = (req, res, next) => {
         }
       */
       res.status(200).json({
-        data: formated(contrats),
+        data: this.formated(contrats),
       });
     })
     .catch((err) => {
@@ -49,7 +49,7 @@ exports.getContrat = (req, res, next) => {
             }
         }
       */
-        res.json(formated(contrat));
+        res.json(this.formated(contrat));
       } else {
         res.status(404).json({ message: "Contrat non trouvé" });
       }
@@ -130,7 +130,7 @@ exports.createContrat = (req, res, next) => {
         */
             res.status(201).json({
               message: "Contrat créé avec succès!",
-              data: formated(contrat),
+              data: this.formated(contrat),
             });
           })
           .catch((err) => {
@@ -250,7 +250,7 @@ exports.updateContrat = (req, res, next) => {
       */
       res.status(200).json({
         message: "Contrat modifié avec succès!",
-        data: formated(contrat),
+        data: this.formated(contrat),
       });
     })
     .catch((err) => {

@@ -117,7 +117,7 @@ exports.createReservation = (req, res, next) => {
                         }
                     }*/
                     res.status(201).json({
-                      message: "Réservation créée",
+                      message: "Réservation créée avec succès!",
                       data: formated(reservation),
                     });
                   })
@@ -272,11 +272,11 @@ function formated(obj) {
   };
 
   if (obj.length > 0) {
-    const obj = [];
+    const objs = [];
     for (let i = 0; i < obj.length; i++) {
-      obj.push(formated(obj[i]));
+      objs.push(formated(obj[i]));
     }
-    return obj;
+    return objs;
   }
 
   return { attributes: obj, links, relationships };

@@ -112,15 +112,16 @@ exports.signup = (req, res, next) => {
         })
         .then((result) => {
           /* #swagger.responses[201] = { 
-              description: "Utilisateur créé",
+              description: "Utilisateur créé avec succès!",
               schema: {
                   userId: "string"
               }
           }
         */
-          res
-            .status(201)
-            .json({ message: "Utilisateur créé !", userId: result.id });
+          res.status(201).json({
+            message: "Utilisateur créé avec succès!",
+            userId: result.id,
+          });
         })
         .catch((err) => {
           res.status(400).json(err);
