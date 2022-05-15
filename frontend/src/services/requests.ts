@@ -7,7 +7,7 @@ export async function getPlanetes() {
     },
   });
   const data = await response.json();
-  return data.planetes;
+  return data;
 }
 
 export async function getContrats(
