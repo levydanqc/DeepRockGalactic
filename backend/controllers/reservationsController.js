@@ -1,6 +1,8 @@
 "use strict";
 
 const Reservation = require("../models/reservation");
+const Mineur = require("../models/mineur");
+const Contrat = require("../models/contrat");
 
 exports.getReservations = (req, res, next) => {
   /* 
@@ -18,7 +20,7 @@ exports.getReservations = (req, res, next) => {
         }
       */
       res.status(200).json({
-        reservations,
+        data: formated(reservations),
       });
     })
     .catch((err) => {
@@ -48,7 +50,7 @@ exports.getReservation = (req, res, next) => {
             }
         }
       */
-        res.status(200).json(reservation);
+        res.status(200).json({ data: formated(reservation) });
       } else {
         res.status(404).json({ message: "Réservation non trouvé" });
       }
@@ -76,43 +78,59 @@ exports.createReservation = (req, res, next) => {
 
   const { mineurId, contratId } = req.params;
 
-  Reservation.findOne({ mineurId, contratId }).then((reservation) => {
-    if (reservation) {
-      /* #swagger.responses[409] = { 
+  Mineur.findById(mineurId).then((mineur) => {
+    if (!mineur) {
+      return res.status(404).json({ message: "Mineur non trouvé" });
+    } else {
+      Contrat.findById(contratId).then((contrat) => {
+        if (!contrat) {
+          return res.status(404).json({ message: "Contrat non trouvé" });
+        } else {
+          Reservation.findOne({ mineurId, contratId })
+            .then((reservation) => {
+              if (reservation) {
+                /* #swagger.responses[409] = { 
             description: "Réservation existante",
             }
           }
       */
-      res.status(409).json({ message: "Réservation existante" });
-    } else {
-      const { estTermine } = req.body;
+                res.status(409).json({ message: "Réservation existante" });
+              } else {
+                const { estTermine } = req.body;
 
-      const reservation = new Reservation({
-        mineurId: mineurId,
-        contratId: contratId,
-        estTermine: estTermine,
-      });
+                const reservation = new Reservation({
+                  mineurId: mineurId,
+                  contratId: contratId,
+                  estTermine: estTermine,
+                });
 
-      reservation
-        .save()
-        .then(() => {
-          /* #swagger.responses[201] = { 
-              description: "Réservation créée",
-              schema: {
-                  message: "Réservation créée avec succès!",
-                  reservation: {
-                      "$ref": "#/definitions/Reservation"
-                  }
+                reservation
+                  .save()
+                  .then(() => {
+                    /* #swagger.responses[201] = { 
+                        description: "Réservation créée",
+                        schema: {
+                            message: "Réservation créée avec succès!",
+                            reservation: {
+                        "$ref": "#/definitions/Reservation"
+                            }
+                        }
+                    }*/
+                    res.status(201).json({
+                      message: "Réservation créée",
+                      data: formated(reservation),
+                    });
+                  })
+                  .catch((err) => {
+                    next(err);
+                  });
               }
-          }*/
-          res.status(201).json({
-            message: "Réservation créée",
-            reservation: reservation,
-          });
-        })
-        .catch((err) => {
-          next(err);
-        });
+            })
+            .catch((err) => {
+              next(err);
+            });
+        }
+      });
     }
   });
 };
@@ -188,6 +206,17 @@ exports.updateReservation = (req, res, next) => {
   const reservationId = req.params.reservationId;
   const { mineurId, contratId, estTermine } = req.body;
 
+  Mineur.findById(mineurId).then((mineur) => {
+    if (!mineur) {
+      return res.status(404).json({ message: "Mineur non trouvé" });
+    }
+  });
+  Contrat.findById(contratId).then((contrat) => {
+    if (!contrat) {
+      return res.status(404).json({ message: "Contrat non trouvé" });
+    }
+  });
+
   Reservation.findById(reservationId)
     .then((reservation) => {
       if (!reservation) {
@@ -213,10 +242,59 @@ exports.updateReservation = (req, res, next) => {
       */
       res.status(200).json({
         message: "Réservation modifiée avec succès!",
-        reservation: reservation,
+        data: formated(reservation),
       });
     })
     .catch((err) => {
       next(err);
     });
 };
+
+function formated(obj) {
+  const url = process.env.URL || "http://localhost:3000";
+
+  const links = [
+    {
+      rel: "self",
+      method: "GET",
+      href: `${url}/reservations/${obj._id}`,
+    },
+    {
+      rel: "create",
+      method: "POST",
+      href: `${url}/reservations/`,
+    },
+    {
+      rel: "update",
+      method: "PUT",
+      href: `${url}/reservations/${obj._id}`,
+    },
+    {
+      rel: "delete",
+      method: "DELETE",
+      href: `${url}/reservations/${obj._id}`,
+    },
+  ];
+  const relationships = {
+    mineur: {
+      links: {
+        related: `${url}/mineurs/${obj.mineurId}`,
+      },
+    },
+    contrat: {
+      links: {
+        related: `${url}/contrats/${obj.contratId}`,
+      },
+    },
+  };
+
+  if (obj.length > 0) {
+    const obj = [];
+    for (let i = 0; i < obj.length; i++) {
+      obj.push(formated(obj[i]));
+    }
+    return obj;
+  }
+
+  return { attributes: obj, links, relationships };
+}
