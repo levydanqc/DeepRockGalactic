@@ -1,9 +1,10 @@
 :root {
-  --primary-color: #6200ee;
+  --primary-color: #ac4f06;
   --background-color: #dcdcdc;
-  --secondary-color: #42b983;
-  --info-color: #edba0c;
-  --warning-color: #fb8c00;
+  --secondary-color: #ffbc00;
+  --info-color: #0081ff;
+  --warning-color: #ff8e00;
+  --hover-color: #582e0b;
 }
 
 :root .dp__theme_light {

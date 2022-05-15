@@ -15,7 +15,7 @@ export async function getContrats(
   maxDate?: string,
   minPrime?: string,
   maxPrime?: string,
-  dangers?: string[],
+  dangers?: number[],
   planetIds?: string[]
 ) {
   const url = new URL("http://localhost:3000/search");

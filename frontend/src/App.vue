@@ -1,27 +1,19 @@
 <template>
   <div id="content">
-    <header>
+    <header class="m-0">
       <v-img
         :src="require('./assets/drg_logo.png')"
-        class="my-3"
+        class="m-0"
         contain
         height="200"
       />
     </header>
-    <nav class="navbar border">
-      <router-link class="router-link nav-item nav-link" to="/"
-        >Home</router-link
-      >
-      <router-link class="router-link nav-item nav-link" to="/planetes"
-        >Planètes</router-link
-      >
-      <router-link class="router-link nav-item nav-link" to="/reservations"
-        >Réserver</router-link
-      >
-      <router-link class="router-link nav-item nav-link" to="/contrats"
-        >Contrats</router-link
-      >
-      <router-link class="router-link nav-item nav-link" to="/auth/login"
+    <nav class="navbar">
+      <router-link class="router-link" to="/">Home</router-link>
+      <router-link class="router-link" to="/planetes">Planètes</router-link>
+      <router-link class="router-link" to="/reservations">Réserver</router-link>
+      <router-link class="router-link" to="/contrats">Contrats</router-link>
+      <router-link class="router-link" to="/auth/login"
         >Se Connecter</router-link
       >
     </nav>
@@ -31,6 +23,8 @@
 
 <style lang="scss">
 @import "./assets/styles/variables.css";
+@import "bootstrap";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -39,14 +33,26 @@
   color: #2c3e50;
 }
 nav {
-  width: 75vw;
+  width: 100vw;
+  padding: 0 20%;
   font-size: 1.5vw;
   margin: auto;
-  background-color: #686868;
+  @extend .border-bottom;
+  @extend .border-4;
+  border-color: var(--primary-color) !important;
 }
 .router-link {
   font-weight: bold;
-  color: #e0ff2f;
+  color: var(--secondary-color);
+}
+.router-link-exact-active {
+  color: var(--primary-color);
+}
+a {
+  text-decoration: none !important;
+  &:hover {
+    color: var(--hover-color) !important;
+  }
 }
 </style>
 
