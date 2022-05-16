@@ -12,7 +12,7 @@ const doc = {
     description:
       "API de Deep Rock Galactic, un jeu de stratégie en ligne de type RTS",
   },
-  host: "localhost:3000",
+  host: process.env.URL ?? "localhost:3000",
   basePath: "/",
   schemes: ["http", "https"],
   consumes: ["application/json"],
@@ -52,7 +52,6 @@ const doc = {
       },
     },
   },
-  // security: [{ bearerAuth: [] }],
   definitions: {
     Mineur: {
       $email: "email@exemple.com",
