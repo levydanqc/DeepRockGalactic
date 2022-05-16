@@ -856,7 +856,7 @@
             "description": "Interdit"
           },
           "404": {
-            "description": "Non Trouvé"
+            "description": "Réservation non trouvé."
           }
         }
       },
@@ -1016,86 +1016,282 @@
     "Mineur": {
       "type": "object",
       "properties": {
-        "email": {
-          "type": "string",
-          "example": "email@exemple.com"
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "example": "Malinda45@hotmail.com"
+            },
+            "nom": {
+              "type": "string",
+              "example": "Earline_Turner"
+            },
+            "motdepasse": {
+              "type": "string",
+              "example": "$2a$12$Rzjj1vInymnROuXepA0qL.1g.O72xHds4RXgFRdYR7QKnRGR0.tLe"
+            },
+            "niveau": {
+              "type": "number",
+              "example": 1
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2022-05-16T18:34:49.396Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2022-05-16T18:34:49.396Z"
+            }
+          },
+          "required": [
+            "email",
+            "nom",
+            "motdepasse",
+            "niveau",
+            "createdAt",
+            "updatedAt"
+          ]
         },
-        "nom": {
-          "type": "string",
-          "example": "Joe Dassin"
+        "links": {
+          "type": "object",
+          "properties": {
+            "self": {
+              "type": "string",
+              "example": "http://localhost:3000/mineurs/62829949dfc507d6c4d0cedf"
+            },
+            "collection": {
+              "type": "string",
+              "example": "http://localhost:3000/mineurs"
+            }
+          },
+          "required": ["self", "collection"]
         },
-        "motdepasse": {
-          "type": "string",
-          "example": "motdepasse123"
-        },
-        "niveau": {
-          "type": "number",
-          "example": 1
+        "relationships": {
+          "type": "object",
+          "properties": {}
         }
       },
-      "required": ["email", "nom", "motdepasse", "niveau"]
+      "required": ["attributes", "links", "relationships"]
     },
     "Planete": {
       "type": "object",
       "properties": {
-        "nom": {
-          "type": "string",
-          "example": "Terre"
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "nom": {
+              "type": "string",
+              "example": "sonya"
+            },
+            "image": {
+              "type": "string",
+              "example": "http://placeimg.com/640/480"
+            }
+          },
+          "required": ["nom", "image"]
         },
-        "image": {
-          "type": "string",
-          "example": "https://picsum.photos/200"
+        "links": {
+          "type": "object",
+          "properties": {
+            "self": {
+              "type": "string",
+              "example": "http://localhost:3000/planetes/62829a3429fdd0fd4b2ec525"
+            },
+            "collection": {
+              "type": "string",
+              "example": "http://localhost:3000/planetes"
+            }
+          },
+          "required": ["self", "collection"]
+        },
+        "relationships": {
+          "type": "object",
+          "properties": {}
         }
       },
-      "required": ["nom", "image"]
+      "required": ["attributes", "links", "relationships"]
     },
     "Contrat": {
       "type": "object",
       "properties": {
-        "prime": {
-          "type": "number",
-          "example": 100
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "planeteId": {
+              "type": "string",
+              "example": "628290ad34dcba8b58f94004"
+            },
+            "prime": {
+              "type": "number",
+              "example": 203
+            },
+            "danger": {
+              "type": "number",
+              "example": 1
+            },
+            "ressource": {
+              "type": "string",
+              "example": "Concrete"
+            },
+            "quantiteRessource": {
+              "type": "number",
+              "example": 605
+            },
+            "dateExpiration": {
+              "type": "string",
+              "example": "2022-05-21T10:55:19.000Z"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2022-05-16T17:59:07.351Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2022-05-16T17:59:07.351Z"
+            }
+          },
+          "required": [
+            "planeteId",
+            "prime",
+            "danger",
+            "ressource",
+            "quantiteRessource",
+            "dateExpiration",
+            "createdAt",
+            "updatedAt"
+          ]
         },
-        "danger": {
-          "type": "number",
-          "example": 1
+        "links": {
+          "type": "object",
+          "properties": {
+            "self": {
+              "type": "string",
+              "example": "http://localhost:3000/contrats/628290eb34dcba8b58f94007"
+            },
+            "collection": {
+              "type": "string",
+              "example": "http://localhost:3000/contrats"
+            },
+            "reserve": {
+              "type": "string",
+              "example": "http://localhost:3000/reservations/628290eb34dcba8b58f94007"
+            }
+          },
+          "required": ["self", "collection", "reserve"]
         },
-        "ressource": {
-          "type": "string",
-          "example": "fer"
-        },
-        "quantiteRessource": {
-          "type": "number",
-          "example": 100
-        },
-        "dateExpiration": {
-          "type": "string",
-          "example": "2022-01-01"
+        "relationships": {
+          "type": "object",
+          "properties": {
+            "planete": {
+              "type": "object",
+              "properties": {
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "related": {
+                      "type": "string",
+                      "example": "http://localhost:3000/planetes/628290ad34dcba8b58f94004"
+                    }
+                  },
+                  "required": ["related"]
+                }
+              },
+              "required": ["links"]
+            }
+          },
+          "required": ["planete"]
         }
       },
-      "required": [
-        "prime",
-        "danger",
-        "ressource",
-        "quantiteRessource",
-        "dateExpiration"
-      ]
+      "required": ["attributes", "links", "relationships"]
     },
     "Reservation": {
       "type": "object",
       "properties": {
-        "mineurId": {
-          "$ref": "#/definitions/Mineur"
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "mineurId": {
+              "$ref": "#/definitions/Mineur"
+            },
+            "contratId": {
+              "$ref": "#/definitions/Contrat"
+            },
+            "estTermine": {
+              "type": "boolean",
+              "example": false
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2022-05-16T16:36:43.632Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2022-05-16T16:36:43.632Z"
+            }
+          },
+          "required": [
+            "mineurId",
+            "contratId",
+            "estTermine",
+            "createdAt",
+            "updatedAt"
+          ]
         },
-        "planeteId": {
-          "$ref": "#/definitions/Planete"
+        "links": {
+          "type": "object",
+          "properties": {
+            "self": {
+              "type": "string",
+              "example": "http://localhost:3000/reservations/62827d9b72a5595a09618d55"
+            },
+            "collection": {
+              "type": "string",
+              "example": "http://localhost:3000/reservations"
+            }
+          },
+          "required": ["self", "collection"]
         },
-        "estTermine": {
-          "type": "boolean",
-          "example": false
+        "relationships": {
+          "type": "object",
+          "properties": {
+            "mineur": {
+              "type": "object",
+              "properties": {
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "related": {
+                      "type": "string",
+                      "example": "http://localhost:3000/mineurs/62827ababfe5f11e9edb79b1"
+                    }
+                  },
+                  "required": ["related"]
+                }
+              },
+              "required": ["links"]
+            },
+            "contrat": {
+              "type": "object",
+              "properties": {
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "related": {
+                      "type": "string",
+                      "example": "http://localhost:3000/contrats/6265f757995a50c7205fae51"
+                    }
+                  },
+                  "required": ["related"]
+                }
+              },
+              "required": ["links"]
+            }
+          },
+          "required": ["mineur", "contrat"]
         }
       },
-      "required": ["mineurId", "planeteId", "estTermine"]
+      "required": ["attributes", "links", "relationships"]
     }
   }
 }
