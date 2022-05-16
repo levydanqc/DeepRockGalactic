@@ -123,7 +123,7 @@ export default defineComponent({
   },
   methods: {
     async reserver() {
-      console.log("reserver");
+      console.log(this.url);
       const res = await reserverContrat(this.url);
 
       if (res.status === 200) {
