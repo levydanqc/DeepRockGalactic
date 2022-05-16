@@ -12,10 +12,10 @@
     </v-row>
     <v-row
       ><h3 class="col mt-3">
-        {{ contrats.length || 0 }} contrats trouvés
+        {{ contrats.length || 0 }} contrat(s) terminé(s)
       </h3></v-row
     >
-    <v-row>
+    <v-row v-if="contrats.length > 0">
       <v-card
         class="my-3 mx-1 bg-light"
         elevation="20"
@@ -96,23 +96,24 @@ export default defineComponent({
     mineurId: String,
   }),
   async created() {
-    this.reservations = await getReservations();
+    this.reservations = await getReservations(localStorage.getItem("token"));
     this.loadContrats();
   },
   methods: {
     async loadContrats() {
-      for (const reservation of this.reservations) {
-        const contrat = await getContrat(
-          reservation.relationships.contrat.links.related
-        );
-        this.primeTotale += contrat.attributes.prime;
-        const planete = getPlanete(
-          contrat.relationships.planete.links.related
-        ) as any;
-        contrat.attributes.image = planete.attributes.image;
-        contrat.attributes.nom = planete.attributes.nom;
-        this.contrats.push(contrat.attributes);
-      }
+      if (this.reservations && this.reservations.length > 0)
+        for (const reservation of this.reservations) {
+          const contrat = await getContrat(
+            reservation.relationships.contrat.links.related
+          );
+          this.primeTotale += contrat.attributes.prime;
+          const planete = (await getPlanete(
+            contrat.relationships.planete.links.related
+          )) as any;
+          contrat.attributes.image = planete.image;
+          contrat.attributes.nom = planete.nom;
+          this.contrats.push(contrat.attributes);
+        }
     },
   },
 });

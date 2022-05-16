@@ -10,7 +10,7 @@
         color="secondary"
         variant="outlined"
         v-model="email"
-        prepend-inner-icon="mdi-currency-usd"
+        prepend-inner-icon="mdi-at"
         class="text-center p-1 rounded"
       ></v-text-field>
       <div class="w-100"></div>
@@ -19,12 +19,14 @@
         color="secondary"
         variant="outlined"
         v-model="motdepasse"
-        prepend-inner-icon="mdi-currency-usd"
-        type="password"
+        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append="show = !show"
+        :type="show ? 'text' : 'password'"
+        prepend-inner-icon="mdi-lock"
         class="text-center p-1 rounded"
       ></v-text-field>
       <div class="w-100"></div>
-      <button-component type="submit" class="px-5 my-3" @click="login"
+      <button-component type="submit" class="px-5 my-3"
         >Se connecter</button-component
       >
       <div class="w-100"></div>
@@ -42,6 +44,7 @@ import { POSITION, useToast } from "vue-toastification";
 export default defineComponent({
   data: () => {
     return {
+      show: false,
       email: "",
       motdepasse: "",
       erreur: undefined as string | undefined,
@@ -49,9 +52,6 @@ export default defineComponent({
   },
   setup: () => {
     const toast = useToast();
-    return { toast };
-  },
-  created() {
     const options: any = {
       position: POSITION.TOP_RIGHT,
       timeout: 3016,
@@ -67,10 +67,13 @@ export default defineComponent({
       rtl: false,
       toastClassName: "my-custom-toast-class",
     };
+    return { toast, options };
+  },
+  created() {
     if (this.$route.query.redirect)
       this.toast.error(
         "Vous devez être connecté pour accéder à cette page",
-        options
+        this.options
       );
   },
   methods: {
@@ -88,8 +91,13 @@ export default defineComponent({
         .then((response) => {
           if (response.status === 200) {
             return response.json();
-          } else {
+          } else if (response.status === 401) {
             this.erreur = "Email ou mot de passe incorrect";
+          } else {
+            this.toast.error(
+              "Une erreur est survenue, veuillez réessayer plus tard",
+              this.options
+            );
           }
         })
         .then((data) => {

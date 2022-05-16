@@ -56,7 +56,7 @@
             class="align-self-end"
             :disabled="clicked"
           >
-            <small @click="reserver()" v-if="!clicked" class="label"
+            <small @mouseup="reserver" v-if="!clicked" class="label"
               >Réserver</small
             >
           </v-btn>
@@ -123,14 +123,17 @@ export default defineComponent({
   },
   methods: {
     async reserver() {
-      console.log(this.url);
-      const res = await reserverContrat(this.url);
+      const res = await reserverContrat(
+        this.url,
+        localStorage.getItem("token")
+      );
 
-      if (res.status === 200) {
+      if (res.status === 201) {
         this.message("Reservation effectuée", "success");
         this.clicked = true;
       } else if (res.status === 409) {
-        this.message("Vous avez déjà réservé ce contrat", "error");
+        this.message("Vous avez déjà réservé ce contrat", "info");
+        this.clicked = true;
       } else if (res.status === 401) {
         this.message(LinkComponent, "error", {
           click: () => this.$router.push({ name: "login" }),

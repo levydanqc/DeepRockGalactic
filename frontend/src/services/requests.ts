@@ -56,7 +56,7 @@ export async function getPlanete(url: string) {
   return { image: data.attributes.image, nom: data.attributes.nom };
 }
 
-export async function reserverContrat(url: string) {
+export async function reserverContrat(url: string, token: string | null) {
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -67,10 +67,8 @@ export async function reserverContrat(url: string) {
   return response;
 }
 
-export async function getReservations() {
-  const url =
-    ROUTES.RESERVATION +
-    `?estTermine=true&user=${localStorage.getItem("token")}`;
+export async function getReservations(token: string | null) {
+  const url = ROUTES.RESERVATION + `?estTermine=true&user=${token}`;
 
   const response = await fetch(url, {
     method: "GET",

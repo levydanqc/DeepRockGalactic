@@ -17,10 +17,10 @@ exports.getReservations = (req, res, next) => {
 
   if (user) {
     const decodedToken = jwt.verify(user, process.env.SECRET_JWT);
-    query.mineurId = decodedToken.userId;
+    query.mineurId = { $in: decodedToken.userId };
   }
   if (estTermine) query.estTermine = estTermine;
-
+  console.log(query);
   Reservation.find(query)
     .then((reservations) => {
       /* #swagger.responses[200] = { 
@@ -30,6 +30,7 @@ exports.getReservations = (req, res, next) => {
             }]
         }
       */
+      console.log(reservations);
       if (reservations.length > 0)
         res.status(200).json({
           data: formated(reservations),
@@ -91,9 +92,7 @@ exports.createReservation = (req, res, next) => {
 
   const { contratId } = req.params;
 
-  const mineurId = req.params.mineurId
-    ? req.params.mineurId
-    : req.user.mineurId;
+  const mineurId = req.params.mineurId ? req.params.mineurId : req.user.userId;
 
   Mineur.findById(mineurId).then((mineur) => {
     if (!mineur) {
@@ -223,48 +222,67 @@ exports.updateReservation = (req, res, next) => {
   const reservationId = req.params.reservationId;
   const { mineurId, contratId, estTermine } = req.body;
 
+  console.log(reservationId, mineurId, contratId, estTermine);
+
   Mineur.findById(mineurId).then((mineur) => {
     if (!mineur) {
-      return res.status(404).json({ message: "Mineur non trouvé" });
-    }
-  });
-  Contrat.findById(contratId).then((contrat) => {
-    if (!contrat) {
-      return res.status(404).json({ message: "Contrat non trouvé" });
-    }
-  });
-
-  Reservation.findById(reservationId)
-    .then((reservation) => {
-      if (!reservation) {
-        const error = new Error("Réservation non trouvé.");
-        error.statusCode = 404;
-        throw error;
-      }
-      reservation.mineurId = mineurId;
-      reservation.contratId = contratId;
-      reservation.estTermine = estTermine;
-      return reservation.save();
-    })
-    .then((reservation) => {
-      /* #swagger.responses[200] = { 
-            description: "Réservation modifiée",
-            schema: {
-                message: "Réservation modifiée avec succès!",
-                réservation: {
-                    "$ref": "#/definitions/Reservation"
-                }
+      /* #swagger.responses[404] = { 
+            description: "Mineur non trouvé.",
             }
-        }
+          }
       */
-      res.status(200).json({
-        message: "Réservation modifiée avec succès!",
-        data: formated(reservation),
+      console.log("Mineur non trouvé");
+      return res.status(404).json({ message: "Mineur non trouvé" });
+    } else {
+      Contrat.findById(contratId).then((contrat) => {
+        if (!contrat) {
+          /* #swagger.responses[404] = { 
+                description: "Contrat non trouvé",
+                }
+              }
+          */
+          console.log("Contrat non trouvé");
+          return res.status(404).json({ message: "Contrat non trouvé" });
+        } else {
+          Reservation.findById(reservationId)
+            .then((reservation) => {
+              if (!reservation) {
+                /* #swagger.responses[404] = { 
+                      description: "Réservation non trouvé.",
+                      }
+                    }
+                */
+                res.status(404).json({ message: "Réservation non trouvé." });
+              } else {
+                reservation.mineurId = mineurId;
+                reservation.contratId = contratId;
+                reservation.estTermine = estTermine;
+                return reservation.save();
+              }
+            })
+            .then((reservation) => {
+              /* #swagger.responses[200] = { 
+                    description: "Réservation modifiée",
+                    schema: {
+                        message: "Réservation modifiée avec succès!",
+                        réservation: {
+                            "$ref": "#/definitions/Reservation"
+                        }
+                    }
+                }
+              */
+              res.status(200).json({
+                message: "Réservation modifiée avec succès!",
+                data: formated(reservation),
+              });
+            })
+            .catch((err) => {
+              next(err);
+            });
+        }
       });
-    })
-    .catch((err) => {
-      next(err);
-    });
+    }
+  });
 };
 
 function formated(obj) {

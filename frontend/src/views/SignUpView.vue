@@ -1,5 +1,5 @@
 <template>
-  <signup-component></signup-component>
+  <signup-component />
 </template>
 
 <script>
