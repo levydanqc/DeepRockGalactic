@@ -8,12 +8,14 @@
         height="200"
       />
     </header>
-    <nav class="navbar">
-      <router-link class="router-link" to="/">Home</router-link>
-      <router-link class="router-link" to="/planetes">Planètes</router-link>
-      <router-link class="router-link" to="/reservations">Réserver</router-link>
-      <router-link class="router-link" to="/contrats">Contrats</router-link>
-      <router-link class="router-link" to="/auth/login"
+    <nav class="navbar border px-5">
+      <router-link class="router-link nav-item nav-link" to="/"
+        >Home</router-link
+      >
+      <router-link class="router-link nav-item nav-link" to="/statistiques"
+        >Statistiques</router-link
+      >
+      <router-link class="router-link nav-item nav-link" to="/login"
         >Se Connecter</router-link
       >
     </nav>

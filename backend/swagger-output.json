@@ -760,6 +760,9 @@
                 "name": "main"
               }
             }
+          },
+          "401": {
+            "description": "Non Autorisé"
           }
         }
       }

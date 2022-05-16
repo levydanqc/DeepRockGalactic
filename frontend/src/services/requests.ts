@@ -7,7 +7,7 @@ export async function getPlanetes() {
     },
   });
   const data = await response.json();
-  return data.planetes;
+  return data;
 }
 
 export async function getContrats(
@@ -49,7 +49,7 @@ export async function getContrats(
   return data;
 }
 
-async function getPlanetesById(id: number) {
+export async function getPlanetesById(id: number) {
   const response = await fetch(`http://localhost:3000/planetes/${id}`, {
     method: "GET",
     headers: {
@@ -66,6 +66,29 @@ export async function reserverContrat(id: string) {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function getReservations() {
+  const response = await fetch(`http://localhost:3000/reservations`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  const data = await response.json();
+  return data.reservations;
+}
+
+export async function getContratByID(id: string) {
+  const response = await fetch(`http://localhost:3000/contrats/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
     },
   });
   const data = await response.json();
