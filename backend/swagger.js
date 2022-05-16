@@ -1,5 +1,6 @@
 const options = {
   language: "fr",
+  openapi: "3.0.0",
 };
 
 const swaggerAutogen = require("swagger-autogen")(options);
@@ -42,13 +43,16 @@ const doc = {
       description: "Système de recherche",
     },
   ],
-  securityDefinitions: {
-    bearerAuth: {
-      type: "http",
-      scheme: "bearer",
-      bearerFormat: "JWT",
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+      },
     },
   },
+  // security: [{ bearerAuth: [] }],
   definitions: {
     Mineur: {
       $email: "email@exemple.com",

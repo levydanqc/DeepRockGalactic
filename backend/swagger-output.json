@@ -1,12 +1,18 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
     "title": "Deep Rock Galactic API",
     "description": "API de Deep Rock Galactic, un jeu de stratégie en ligne de type RTS"
   },
-  "host": "localhost:3000",
-  "basePath": "/",
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    },
+    {
+      "url": "https://localhost:3000/"
+    }
+  ],
   "tags": [
     {
       "name": "Authentification",
@@ -33,61 +39,66 @@
       "description": "Système de recherche"
     }
   ],
-  "schemes": ["http", "https"],
-  "securityDefinitions": {
-    "bearerAuth": {
-      "type": "http",
-      "scheme": "bearer",
-      "bearerFormat": "JWT"
-    }
-  },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
   "paths": {
     "/auth/login": {
       "post": {
         "tags": ["Authentification"],
         "summary": "Connexion d'un utilisateur",
         "description": "Retourne un token d'authentification",
-        "parameters": [
-          {
-            "name": "Utilisateur",
-            "in": "body",
-            "description": "Informations de l'utilisateur",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "type": "string",
-                  "example": "email@exemple.com"
-                },
-                "motdepasse": {
-                  "type": "string",
-                  "example": "motdepasse123"
-                }
-              }
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Utilisateur authentifié",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "token": {
-                  "type": "string",
-                  "example": "string"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
           "401": {
             "description": "Email ou mot de passe invalide"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "motdepasse": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -97,29 +108,38 @@
         "tags": ["Authentification"],
         "summary": "Inscription d'un utilisateur",
         "description": "Retourne l'id de l'utilisateur",
-        "parameters": [
-          {
-            "name": "Utilisateur",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Mineur"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "Utilisateur créé avec succès!",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "type": "string",
-                  "example": "string"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -128,6 +148,29 @@
           },
           "409": {
             "description": "Utilisateur existant"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "nom": {
+                    "example": "any"
+                  },
+                  "motdepasse": {
+                    "example": "any"
+                  },
+                  "niveau": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -142,50 +185,79 @@
             "name": "dangers",
             "in": "query",
             "description": "Niveaux de dangers recherchés, séparés par des virgules",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "planetIds",
             "in": "query",
             "description": "Id des planètes recherchées, séparés par des virgules",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "minDate",
             "in": "query",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "maxDate",
             "in": "query",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "minPrime",
             "in": "query",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "maxPrime",
             "in": "query",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "planets",
             "in": "query",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Liste des contrats",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Contrat"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contrat"
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contrat"
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -204,13 +276,28 @@
         "responses": {
           "200": {
             "description": "Liste des planètes",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Planete"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Planete"
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Planete"
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           }
@@ -226,26 +313,47 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Planete"
+              "$ref": "#/components/schemas/Planete"
             }
           }
         ],
         "responses": {
           "201": {
             "description": "Planète créée",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Planète créée avec succès!"
-                },
-                "planete": {
-                  "$ref": "#/definitions/Planete"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Planète créée avec succès!"
+                    },
+                    "planete": {
+                      "$ref": "#/components/schemas/Planete"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Planète créée avec succès!"
+                    },
+                    "planete": {
+                      "$ref": "#/components/schemas/Planete"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -261,7 +369,12 @@
           "409": {
             "description": "Planète existante"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/planetes/{planeteId}": {
@@ -274,15 +387,26 @@
             "name": "planeteId",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
             "description": "Planete",
-            "schema": {
-              "$ref": "#/definitions/Planete"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Planete"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Planete"
+                }
+              }
             }
           },
           "404": {
@@ -299,7 +423,9 @@
             "name": "planeteId",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "value": "626339247fe023c3b50ba0d4"
           },
           {
@@ -307,26 +433,47 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Planete"
+              "$ref": "#/components/schemas/Planete"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "Planète modifiée",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Planète modifiée avec succès!"
-                },
-                "planète": {
-                  "$ref": "#/definitions/Planete"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Planète modifiée avec succès!"
+                    },
+                    "planète": {
+                      "$ref": "#/components/schemas/Planete"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Planète modifiée avec succès!"
+                    },
+                    "planète": {
+                      "$ref": "#/components/schemas/Planete"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -336,7 +483,12 @@
           "403": {
             "description": "Interdit"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": ["Planètes"],
@@ -347,23 +499,43 @@
             "name": "planeteId",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
             "description": "Planète supprimée",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Planète supprimée avec succès!"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Planète supprimée avec succès!"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Planète supprimée avec succès!"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -376,7 +548,12 @@
           "404": {
             "description": "Non Trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/mineurs/": {
@@ -388,13 +565,28 @@
         "responses": {
           "200": {
             "description": "Liste des mineurs",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Mineur"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Mineur"
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Mineur"
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           }
@@ -410,26 +602,47 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Mineur"
+              "$ref": "#/components/schemas/Mineur"
             }
           }
         ],
         "responses": {
           "201": {
             "description": "Mineur créé",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Mineur créé avec succès!"
-                },
-                "mineur": {
-                  "$ref": "#/definitions/Mineur"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Mineur créé avec succès!"
+                    },
+                    "mineur": {
+                      "$ref": "#/components/schemas/Mineur"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Mineur créé avec succès!"
+                    },
+                    "mineur": {
+                      "$ref": "#/components/schemas/Mineur"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -445,7 +658,12 @@
           "409": {
             "description": "Mineur existant"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/mineurs/{mineurId}": {
@@ -458,15 +676,26 @@
             "name": "mineurId",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
             "description": "Mineur",
-            "schema": {
-              "$ref": "#/definitions/Mineur"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mineur"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mineur"
+                }
+              }
             }
           },
           "404": {
@@ -483,7 +712,9 @@
             "name": "mineurId",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "value": "626339247fe023c3b50ba0d4"
           },
           {
@@ -491,26 +722,47 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Mineur"
+              "$ref": "#/components/schemas/Mineur"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "Mineur modifié",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Mineur modifié avec succès!"
-                },
-                "mineur": {
-                  "$ref": "#/definitions/Mineur"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Mineur modifié avec succès!"
+                    },
+                    "mineur": {
+                      "$ref": "#/components/schemas/Mineur"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Mineur modifié avec succès!"
+                    },
+                    "mineur": {
+                      "$ref": "#/components/schemas/Mineur"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -523,7 +775,12 @@
           "404": {
             "description": "Non Trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": ["Mineurs"],
@@ -534,23 +791,43 @@
             "name": "mineurId",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
             "description": "Mineur supprimé",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Mineur supprimé avec succès!"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Mineur supprimé avec succès!"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Mineur supprimé avec succès!"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -563,7 +840,12 @@
           "404": {
             "description": "Non Trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/contrats/": {
@@ -575,13 +857,28 @@
         "responses": {
           "200": {
             "description": "Liste des contrats",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Contrat"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contrat"
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contrat"
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           }
@@ -597,26 +894,47 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Contrat"
+              "$ref": "#/components/schemas/Contrat"
             }
           }
         ],
         "responses": {
           "201": {
             "description": "Contrat créé",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Contrat créé avec succès!"
-                },
-                "contrat": {
-                  "$ref": "#/definitions/Contrat"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Contrat créé avec succès!"
+                    },
+                    "contrat": {
+                      "$ref": "#/components/schemas/Contrat"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Contrat créé avec succès!"
+                    },
+                    "contrat": {
+                      "$ref": "#/components/schemas/Contrat"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -629,7 +947,12 @@
           "409": {
             "description": "Contrat existant"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/contrats/{contratId}": {
@@ -642,15 +965,26 @@
             "name": "contratId",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
             "description": "Contrat",
-            "schema": {
-              "$ref": "#/definitions/Contrat"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contrat"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contrat"
+                }
+              }
             }
           },
           "404": {
@@ -667,7 +1001,9 @@
             "name": "contratId",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "value": "626339247fe023c3b50ba0d4"
           },
           {
@@ -675,26 +1011,47 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Contrat"
+              "$ref": "#/components/schemas/Contrat"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "Contrat modifié",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Contrat modifié avec succès!"
-                },
-                "contrat": {
-                  "$ref": "#/definitions/Contrat"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Contrat modifié avec succès!"
+                    },
+                    "contrat": {
+                      "$ref": "#/components/schemas/Contrat"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Contrat modifié avec succès!"
+                    },
+                    "contrat": {
+                      "$ref": "#/components/schemas/Contrat"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -704,7 +1061,12 @@
           "403": {
             "description": "Interdit"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": ["Contrats"],
@@ -715,23 +1077,43 @@
             "name": "contratId",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
             "description": "Contrat supprimé",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Contrat supprimé avec succès!"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Contrat supprimé avec succès!"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Contrat supprimé avec succès!"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -744,7 +1126,12 @@
           "404": {
             "description": "Non Trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/reservations/": {
@@ -756,24 +1143,43 @@
           {
             "name": "user",
             "in": "query",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "estTermine",
             "in": "query",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Liste des réservations",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Reservation"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reservation"
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reservation"
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -793,15 +1199,26 @@
             "name": "reservationId",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
             "description": "Reservation",
-            "schema": {
-              "$ref": "#/definitions/Reservation"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reservation"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reservation"
+                }
+              }
             }
           },
           "404": {
@@ -818,7 +1235,9 @@
             "name": "reservationId",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "value": "626339247fe023c3b50ba0d4"
           },
           {
@@ -826,26 +1245,47 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Reservation"
+              "$ref": "#/components/schemas/Reservation"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "Réservation modifiée",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Réservation modifiée avec succès!"
-                },
-                "réservation": {
-                  "$ref": "#/definitions/Reservation"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Réservation modifiée avec succès!"
+                    },
+                    "réservation": {
+                      "$ref": "#/components/schemas/Reservation"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Réservation modifiée avec succès!"
+                    },
+                    "réservation": {
+                      "$ref": "#/components/schemas/Reservation"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -856,9 +1296,14 @@
             "description": "Interdit"
           },
           "404": {
-            "description": "Non Trouvé"
+            "description": "Réservation non trouvé."
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": ["Réservations"],
@@ -869,23 +1314,43 @@
             "name": "reservationId",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "value": "626339247fe023c3b50ba0d4"
           }
         ],
         "responses": {
           "200": {
             "description": "Réservation supprimée",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Réservation supprimée avec succès!"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Réservation supprimée avec succès!"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Réservation supprimée avec succès!"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -898,7 +1363,12 @@
           "404": {
             "description": "Non Trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/reservations/{contratId}": {
@@ -911,33 +1381,56 @@
             "name": "contratId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "Reservation",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Reservation"
+              "$ref": "#/components/schemas/Reservation"
             }
           }
         ],
         "responses": {
           "201": {
             "description": "Réservation créée",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Réservation créée avec succès!"
-                },
-                "reservation": {
-                  "$ref": "#/definitions/Reservation"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Réservation créée avec succès!"
+                    },
+                    "reservation": {
+                      "$ref": "#/components/schemas/Reservation"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Réservation créée avec succès!"
+                    },
+                    "reservation": {
+                      "$ref": "#/components/schemas/Reservation"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -950,7 +1443,12 @@
           "409": {
             "description": "Réservation existante"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/reservations/{mineurId}/{contratId}": {
@@ -963,39 +1461,64 @@
             "name": "mineurId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "contratId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "Reservation",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Reservation"
+              "$ref": "#/components/schemas/Reservation"
             }
           }
         ],
         "responses": {
           "201": {
             "description": "Réservation créée",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Réservation créée avec succès!"
-                },
-                "reservation": {
-                  "$ref": "#/definitions/Reservation"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Réservation créée avec succès!"
+                    },
+                    "reservation": {
+                      "$ref": "#/components/schemas/Reservation"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               },
-              "xml": {
-                "name": "main"
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Réservation créée avec succès!"
+                    },
+                    "reservation": {
+                      "$ref": "#/components/schemas/Reservation"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
               }
             }
           },
@@ -1008,94 +1531,126 @@
           "409": {
             "description": "Réservation existante"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     }
   },
-  "definitions": {
-    "Mineur": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "example": "email@exemple.com"
-        },
-        "nom": {
-          "type": "string",
-          "example": "Joe Dassin"
-        },
-        "motdepasse": {
-          "type": "string",
-          "example": "motdepasse123"
-        },
-        "niveau": {
-          "type": "number",
-          "example": 1
-        }
-      },
-      "required": ["email", "nom", "motdepasse", "niveau"]
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     },
-    "Planete": {
-      "type": "object",
-      "properties": {
-        "nom": {
-          "type": "string",
-          "example": "Terre"
+    "schemas": {
+      "Mineur": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "email@exemple.com"
+          },
+          "nom": {
+            "type": "string",
+            "example": "Joe Dassin"
+          },
+          "motdepasse": {
+            "type": "string",
+            "example": "motdepasse123"
+          },
+          "niveau": {
+            "type": "number",
+            "example": 1
+          }
         },
-        "image": {
-          "type": "string",
-          "example": "https://picsum.photos/200"
+        "required": ["email", "nom", "motdepasse", "niveau"],
+        "xml": {
+          "name": "Mineur"
         }
       },
-      "required": ["nom", "image"]
-    },
-    "Contrat": {
-      "type": "object",
-      "properties": {
-        "prime": {
-          "type": "number",
-          "example": 100
+      "Planete": {
+        "type": "object",
+        "properties": {
+          "nom": {
+            "type": "string",
+            "example": "Terre"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://picsum.photos/200"
+          }
         },
-        "danger": {
-          "type": "number",
-          "example": 1
-        },
-        "ressource": {
-          "type": "string",
-          "example": "fer"
-        },
-        "quantiteRessource": {
-          "type": "number",
-          "example": 100
-        },
-        "dateExpiration": {
-          "type": "string",
-          "example": "2022-01-01"
+        "required": ["nom", "image"],
+        "xml": {
+          "name": "Planete"
         }
       },
-      "required": [
-        "prime",
-        "danger",
-        "ressource",
-        "quantiteRessource",
-        "dateExpiration"
-      ]
-    },
-    "Reservation": {
-      "type": "object",
-      "properties": {
-        "mineurId": {
-          "$ref": "#/definitions/Mineur"
+      "Contrat": {
+        "type": "object",
+        "properties": {
+          "prime": {
+            "type": "number",
+            "example": 100
+          },
+          "danger": {
+            "type": "number",
+            "example": 1
+          },
+          "ressource": {
+            "type": "string",
+            "example": "fer"
+          },
+          "quantiteRessource": {
+            "type": "number",
+            "example": 100
+          },
+          "dateExpiration": {
+            "type": "string",
+            "example": "2022-01-01"
+          }
         },
-        "planeteId": {
-          "$ref": "#/definitions/Planete"
-        },
-        "estTermine": {
-          "type": "boolean",
-          "example": false
+        "required": [
+          "prime",
+          "danger",
+          "ressource",
+          "quantiteRessource",
+          "dateExpiration"
+        ],
+        "xml": {
+          "name": "Contrat"
         }
       },
-      "required": ["mineurId", "planeteId", "estTermine"]
+      "Reservation": {
+        "type": "object",
+        "properties": {
+          "mineurId": {
+            "xml": {
+              "name": "mineur"
+            },
+            "$ref": "#/components/schemas/Mineur"
+          },
+          "planeteId": {
+            "xml": {
+              "name": "planete"
+            },
+            "$ref": "#/components/schemas/Planete"
+          },
+          "estTermine": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": ["mineurId", "planeteId", "estTermine"],
+        "xml": {
+          "name": "Reservation"
+        }
+      }
     }
   }
 }

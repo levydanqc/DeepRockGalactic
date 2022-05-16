@@ -3,7 +3,7 @@
   <form @submit.prevent="signup" class="mx-auto p-3">
     <span v-if="erreur">{{ erreur }}</span>
     <v-text-field
-      label="Courriel"
+      label="Email"
       color="secondary"
       variant="outlined"
       v-model="email"
@@ -24,7 +24,7 @@
     ></v-text-field>
     <div class="w-100"></div>
     <v-text-field
-      label="Nom d'utilisateur"
+      label="Nom de mineur"
       color="secondary"
       variant="outlined"
       v-model="nom"
