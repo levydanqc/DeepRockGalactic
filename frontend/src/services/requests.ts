@@ -45,7 +45,7 @@ export async function getContrats(
   return data;
 }
 
-async function getPlanete(url: string) {
+export async function getPlanete(url: string) {
   const response = await fetch(url, {
     method: "GET",
     headers: {
@@ -68,19 +68,22 @@ export async function reserverContrat(url: string) {
 }
 
 export async function getReservations() {
-  const response = await fetch(`http://localhost:3000/reservations`, {
+  const url =
+    ROUTES.RESERVATION +
+    `?estTermine=true&user=${localStorage.getItem("token")}`;
+
+  const response = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
   const data = await response.json();
-  return data.reservations;
+  return data.data;
 }
 
-export async function getContratByID(id: string) {
-  const response = await fetch(`http://localhost:3000/contrats/${id}`, {
+export async function getContrat(url: string) {
+  const response = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

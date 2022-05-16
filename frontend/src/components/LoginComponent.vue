@@ -37,6 +37,7 @@
 import { defineComponent } from "vue";
 import ROUTES from "../services/routes";
 import ButtonComponent from "./reusable/ButtonComponent.vue";
+import { POSITION, useToast } from "vue-toastification";
 
 export default defineComponent({
   data: () => {
@@ -45,6 +46,32 @@ export default defineComponent({
       motdepasse: "",
       erreurs: [] as Array<string>,
     };
+  },
+  setup: () => {
+    const toast = useToast();
+    return { toast };
+  },
+  created() {
+    const options: any = {
+      position: POSITION.TOP_RIGHT,
+      timeout: 3016,
+      closeOnClick: true,
+      pauseOnFocusLoss: true,
+      pauseOnHover: true,
+      draggable: true,
+      draggablePercent: 1,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: true,
+      rtl: false,
+      toastClassName: "my-custom-toast-class",
+    };
+    if (this.$route.query.redirect)
+      this.toast.error(
+        "Vous devez être connecté pour accéder à cette page",
+        options
+      );
   },
   methods: {
     login() {

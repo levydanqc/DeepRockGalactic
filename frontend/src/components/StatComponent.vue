@@ -11,7 +11,9 @@
       >
     </v-row>
     <v-row
-      ><h3 class="col mt-3">{{ contrats.length }} contrats trouvés</h3></v-row
+      ><h3 class="col mt-3">
+        {{ contrats.length || 0 }} contrats trouvés
+      </h3></v-row
     >
     <v-row>
       <v-card
@@ -83,36 +85,33 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import {
-  getReservations,
-  getContratByID,
-  getPlanetesById,
-} from "../services/requests";
+import { getReservations, getContrat, getPlanete } from "../services/requests";
 
 export default defineComponent({
   name: "SearchComponent",
   data: () => ({
     contrats: [] as any[],
-    reservations: [],
+    reservations: [] as Array<any>,
     primeTotale: 0,
     mineurId: String,
   }),
   async created() {
     this.reservations = await getReservations();
-    this.loadData();
+    this.loadContrats();
   },
   methods: {
-    async loadData() {
-      for (let index = 0; index < this.reservations.length; index++) {
-        var contrat = await getContratByID(
-          this.reservations[index]["contratId"]
+    async loadContrats() {
+      for (const reservation of this.reservations) {
+        const contrat = await getContrat(
+          reservation.relationships.contrat.links.related
         );
-        var planete = await getPlanetesById(contrat["planeteId"]);
-        contrat.image = planete.image;
-        contrat.nom = planete.nom;
-        console.log(contrat.image);
-        this.contrats.push(contrat);
-        this.primeTotale += this.contrats[this.contrats.length - 1]["prime"];
+        this.primeTotale += contrat.attributes.prime;
+        const planete = getPlanete(
+          contrat.relationships.planete.links.related
+        ) as any;
+        contrat.attributes.image = planete.attributes.image;
+        contrat.attributes.nom = planete.attributes.nom;
+        this.contrats.push(contrat.attributes);
       }
     },
   },

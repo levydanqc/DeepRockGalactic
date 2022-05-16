@@ -10,7 +10,9 @@
     </header>
     <nav class="navbar">
       <router-link class="router-link" to="/">Home</router-link>
-      <router-link class="router-link" to="/statistiques">Statistiques</router-link>
+      <router-link class="router-link" to="/statistiques"
+        >Statistiques</router-link
+      >
       <router-link class="router-link" to="/signup">S'inscrire</router-link>
       <router-link class="router-link" to="/login">Connexion</router-link>
     </nav>
