@@ -50,7 +50,6 @@
         <v-card-actions class="w-100">
           <v-spacer></v-spacer>
           <v-btn
-            @click="reserver"
             rounded="lg"
             :prepend-icon="clicked ? 'mdi-note-check' : 'mdi-note-plus-outline'"
             color="primary"
