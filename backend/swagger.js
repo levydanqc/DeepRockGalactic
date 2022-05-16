@@ -1,5 +1,6 @@
 const options = {
   language: "fr",
+  openapi: "3.0.0",
 };
 
 const swaggerAutogen = require("swagger-autogen")(options);
@@ -11,7 +12,7 @@ const doc = {
     description:
       "API de Deep Rock Galactic, un jeu de stratégie en ligne de type RTS",
   },
-  host: "localhost:3000",
+  host: process.env.URL ?? "localhost:3000",
   basePath: "/",
   schemes: ["http", "https"],
   consumes: ["application/json"],
@@ -42,11 +43,13 @@ const doc = {
       description: "Système de recherche",
     },
   ],
-  securityDefinitions: {
-    bearerAuth: {
-      type: "http",
-      scheme: "bearer",
-      bearerFormat: "JWT",
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+      },
     },
   },
   definitions: {

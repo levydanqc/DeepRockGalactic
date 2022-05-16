@@ -1,9 +1,9 @@
 <template>
   <h1>S'inscrire</h1>
   <form @submit.prevent="signup" class="mx-auto p-3">
-    <span v-if="erreur">{{ erreur }}</span>
+    <span class="text-danger" v-if="erreur">{{ erreur }}</span>
     <v-text-field
-      label="Courriel"
+      label="Email"
       color="secondary"
       variant="outlined"
       v-model="email"
@@ -24,7 +24,7 @@
     ></v-text-field>
     <div class="w-100"></div>
     <v-text-field
-      label="Nom d'utilisateur"
+      label="Nom de mineur"
       color="secondary"
       variant="outlined"
       v-model="nom"
@@ -77,8 +77,13 @@ export default defineComponent({
   },
   methods: {
     signup() {
+      var regex = /\S+@\S+\.\S+/;
       if (this.email.length === 0) {
         this.erreur = "Veuillez entrer un courriel";
+        return;
+      }
+      if (!this.email.match(regex)) {
+        this.erreur = "Veuillez entrer un courriel valide";
         return;
       }
       if (this.motdepasse.length === 0) {
