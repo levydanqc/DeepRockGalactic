@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 import StatistiqueView from "../views/StatistiqueView.vue";
-import SignupView from "../views/SignUpView.vue";
+import SignupView from "../views/SignupView.vue";
 import LoginView from "../views/LoginView.vue";
 import SearchView from "../views/SearchView.vue";
 import LogoutView from "../views/LogoutView.vue";
