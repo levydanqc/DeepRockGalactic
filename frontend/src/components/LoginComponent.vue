@@ -2,9 +2,9 @@
   <div>
     <h1>Connexion</h1>
     <form @submit.prevent="login" class="mx-auto p-3">
-      <div class="text-danger p-1 mx-4 rounded" v-if="erreurs.length">
-        <span v-for="erreur in erreurs" :key="erreur">{{ erreur }}</span>
-      </div>
+      <span class="text-danger p-1 mx-4 rounded" v-if="erreur">
+        {{ erreur }}
+      </span>
       <v-text-field
         label="Courriel"
         color="secondary"
@@ -44,7 +44,7 @@ export default defineComponent({
     return {
       email: "",
       motdepasse: "",
-      erreurs: [] as Array<string>,
+      erreur: undefined as string | undefined,
     };
   },
   setup: () => {
@@ -89,12 +89,13 @@ export default defineComponent({
           if (response.status === 200) {
             return response.json();
           } else {
-            this.erreurs.push("Email ou mot de passe incorrect");
+            this.erreur = "Email ou mot de passe incorrect";
           }
         })
         .then((data) => {
           localStorage.setItem("token", data.token);
           this.$router.push("/");
+          this.$forceUpdate();
         });
     },
   },

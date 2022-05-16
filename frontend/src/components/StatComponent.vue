@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="border-bottom">
-      <v-col><h1>Vos contrats complètés</h1></v-col>
+      <v-col><h1>Vos contrats complétés</h1></v-col>
       <v-col
         ><h5 class="mt-3">
           Totale des primes:

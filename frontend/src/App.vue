@@ -8,14 +8,7 @@
         height="200"
       />
     </header>
-    <nav class="navbar">
-      <router-link class="router-link" to="/">Home</router-link>
-      <router-link class="router-link" to="/statistiques"
-        >Statistiques</router-link
-      >
-      <router-link class="router-link" to="/signup">S'inscrire</router-link>
-      <router-link class="router-link" to="/login">Connexion</router-link>
-    </nav>
+    <navbar-component :key="$route.fullPath" />
     <router-view />
   </div>
 </template>
@@ -44,6 +37,7 @@ nav {
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import NavbarComponent from "./components/NavbarComponent.vue";
 
 export default defineComponent({
   name: "App",
@@ -52,6 +46,9 @@ export default defineComponent({
     return {
       //
     };
+  },
+  components: {
+    NavbarComponent,
   },
 });
 </script>
