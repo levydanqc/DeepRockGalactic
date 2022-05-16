@@ -34,14 +34,7 @@
               ></v-text-field>
             </v-row>
             <v-row class="w-100">
-              <v-btn
-                @click="loadContrats"
-                variant="outlined"
-                color="primary"
-                class="w-100"
-              >
-                Appliquer
-              </v-btn>
+              <button-component @apply="loadContrats()" />
             </v-row>
           </v-container>
         </expansion-panel>
@@ -76,14 +69,7 @@
               </v-combobox>
             </v-row>
             <v-row class="w-100">
-              <v-btn
-                @click="loadContrats"
-                variant="outlined"
-                color="primary"
-                class="w-100"
-              >
-                Appliquer
-              </v-btn>
+              <button-component @apply="loadContrats()" />
             </v-row>
           </v-container>
         </expansion-panel>
@@ -106,7 +92,9 @@
       </v-col>
 
       <v-col cols="7" class="mx-auto">
-        <p class="h4 text-start">{{ contrats.length }} contrats trouvés</p>
+        <p class="h4 text-start">
+          {{ contrats.length || 0 }} contrat(s) trouvé(s)
+        </p>
         <v-divider></v-divider>
         <contrat-card
           class="my-3"
@@ -128,22 +116,23 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ExpansionPanel from "./ExpansionPanel.vue";
-import ContratCard from "./ContratCard.vue";
+import ExpansionPanel from "./reusable/ExpansionPanel.vue";
+import ContratCard from "./reusable/ContratCard.vue";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { getPlanetes, getContrats } from "../services/requests";
+import ButtonComponent from "./reusable/ButtonComponent.vue";
 
 export default defineComponent({
   name: "SearchComponent",
   data: () => ({
-    contrats: [] as any[],
+    contrats: [] as Array<any>,
     minPrime: "",
     maxPrime: "",
-    dates: [],
-    dangers: [],
-    chips: [],
-    planets: [],
+    dates: [] as Array<Date>,
+    dangers: [] as Array<number>,
+    chips: [] as Array<string>,
+    planets: [] as Array<string>,
   }),
   computed: {
     planetsNames() {
@@ -155,7 +144,7 @@ export default defineComponent({
           return obj?.nom === c;
         })
       );
-      return planets?.map((p) => p?.["_id"]) as unknown as string[];
+      return planets?.map((p: any) => p?.["_id"]) as unknown as string[];
     },
   },
   async created() {
@@ -166,6 +155,7 @@ export default defineComponent({
     ExpansionPanel,
     Datepicker,
     ContratCard,
+    ButtonComponent,
   },
   watch: {
     dates() {
