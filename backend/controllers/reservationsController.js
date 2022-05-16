@@ -76,10 +76,11 @@ exports.createReservation = (req, res, next) => {
     }
   */
 
-  const { mineurId, contratId } = req.params;
+  const { contratId } = req.params;
 
-  console.log(mineurId, contratId);
-  console.log("reservation");
+  const mineurId = req.params.mineurId
+    ? req.params.mineurId
+    : req.user.mineurId;
 
   Mineur.findById(mineurId).then((mineur) => {
     if (!mineur) {
