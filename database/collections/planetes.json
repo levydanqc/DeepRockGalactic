@@ -2,97 +2,81 @@
   {
     "_id": { "$oid": "625f480604c9aca57a7ad22a" },
     "nom": "Krypto",
-    "image": "planet_1.png",
-    "__v": 0
+    "image": "planet_1.png"
   },
   {
     "_id": { "$oid": "625f487304c9aca57a7ad22c" },
     "nom": "Coruscant",
-    "image": "planet_2.png",
-    "__v": 0
+    "image": "planet_2.png"
   },
   {
     "_id": { "$oid": "625f4a9b3c6e0131874ac558" },
     "nom": "Omicron Persei 8",
-    "image": "planet_3.png",
-    "__v": 0
+    "image": "planet_3.png"
   },
   {
     "_id": { "$oid": "625f4aba3c6e0131874ac55a" },
     "nom": "Magrathea",
-    "image": "planet_4.png",
-    "__v": 0
+    "image": "planet_4.png"
   },
   {
     "_id": { "$oid": "625f4c9c6e433a97d6996d5a" },
     "nom": "Gallifrey",
-    "image": "planet_5.png",
-    "__v": 0
+    "image": "planet_5.png"
   },
   {
     "_id": { "$oid": "6265ebee36e07c33279c1cd1" },
     "nom": "Vulcan",
-    "image": "planet_6.png",
-    "__v": 0
+    "image": "planet_6.png"
   },
   {
     "_id": { "$oid": "6265f73f995a50c7205fae3b" },
     "nom": "Qo'noS",
-    "image": "planet_7.png",
-    "__v": 0
+    "image": "planet_7.png"
   },
   {
     "_id": { "$oid": "6265f74d995a50c7205fae45" },
     "nom": "Phaedos",
-    "image": "planet_8.png",
-    "__v": 0
+    "image": "planet_8.png"
   },
   {
     "_id": { "$oid": "6265f755995a50c7205fae4f" },
     "nom": "Abydos",
-    "image": "planet_9.png",
-    "__v": 0
+    "image": "planet_9.png"
   },
   {
     "_id": { "$oid": "6266c0c32383df77bc881d66" },
     "nom": "Minbar",
-    "image": "planet_10.png",
-    "__v": 0
+    "image": "planet_10.png"
   },
   {
     "_id": { "$oid": "6266c0ee2383df77bc881d70" },
     "nom": "Kobol",
-    "image": "planet_11.png",
-    "__v": 0
+    "image": "planet_11.png"
   },
   {
     "_id": { "$oid": "6266c0f22383df77bc881d76" },
     "nom": "Mongo",
-    "image": "planet_12.png",
-    "__v": 0
+    "image": "planet_12.png"
   },
   {
     "_id": { "$oid": "62672548a951a48d6c401915" },
     "nom": "Cybertron",
-    "image": "planet_13.png",
-    "__v": 0
+    "image": "planet_13.png"
   },
   {
     "_id": { "$oid": "62672597a951a48d6c401917" },
     "nom": "Vegeta",
-    "image": "planet_14.png",
-    "__v": 0
+    "image": "planet_14.png"
   },
   {
     "_id": { "$oid": "626725a3a951a48d6c401919" },
     "nom": "Asgard",
-    "image": "planet_15.png",
-    "__v": 0
+    "image": "planet_15.png"
   },
   {
     "_id": { "$oid": "626729b03889b8e5d0f88770" },
     "nom": "Oa",
-    "image": "planet_16.png",
-    "__v": 0
+    "image": "planet_16.png"
   }
 ]

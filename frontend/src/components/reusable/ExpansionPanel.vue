@@ -39,7 +39,7 @@ export default defineComponent({
   font-weight: bold;
   cursor: pointer;
   &:hover {
-    color: #42b983;
+    color: var(--hover-color);
   }
 }
 </style>

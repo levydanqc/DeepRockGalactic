@@ -1,5 +1,6 @@
 "use strict";
 
+const { format } = require("prettier");
 const Contrat = require("../models/contrat");
 
 exports.getContrats = (req, res, next) => {
@@ -18,7 +19,7 @@ exports.getContrats = (req, res, next) => {
         }
       */
       res.status(200).json({
-        contrats,
+        data: this.formated(contrats),
       });
     })
     .catch((err) => {
@@ -48,7 +49,7 @@ exports.getContrat = (req, res, next) => {
             }
         }
       */
-        res.status(200).json(contrat);
+        res.json(this.formated(contrat));
       } else {
         res.status(404).json({ message: "Contrat non trouvé" });
       }
@@ -129,7 +130,7 @@ exports.createContrat = (req, res, next) => {
         */
             res.status(201).json({
               message: "Contrat créé avec succès!",
-              contrat: contrat,
+              data: this.formated(contrat),
             });
           })
           .catch((err) => {
@@ -249,10 +250,38 @@ exports.updateContrat = (req, res, next) => {
       */
       res.status(200).json({
         message: "Contrat modifié avec succès!",
-        contrat: contrat,
+        data: this.formated(contrat),
       });
     })
     .catch((err) => {
       next(err);
     });
+};
+
+exports.formated = (obj) => {
+  const url = process.env.URL || "http://localhost:3000";
+
+  const links = {
+    self: `${url}/contrats/${obj._id}`,
+    collection: `${url}/contrats`,
+    reserve: `${url}/reservations/${obj._id}`,
+  };
+
+  const relationships = {
+    planete: {
+      links: {
+        related: `${url}/planetes/${obj.planeteId}`,
+      },
+    },
+  };
+
+  if (obj.length > 0) {
+    const objs = [];
+    for (let i = 0; i < obj.length; i++) {
+      objs.push(this.formated(obj[i]));
+    }
+    return objs;
+  }
+
+  return { attributes: obj, links, relationships };
 };

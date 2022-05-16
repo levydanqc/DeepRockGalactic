@@ -109,7 +109,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Utilisateur créé",
+            "description": "Utilisateur créé avec succès!",
             "schema": {
               "type": "object",
               "properties": {
@@ -838,6 +838,9 @@
           },
           "403": {
             "description": "Interdit"
+          },
+          "404": {
+            "description": "Non Trouvé"
           }
         }
       },
@@ -930,6 +933,9 @@
           },
           "401": {
             "description": "Non Autorisé"
+          },
+          "404": {
+            "description": "Non Trouvé"
           },
           "409": {
             "description": "Réservation existante"

@@ -1,52 +1,30 @@
 [
   {
-    "_id": { "$oid": "62633e8bce6292a4090a9127" },
-    "email": "danlevy.ca@icloud.com",
-    "nom": "Lempi_Leannon",
-    "motdepasse": "$2a$12$YiexlYCb8ITqNdpANAwHSOOb4K8KH/LKDD4r104P6mS/adAkYbbXS",
-    "niveau": 2,
-    "createdAt": { "$date": "2022-04-22T23:47:23.94Z" },
-    "updatedAt": { "$date": "2022-04-22T23:47:23.94Z" },
-    "__v": 0
-  },
-  {
     "_id": { "$oid": "62672524a951a48d6c401911" },
     "email": "Collin.Kozey33@yahoo.com",
     "nom": "Waino.Corwin",
     "motdepasse": "$2a$12$ykvUDPvvLF0hmnrTWzlahefXXEFm6C.97UFgKdxIELXCf1PZCeZR6",
-    "niveau": 2,
-    "createdAt": { "$date": "2022-04-25T22:48:04.935Z" },
-    "updatedAt": { "$date": "2022-04-25T22:48:04.935Z" },
-    "__v": 0
+    "niveau": 2
   },
   {
     "_id": { "$oid": "626743fad0d3e81d53466e27" },
     "email": "Jaylen_Volkman@yahoo.com",
     "nom": "Tomasa.Bailey",
     "motdepasse": "$2a$12$ZQ8wDLDwXu.uCVYRTXbuk.HP/jD8at6f2hVhgUlYZW1lgi3YpZQ1q",
-    "niveau": 1,
-    "createdAt": { "$date": "2022-04-26T00:59:38.812Z" },
-    "updatedAt": { "$date": "2022-04-26T00:59:38.812Z" },
-    "__v": 0
+    "niveau": 1
   },
   {
     "_id": { "$oid": "626749e0fa3d7d8e80110052" },
     "email": "Ayden.Kulas44@yahoo.com",
     "nom": "Keshawn.Rau",
     "motdepasse": "$2a$12$nXlgH1uUippHoqvRSnDRa.mMxYesDtmSpeEBAfPVro6JTT1W1IKfW",
-    "niveau": 1,
-    "createdAt": { "$date": "2022-04-26T01:24:48.963Z" },
-    "updatedAt": { "$date": "2022-04-26T01:24:48.963Z" },
-    "__v": 0
+    "niveau": 1
   },
   {
     "_id": { "$oid": "62674b7e563f2f0b49f8c8ba" },
     "email": "Theron_Jakubowski53@yahoo.com",
     "nom": "Dean_Collier85",
     "motdepasse": "$2a$12$0mmLJciY5EvSj.exoSrmEeYICRC0yHvKMi0Xqhvm/GUWilPydc/Ku",
-    "niveau": 2,
-    "createdAt": { "$date": "2022-04-26T01:31:42.793Z" },
-    "updatedAt": { "$date": "2022-04-26T01:31:42.793Z" },
-    "__v": 0
+    "niveau": 2
   }
 ]

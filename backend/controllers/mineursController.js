@@ -19,7 +19,7 @@ exports.getMineurs = (_req, res, next) => {
         }
       */
       res.status(200).json({
-        mineurs,
+        data: formated(mineurs),
       });
     })
     .catch((err) => {
@@ -48,7 +48,9 @@ exports.getMineur = (req, res, next) => {
             }
         }
       */
-        res.status(200).json(mineur);
+        res.status(200).json({
+          data: formated(mineur),
+        });
       } else {
         res.status(404).json({ message: "Mineur non trouvé" });
       }
@@ -112,9 +114,10 @@ exports.createMineur = (req, res, next) => {
                 }
             }
           */
-          res
-            .status(201)
-            .json({ message: "Mineur créé avec succès!", mineur: mineur });
+          res.status(201).json({
+            message: "Mineur créé avec succès!",
+            data: formated(mineur),
+          });
         })
         .catch((err) => {
           next(err);
@@ -217,7 +220,7 @@ exports.updateMineur = (req, res, next) => {
             */
             res.status(200).json({
               message: "Mineur modifié avec succès",
-              mineur: mineur,
+              data: formated(mineur),
             });
           } else {
             res.status(404).json({ message: "Mineur non trouvé" });
@@ -231,3 +234,24 @@ exports.updateMineur = (req, res, next) => {
       next(err);
     });
 };
+
+function formated(obj) {
+  const url = process.env.URL || "http://localhost:3000";
+
+  const links = {
+    self: `${url}/mineurs/${obj._id}`,
+    collection: `${url}/mineurs`,
+  };
+
+  const relationships = {};
+
+  if (obj.length > 0) {
+    const objs = [];
+    for (let i = 0; i < obj.length; i++) {
+      objs.push(formated(obj[i]));
+    }
+    return objs;
+  }
+
+  return { attributes: obj, links, relationships };
+}

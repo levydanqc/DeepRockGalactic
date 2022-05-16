@@ -1,9 +1,9 @@
 <template>
   <div id="content">
-    <header>
+    <header class="m-0">
       <v-img
         :src="require('./assets/drg_logo.png')"
-        class="my-3"
+        class="m-0"
         contain
         height="200"
       />
@@ -25,6 +25,8 @@
 
 <style lang="scss">
 @import "./assets/styles/variables.css";
+@import "bootstrap";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -33,14 +35,26 @@
   color: #2c3e50;
 }
 nav {
-  width: 60vw;
+  width: 100vw;
+  padding: 0 20%;
   font-size: 1.5vw;
   margin: auto;
-  background-color: #686868;
+  @extend .border-bottom;
+  @extend .border-4;
+  border-color: var(--primary-color) !important;
 }
 .router-link {
   font-weight: bold;
-  color: #e0ff2f;
+  color: var(--secondary-color);
+}
+.router-link-exact-active {
+  color: var(--primary-color);
+}
+a {
+  text-decoration: none !important;
+  &:hover {
+    color: var(--hover-color) !important;
+  }
 }
 </style>
 

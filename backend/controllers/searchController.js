@@ -1,6 +1,8 @@
 "use strict";
 
 const Contrat = require("../models/contrat");
+const { formated } = require("../controllers/contratsController");
+const contrat = require("../models/contrat");
 
 exports.createSearch = (req, res, next) => {
   /* 
@@ -44,7 +46,7 @@ exports.createSearch = (req, res, next) => {
   }
 
   Contrat.find(query).then((contrats) => {
-    if (contrats) {
+    if (contrats.length > 0) {
       /* #swagger.responses[200] = { 
             description: "Liste des contrats",
             schema: [{
@@ -52,7 +54,7 @@ exports.createSearch = (req, res, next) => {
             }]
         }
       */
-      res.status(200).json(contrats);
+      res.status(200).json({ data: formated(contrats) });
     } else {
       res.status(404).json({ message: "Aucun contrat trouvé" });
     }

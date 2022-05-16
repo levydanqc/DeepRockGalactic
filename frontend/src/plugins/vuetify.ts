@@ -9,10 +9,10 @@ const lightTheme = {
   dark: false,
   colors: {
     background: "#FFFFFF",
-    primary: "#6200EE",
-    secondary: "#42b983",
-    info: "#EDBA0C",
-    warning: "#FB8C00",
+    primary: "#ac4f06",
+    secondary: "#ffbc00",
+    info: "#0081ff",
+    warning: "#ff8e00",
   },
 };
 

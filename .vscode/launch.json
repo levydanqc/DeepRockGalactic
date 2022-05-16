@@ -5,11 +5,22 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "pwa-node",
+      "name": "Launch File",
+      "program": "${file}",
       "request": "launch",
-      "name": "NodeJs API",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/backend/app.js"
+      "type": "node"
+    },
+    {
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "name": "Backend Debug",
+      "program": "${workspaceFolder}/backend/app.js",
+      "request": "launch",
+      "restart": true,
+      "runtimeExecutable": "nodemon",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
     }
   ]
 }
