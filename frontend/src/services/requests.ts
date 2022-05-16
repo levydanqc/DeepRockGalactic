@@ -64,6 +64,5 @@ export async function reserverContrat(url: string) {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
-  const data = await response.json();
-  return data;
+  return response;
 }

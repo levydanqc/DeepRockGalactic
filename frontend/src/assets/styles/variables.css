@@ -27,3 +27,21 @@
   --dp-icon-color: var(--primary-color);
   --dp-danger-color: #ff6f60;
 }
+
+.router-link {
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.router-link-exact-active {
+  color: var(--primary-color);
+}
+
+a {
+  text-decoration: none !important;
+  color: var(--secondary-color) !important;
+}
+
+a:hover {
+  color: var(--hover-color) !important;
+}

@@ -10,20 +10,15 @@
     </header>
     <nav class="navbar">
       <router-link class="router-link" to="/">Home</router-link>
-      <router-link class="router-link" to="/planetes">Planètes</router-link>
-      <router-link class="router-link" to="/reservations">Réserver</router-link>
-      <router-link class="router-link" to="/contrats">Contrats</router-link>
-      <router-link class="router-link" to="/auth/login"
-        >Se Connecter</router-link
-      >
+      <router-link class="router-link" to="/login">Connexion</router-link>
     </nav>
     <router-view />
   </div>
 </template>
 
 <style lang="scss">
-@import "./assets/styles/variables.css";
 @import "bootstrap";
+@import "./assets/styles/variables.css";
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -40,19 +35,6 @@ nav {
   @extend .border-bottom;
   @extend .border-4;
   border-color: var(--primary-color) !important;
-}
-.router-link {
-  font-weight: bold;
-  color: var(--secondary-color);
-}
-.router-link-exact-active {
-  color: var(--primary-color);
-}
-a {
-  text-decoration: none !important;
-  &:hover {
-    color: var(--hover-color) !important;
-  }
 }
 </style>
 

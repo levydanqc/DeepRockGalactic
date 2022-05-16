@@ -1,6 +1,6 @@
 <template>
   <v-btn @click="$emit('apply')" variant="outlined" class="w-100 bg-primary">
-    Appliquer
+    <slot />
   </v-btn>
 </template>
 

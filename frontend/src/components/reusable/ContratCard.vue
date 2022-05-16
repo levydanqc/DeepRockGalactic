@@ -70,8 +70,9 @@
 <script lang="ts">
 import { reserverContrat } from "@/services/requests";
 import moment from "moment";
-import { defineComponent } from "vue";
+import { Component, defineComponent } from "vue";
 import { POSITION, useToast } from "vue-toastification";
+import LinkComponent from "./LinkComponent.vue";
 
 export default defineComponent({
   name: "ContratCard",
@@ -112,19 +113,34 @@ export default defineComponent({
   data: () => ({
     clicked: false,
   }),
+  setup: () => {
+    const toast = useToast();
+    return { toast };
+  },
   computed: {
     expiration() {
       return moment(this.date).format("DD/MM/YYYY");
     },
   },
   methods: {
-    reserver() {
-      this.clicked = true;
-      const res = reserverContrat(this.url);
-      this.toast("Reservation effectuée");
+    async reserver() {
+      const res = await reserverContrat(this.url);
+
+      if (res.status === 200) {
+        this.message("Reservation effectuée", "success");
+        this.clicked = true;
+      } else if (res.status === 409) {
+        this.message("Vous avez déjà réservé ce contrat", "error");
+      } else if (res.status === 401) {
+        this.message("Vous devez être connecté", "error", {
+          click: () => this.$router.push({ name: "login" }),
+        });
+      } else {
+        this.message("Une erreur est survenue", "error");
+      }
     },
-    toast(message: string) {
-      useToast()(message, {
+    message(message: string | Component, type = "", listener?: any) {
+      const options: any = {
         position: POSITION.TOP_RIGHT,
         timeout: 3016,
         closeOnClick: true,
@@ -138,7 +154,28 @@ export default defineComponent({
         icon: true,
         rtl: false,
         toastClassName: "my-custom-toast-class",
-      });
+      };
+
+      if (listener)
+        return this.toast.error(
+          {
+            component: LinkComponent,
+            listeners: listener,
+          },
+          options
+        );
+
+      switch (type) {
+        case "success":
+          this.toast.success(message, options);
+          break;
+        case "error":
+          this.toast.error(message, options);
+          break;
+        default:
+          this.toast(message, options);
+          break;
+      }
     },
   },
 });

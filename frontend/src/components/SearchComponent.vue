@@ -34,7 +34,9 @@
               ></v-text-field>
             </v-row>
             <v-row class="w-100">
-              <button-component @apply="loadContrats()" />
+              <button-component @apply="loadContrats()"
+                >Appliquer</button-component
+              >
             </v-row>
           </v-container>
         </expansion-panel>
@@ -69,7 +71,9 @@
               </v-combobox>
             </v-row>
             <v-row class="w-100">
-              <button-component @apply="loadContrats()" />
+              <button-component @apply="loadContrats()"
+                >Appliquer</button-component
+              >
             </v-row>
           </v-container>
         </expansion-panel>
