@@ -66,3 +66,26 @@ export async function reserverContrat(url: string) {
   });
   return response;
 }
+
+export async function getReservations() {
+  const response = await fetch(`http://localhost:3000/reservations`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  const data = await response.json();
+  return data.reservations;
+}
+
+export async function getContratByID(id: string) {
+  const response = await fetch(`http://localhost:3000/contrats/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  return data;
+}

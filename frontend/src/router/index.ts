@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
-import SignupView from "../views/SignupView.vue";
+import StatistiqueView from "../views/StatistiqueView.vue";
+import SignUpView from "../views/SignUpView.vue";
 import LoginView from "../views/LoginView.vue";
 import SearchView from "../views/SearchView.vue";
 
@@ -19,6 +20,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: LoginView,
+  },
+  {
+    path: "/statistiques",
+    name: "statistiques",
+    component: StatistiqueView,
   },
 ];
 

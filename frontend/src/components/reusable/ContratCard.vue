@@ -73,6 +73,7 @@ import moment from "moment";
 import { Component, defineComponent } from "vue";
 import { POSITION, useToast } from "vue-toastification";
 import LinkComponent from "./LinkComponent.vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ContratCard",
