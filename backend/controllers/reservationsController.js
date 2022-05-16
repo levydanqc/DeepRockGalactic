@@ -3,6 +3,7 @@
 const Reservation = require("../models/reservation");
 const Mineur = require("../models/mineur");
 const Contrat = require("../models/contrat");
+const jwt = require("jsonwebtoken");
 
 exports.getReservations = (req, res, next) => {
   /* 
@@ -11,7 +12,15 @@ exports.getReservations = (req, res, next) => {
       #swagger.summary = "Obtenir toutes les réservations"
   */
 
-  const query = { mineurId: req.user.userId, estTermine: true };
+  const query = {};
+  const { user, estTermine } = req.query;
+
+  if (user) {
+    const decodedToken = jwt.verify(user, process.env.SECRET_JWT);
+    query.mineurId = decodedToken.userId;
+  }
+  if (estTermine) query.estTermine = estTermine;
+
   Reservation.find(query)
     .then((reservations) => {
       /* #swagger.responses[200] = { 
@@ -21,9 +30,11 @@ exports.getReservations = (req, res, next) => {
             }]
         }
       */
-      res.status(200).json({
-        data: formated(reservations),
-      });
+      if (reservations.length > 0)
+        res.status(200).json({
+          data: formated(reservations),
+        });
+      else res.status(404).json({ message: "Aucune réservation trouvé" });
     })
     .catch((err) => {
       next(err);
