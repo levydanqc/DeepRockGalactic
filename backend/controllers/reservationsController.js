@@ -20,7 +20,6 @@ exports.getReservations = (req, res, next) => {
     query.mineurId = { $in: decodedToken.userId };
   }
   if (estTermine) query.estTermine = estTermine;
-  console.log(query);
   Reservation.find(query)
     .then((reservations) => {
       /* #swagger.responses[200] = { 
@@ -30,7 +29,6 @@ exports.getReservations = (req, res, next) => {
             }]
         }
       */
-      console.log(reservations);
       if (reservations.length > 0)
         res.status(200).json({
           data: formated(reservations),
@@ -222,8 +220,6 @@ exports.updateReservation = (req, res, next) => {
   const reservationId = req.params.reservationId;
   const { mineurId, contratId, estTermine } = req.body;
 
-  console.log(reservationId, mineurId, contratId, estTermine);
-
   Mineur.findById(mineurId).then((mineur) => {
     if (!mineur) {
       /* #swagger.responses[404] = { 
@@ -231,7 +227,6 @@ exports.updateReservation = (req, res, next) => {
             }
           }
       */
-      console.log("Mineur non trouvé");
       return res.status(404).json({ message: "Mineur non trouvé" });
     } else {
       Contrat.findById(contratId).then((contrat) => {
@@ -241,7 +236,6 @@ exports.updateReservation = (req, res, next) => {
                 }
               }
           */
-          console.log("Contrat non trouvé");
           return res.status(404).json({ message: "Contrat non trouvé" });
         } else {
           Reservation.findById(reservationId)
