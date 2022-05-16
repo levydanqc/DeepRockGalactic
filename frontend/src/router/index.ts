@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 import StatistiqueView from "../views/StatistiqueView.vue";
-import SignUpView from "../views/SignUpView.vue";
+import SignupView from "../views/SignupView.vue";
 import LoginView from "../views/LoginView.vue";
 import SearchView from "../views/SearchView.vue";
+import LogoutView from "../views/LogoutView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/signup",
     name: "signup",
-    component: SignUpView,
+    component: SignupView,
   },
   {
     path: "/login",
@@ -27,19 +28,28 @@ const routes: Array<RouteRecordRaw> = [
     component: StatistiqueView,
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/logout",
+    name: "logout",
+    component: LogoutView,
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.name === "statistiques" && localStorage.getItem("token") === null) {
+    next({
+      path: "/login",
+      query: {
+        redirect: true,
+      },
+    } as any);
+  } else {
+    next();
+  }
 });
 
 export default router;

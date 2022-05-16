@@ -8,12 +8,19 @@ const reservationsController = require("../controllers/reservationsController");
 const isAuth = require("../middleware/is-auth");
 
 // /reservation/ => GET
-router.get("/reservations/", isAuth, reservationsController.getReservations);
+router.get("/reservations/", reservationsController.getReservations);
 
 // /reservation/reservationId => GET
 router.get(
   "/reservations/:reservationId",
   reservationsController.getReservation
+);
+
+// /reservation/ => POST
+router.post(
+  "/reservations/:contratId",
+  isAuth,
+  reservationsController.createReservation
 );
 
 // /reservation/ => POST

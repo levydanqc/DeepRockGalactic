@@ -8,24 +8,14 @@
         height="200"
       />
     </header>
-    <nav class="navbar border px-5">
-      <router-link class="router-link nav-item nav-link" to="/"
-        >Home</router-link
-      >
-      <router-link class="router-link nav-item nav-link" to="/statistiques"
-        >Statistiques</router-link
-      >
-      <router-link class="router-link nav-item nav-link" to="/login"
-        >Se Connecter</router-link
-      >
-    </nav>
+    <navbar-component :key="$route.fullPath" />
     <router-view />
   </div>
 </template>
 
 <style lang="scss">
-@import "./assets/styles/variables.css";
 @import "bootstrap";
+@import "./assets/styles/variables.css";
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -43,23 +33,11 @@ nav {
   @extend .border-4;
   border-color: var(--primary-color) !important;
 }
-.router-link {
-  font-weight: bold;
-  color: var(--secondary-color);
-}
-.router-link-exact-active {
-  color: var(--primary-color);
-}
-a {
-  text-decoration: none !important;
-  &:hover {
-    color: var(--hover-color) !important;
-  }
-}
 </style>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import NavbarComponent from "./components/NavbarComponent.vue";
 
 export default defineComponent({
   name: "App",
@@ -68,6 +46,9 @@ export default defineComponent({
     return {
       //
     };
+  },
+  components: {
+    NavbarComponent,
   },
 });
 </script>

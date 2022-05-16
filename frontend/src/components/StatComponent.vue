@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="border-bottom">
-      <v-col><h1>Vos contrats complètés</h1></v-col>
+      <v-col><h1>Vos contrats complétés</h1></v-col>
       <v-col
         ><h5 class="mt-3">
           Totale des primes:
@@ -11,9 +11,11 @@
       >
     </v-row>
     <v-row
-      ><h3 class="col mt-3">{{ contrats.length }} contrats trouvés</h3></v-row
+      ><h3 class="col mt-3">
+        {{ contrats.length || 0 }} contrat(s) terminé(s)
+      </h3></v-row
     >
-    <v-row>
+    <v-row v-if="contrats.length > 0">
       <v-card
         class="my-3 mx-1 bg-light"
         elevation="20"
@@ -83,37 +85,35 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import {
-  getReservations,
-  getContratByID,
-  getPlanetesById,
-} from "../services/requests";
+import { getReservations, getContrat, getPlanete } from "../services/requests";
 
 export default defineComponent({
   name: "SearchComponent",
   data: () => ({
     contrats: [] as any[],
-    reservations: [],
+    reservations: [] as Array<any>,
     primeTotale: 0,
     mineurId: String,
   }),
   async created() {
-    this.reservations = await getReservations();
-    this.loadData();
+    this.reservations = await getReservations(localStorage.getItem("token"));
+    this.loadContrats();
   },
   methods: {
-    async loadData() {
-      for (let index = 0; index < this.reservations.length; index++) {
-        var contrat = await getContratByID(
-          this.reservations[index]["contratId"]
-        );
-        var planete = await getPlanetesById(contrat["planeteId"]);
-        contrat.image = planete.image;
-        contrat.nom = planete.nom;
-        console.log(contrat.image);
-        this.contrats.push(contrat);
-        this.primeTotale += this.contrats[this.contrats.length - 1]["prime"];
-      }
+    async loadContrats() {
+      if (this.reservations && this.reservations.length > 0)
+        for (const reservation of this.reservations) {
+          const contrat = await getContrat(
+            reservation.relationships.contrat.links.related
+          );
+          this.primeTotale += contrat.attributes.prime;
+          const planete = (await getPlanete(
+            contrat.relationships.planete.links.related
+          )) as any;
+          contrat.attributes.image = planete.image;
+          contrat.attributes.nom = planete.nom;
+          this.contrats.push(contrat.attributes);
+        }
     },
   },
 });

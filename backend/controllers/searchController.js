@@ -1,10 +1,10 @@
 "use strict";
 
 const Contrat = require("../models/contrat");
+const Planete = require("../models/planete");
 const { formated } = require("../controllers/contratsController");
-const contrat = require("../models/contrat");
 
-exports.createSearch = (req, res, next) => {
+exports.createSearch = async (req, res, next) => {
   /* 
         #swagger.tags = ['Recherche']
         #swagger.summary = "Effectuer une recherche"
@@ -18,8 +18,7 @@ exports.createSearch = (req, res, next) => {
             description: 'Id des planètes recherchées, séparés par des virgules',
   } */
 
-  const { minDate, maxDate, minPrime, maxPrime, dangers, planetIds } =
-    req.query;
+  const { minDate, maxDate, minPrime, maxPrime, dangers, planets } = req.query;
   const query = {};
 
   if (minDate) {
@@ -33,16 +32,23 @@ exports.createSearch = (req, res, next) => {
       : (query.dateExpiration = { $lte: new Date(maxDate) });
   }
   if (minPrime) {
-    query.prime = { $gte: minPrime };
+    query.prime
+      ? (query.prime.$gte = minPrime)
+      : (query.prime = { $gte: minPrime });
   }
   if (maxPrime) {
-    query.prime = { $lte: maxPrime };
+    query.prime
+      ? (query.prime.$lte = maxPrime)
+      : (query.prime = { $lte: maxPrime });
   }
   if (dangers) {
     query.danger = { $in: dangers.split(",") };
   }
-  if (planetIds) {
-    query.planeteId = { $in: planetIds.split(",") };
+  if (planets) {
+    await Planete.find({ nom: { $in: planets.split(",") } }).then((planets) => {
+      const planetIds = planets.map((planete) => planete._id);
+      query.planeteId = { $in: planetIds };
+    });
   }
 
   Contrat.find(query).then((contrats) => {

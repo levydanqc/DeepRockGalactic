@@ -34,7 +34,9 @@
               ></v-text-field>
             </v-row>
             <v-row class="w-100">
-              <button-component @apply="loadContrats()" />
+              <button-component @apply="loadContrats()"
+                >Appliquer</button-component
+              >
             </v-row>
           </v-container>
         </expansion-panel>
@@ -43,7 +45,7 @@
             <v-row class="w-100">
               <v-combobox
                 v-model="chips"
-                :items="planetsNames"
+                :items="planets"
                 chips
                 clearable
                 label="Choix"
@@ -69,7 +71,9 @@
               </v-combobox>
             </v-row>
             <v-row class="w-100">
-              <button-component @apply="loadContrats()" />
+              <button-component @apply="loadContrats()"
+                >Appliquer</button-component
+              >
             </v-row>
           </v-container>
         </expansion-panel>
@@ -99,15 +103,15 @@
         <contrat-card
           class="my-3"
           v-for="contrat in contrats"
-          :key="contrat._id"
-          :id="contrat._id"
+          :key="contrat.attributes._id"
+          :url="contrat.links.reserve"
           :title="contrat.planeteNom"
           :src="contrat.planeteImage"
-          :prime="contrat.prime"
-          :danger="contrat.danger"
-          :ressource="contrat.ressource"
-          :qte="contrat.quantiteRessource"
-          :date="contrat.dateExpiration"
+          :prime="contrat.attributes.prime"
+          :danger="contrat.attributes.danger"
+          :ressource="contrat.attributes.ressource"
+          :qte="contrat.attributes.quantiteRessource"
+          :date="contrat.attributes.dateExpiration"
         ></contrat-card>
       </v-col>
     </v-row>
@@ -120,7 +124,7 @@ import ExpansionPanel from "./reusable/ExpansionPanel.vue";
 import ContratCard from "./reusable/ContratCard.vue";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-import { getPlanetes, getContrats } from "../services/requests";
+import { getContrats } from "../services/requests";
 import ButtonComponent from "./reusable/ButtonComponent.vue";
 
 export default defineComponent({
@@ -134,22 +138,11 @@ export default defineComponent({
     chips: [] as Array<string>,
     planets: [] as Array<string>,
   }),
-  computed: {
-    planetsNames() {
-      return this.planets.map((planet: any) => planet.nom);
-    },
-    planetsIds(): string[] {
-      const planets = this.chips.map((c: any) =>
-        this.planets?.find((obj: any) => {
-          return obj?.nom === c;
-        })
-      );
-      return planets?.map((p: any) => p?.["_id"]) as unknown as string[];
-    },
-  },
   async created() {
-    this.loadContrats();
-    this.planets = await getPlanetes();
+    await this.loadContrats();
+    this.planets = this.contrats
+      .map((contrat: any) => contrat.planeteNom)
+      .filter((value, index, self) => self.indexOf(value) === index);
   },
   components: {
     ExpansionPanel,
@@ -177,7 +170,7 @@ export default defineComponent({
         this.minPrime,
         this.maxPrime,
         this.dangers,
-        this.planetsIds
+        this.chips
       );
     },
     isNumber(event: KeyboardEvent, value: string) {

@@ -65,7 +65,7 @@ exports.login = (req, res, next) => {
         res.status(200).json({ token: token });
       }
     })
-    .catch(() => {
+    .catch((err) => {
       res.status(401).json({ message: "Email ou mot de passe invalide" });
     });
 };

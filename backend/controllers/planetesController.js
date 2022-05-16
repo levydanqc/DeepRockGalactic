@@ -48,9 +48,7 @@ exports.getPlanete = (req, res, next) => {
             }
         }
       */
-        res.status(200).json({
-          data: formated(planete),
-        });
+        res.status(200).json(formated(planete));
       } else {
         res.status(404).json({ message: "Planète non trouvé!" });
       }

@@ -169,6 +169,11 @@
             "name": "maxPrime",
             "in": "query",
             "type": "string"
+          },
+          {
+            "name": "planets",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {
@@ -747,7 +752,18 @@
         "tags": ["Réservations"],
         "summary": "Obtenir toutes les réservations",
         "description": "Retourne la liste des réservations",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "estTermine",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Liste des réservations",
@@ -761,8 +777,8 @@
               }
             }
           },
-          "401": {
-            "description": "Non Autorisé"
+          "404": {
+            "description": "Non Trouvé"
           }
         }
       }
@@ -881,6 +897,58 @@
           },
           "404": {
             "description": "Non Trouvé"
+          }
+        }
+      }
+    },
+    "/reservations/{contratId}": {
+      "post": {
+        "tags": ["Réservations"],
+        "summary": "Créer une réservation",
+        "description": "",
+        "parameters": [
+          {
+            "name": "contratId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Reservation",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Réservation créée",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Réservation créée avec succès!"
+                },
+                "reservation": {
+                  "$ref": "#/definitions/Reservation"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Non Autorisé"
+          },
+          "404": {
+            "description": "Non Trouvé"
+          },
+          "409": {
+            "description": "Réservation existante"
           }
         }
       }

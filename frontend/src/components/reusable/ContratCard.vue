@@ -50,14 +50,15 @@
         <v-card-actions class="w-100">
           <v-spacer></v-spacer>
           <v-btn
-            @click="reserver"
             rounded="lg"
             :prepend-icon="clicked ? 'mdi-note-check' : 'mdi-note-plus-outline'"
             color="primary"
             class="align-self-end"
             :disabled="clicked"
           >
-            <small v-if="!clicked" class="label">Réserver</small>
+            <small @mouseup="reserver" v-if="!clicked" class="label"
+              >Réserver</small
+            >
           </v-btn>
         </v-card-actions>
       </div>
@@ -68,8 +69,9 @@
 <script lang="ts">
 import { reserverContrat } from "@/services/requests";
 import moment from "moment";
-import { defineComponent } from "vue";
+import { Component, defineComponent } from "vue";
 import { POSITION, useToast } from "vue-toastification";
+import LinkComponent from "./LinkComponent.vue";
 
 export default defineComponent({
   name: "ContratCard",
@@ -78,7 +80,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    id: {
+    url: {
       type: String,
       required: true,
     },
@@ -110,19 +112,38 @@ export default defineComponent({
   data: () => ({
     clicked: false,
   }),
+  setup: () => {
+    const toast = useToast();
+    return { toast };
+  },
   computed: {
     expiration() {
       return moment(this.date).format("DD/MM/YYYY");
     },
   },
   methods: {
-    reserver() {
-      this.clicked = true;
-      reserverContrat(this.id);
-      this.toast("Reservation effectuée");
+    async reserver() {
+      const res = await reserverContrat(
+        this.url,
+        localStorage.getItem("token")
+      );
+
+      if (res.status === 201) {
+        this.message("Reservation effectuée", "success");
+        this.clicked = true;
+      } else if (res.status === 409) {
+        this.message("Vous avez déjà réservé ce contrat", "info");
+        this.clicked = true;
+      } else if (res.status === 401) {
+        this.message(LinkComponent, "error", {
+          click: () => this.$router.push({ name: "login" }),
+        });
+      } else {
+        this.message("Une erreur est survenue", "error");
+      }
     },
-    toast(message: string) {
-      useToast()(message, {
+    message(slot: string | Component, type = "", listener?: any) {
+      const options: any = {
         position: POSITION.TOP_RIGHT,
         timeout: 3016,
         closeOnClick: true,
@@ -136,7 +157,29 @@ export default defineComponent({
         icon: true,
         rtl: false,
         toastClassName: "my-custom-toast-class",
-      });
+      };
+
+      switch (type) {
+        case "success":
+          this.toast.success(slot, options);
+          break;
+        case "error":
+          if (listener) {
+            this.toast.error(
+              {
+                component: slot,
+                listeners: listener,
+              },
+              options
+            );
+          } else {
+            this.toast.error(slot, options);
+          }
+          break;
+        default:
+          this.toast(slot, options);
+          break;
+      }
     },
   },
 });

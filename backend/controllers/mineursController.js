@@ -48,9 +48,7 @@ exports.getMineur = (req, res, next) => {
             }
         }
       */
-        res.status(200).json({
-          data: formated(mineur),
-        });
+        res.status(200).json(formated(mineur));
       } else {
         res.status(404).json({ message: "Mineur non trouvé" });
       }

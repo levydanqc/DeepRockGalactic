@@ -1,14 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-export async function getPlanetes() {
-  const response = await fetch("http://localhost:3000/planetes", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const data = await response.json();
-  return data;
-}
+
+import ROUTES from "./routes";
 
 export async function getContrats(
   minDate?: string,
@@ -16,16 +8,16 @@ export async function getContrats(
   minPrime?: string,
   maxPrime?: string,
   dangers?: number[],
-  planetIds?: string[]
+  planets?: string[]
 ) {
-  const url = new URL("http://localhost:3000/search");
+  const url = new URL(ROUTES.SEARCH);
   const params: { [key: string]: string } = {
     minDate: minDate || "",
     maxDate: maxDate || "",
     minPrime: minPrime?.toString() || "",
     maxPrime: maxPrime?.toString() || "",
     dangers: dangers?.join(",") || "",
-    planetIds: planetIds?.join(",") || "",
+    planets: planets?.join(",") || "",
   };
   Object.entries(params).forEach(([key, value]) =>
     url.searchParams.append(key, value)
@@ -37,55 +29,59 @@ export async function getContrats(
       "Content-Type": "application/json",
     },
   });
-  const data = await response.json();
-
+  if (response.status === 404) {
+    return [];
+  }
+  const res = await response.json();
+  const data = res.data;
   for (let i = 0; i < data.length; i++) {
     const contrat = data[i];
-    const planete = await getPlanetesById(contrat.planeteId);
+    const planete = await getPlanete(
+      contrat.relationships.planete.links.related
+    );
     contrat.planeteImage = planete.image;
     contrat.planeteNom = planete.nom;
   }
-
   return data;
 }
 
-export async function getPlanetesById(id: number) {
-  const response = await fetch(`http://localhost:3000/planetes/${id}`, {
+export async function getPlanete(url: string) {
+  const response = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   });
   const data = await response.json();
-  return { image: data.planete.image, nom: data.planete.nom };
+  return { image: data.attributes.image, nom: data.attributes.nom };
 }
 
-export async function reserverContrat(id: string) {
-  const response = await fetch(`http://localhost:3000/reservation/${id}`, {
+export async function reserverContrat(url: string, token: string | null) {
+  const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
-  const data = await response.json();
-  return data;
+  return response;
 }
 
-export async function getReservations() {
-  const response = await fetch(`http://localhost:3000/reservations`, {
+export async function getReservations(token: string | null) {
+  const url = ROUTES.RESERVATION + `?estTermine=true&user=${token}`;
+
+  const response = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
   const data = await response.json();
-  return data.reservations;
+  return data.data;
 }
 
-export async function getContratByID(id: string) {
-  const response = await fetch(`http://localhost:3000/contrats/${id}`, {
+export async function getContrat(url: string) {
+  const response = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
