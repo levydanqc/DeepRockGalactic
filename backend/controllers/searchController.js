@@ -53,7 +53,6 @@ exports.createSearch = async (req, res, next) => {
 
   Contrat.find(query).then((contrats) => {
     if (contrats.length > 0) {
-      console.log("search");
       /* #swagger.responses[200] = { 
             description: "Liste des contrats",
             schema: [{

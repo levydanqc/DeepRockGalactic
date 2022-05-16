@@ -1,5 +1,5 @@
 <template>
-  <h1>S'Inscrire</h1>
+  <h1>S'inscrire</h1>
   <form @submit.prevent="signup" class="mx-auto p-3">
     <div class="bg-danger text-white p-1 mx-4 rounded" v-if="erreurs.length">
       <span v-for="erreur in erreurs" :key="erreur">{{ erreur }}</span>

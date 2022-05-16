@@ -169,6 +169,11 @@
             "name": "maxPrime",
             "in": "query",
             "type": "string"
+          },
+          {
+            "name": "planets",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {

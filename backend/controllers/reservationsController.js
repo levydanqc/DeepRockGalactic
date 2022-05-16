@@ -78,6 +78,9 @@ exports.createReservation = (req, res, next) => {
 
   const { mineurId, contratId } = req.params;
 
+  console.log(mineurId, contratId);
+  console.log("reservation");
+
   Mineur.findById(mineurId).then((mineur) => {
     if (!mineur) {
       return res.status(404).json({ message: "Mineur non trouvé" });

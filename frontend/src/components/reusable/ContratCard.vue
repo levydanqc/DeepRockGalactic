@@ -124,6 +124,7 @@ export default defineComponent({
   },
   methods: {
     async reserver() {
+      console.log("reserver");
       const res = await reserverContrat(this.url);
 
       if (res.status === 200) {
@@ -132,14 +133,14 @@ export default defineComponent({
       } else if (res.status === 409) {
         this.message("Vous avez déjà réservé ce contrat", "error");
       } else if (res.status === 401) {
-        this.message("Vous devez être connecté", "error", {
+        this.message(LinkComponent, "error", {
           click: () => this.$router.push({ name: "login" }),
         });
       } else {
         this.message("Une erreur est survenue", "error");
       }
     },
-    message(message: string | Component, type = "", listener?: any) {
+    message(slot: string | Component, type = "", listener?: any) {
       const options: any = {
         position: POSITION.TOP_RIGHT,
         timeout: 3016,
@@ -156,24 +157,25 @@ export default defineComponent({
         toastClassName: "my-custom-toast-class",
       };
 
-      if (listener)
-        return this.toast.error(
-          {
-            component: LinkComponent,
-            listeners: listener,
-          },
-          options
-        );
-
       switch (type) {
         case "success":
-          this.toast.success(message, options);
+          this.toast.success(slot, options);
           break;
         case "error":
-          this.toast.error(message, options);
+          if (listener) {
+            this.toast.error(
+              {
+                component: slot,
+                listeners: listener,
+              },
+              options
+            );
+          } else {
+            this.toast.error(slot, options);
+          }
           break;
         default:
-          this.toast(message, options);
+          this.toast(slot, options);
           break;
       }
     },
