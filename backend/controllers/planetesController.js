@@ -13,7 +13,16 @@ exports.getPlanetes = (req, res, next) => {
       /* #swagger.responses[200] = { 
             description: "Liste des planètes",
             schema: [{
-                "$ref": "#/definitions/Planete"
+                "attributes": {
+                  "_id": "625f4a9b3c6e0131874ac558",
+                  "nom": "Omicron Persei 8",
+                  "image": "planet_3.png"
+                },
+                "links": {
+                  "self": "https://deeprockgalactic.danlevy.ca//planetes/625f4a9b3c6e0131874ac558",
+                  "collection": "https://deeprockgalactic.danlevy.ca//planetes"
+                },
+                "relationships": {}
             }]
         }
       */
@@ -44,7 +53,16 @@ exports.getPlanete = (req, res, next) => {
         /* #swagger.responses[200] = { 
             description: "Planete",
             schema: {
-                "$ref": "#/definitions/Planete"
+              "attributes": {
+                  "_id": "625f4a9b3c6e0131874ac558",
+                  "nom": "Omicron Persei 8",
+                  "image": "planet_3.png"
+                },
+                "links": {
+                  "self": "https://deeprockgalactic.danlevy.ca//planetes/625f4a9b3c6e0131874ac558",
+                  "collection": "https://deeprockgalactic.danlevy.ca//planetes"
+                },
+                "relationships": {}
             }
         }
       */
@@ -103,7 +121,16 @@ exports.createPlanete = (req, res, next) => {
           schema: {
             message: "Planète créée avec succès!",
             planete: {
-              "$ref": "#/definitions/Planete"
+              "attributes": {
+                  "_id": "625f4a9b3c6e0131874ac558",
+                  "nom": "Omicron Persei 8",
+                  "image": "planet_3.png"
+                },
+                "links": {
+                  "self": "https://deeprockgalactic.danlevy.ca//planetes/625f4a9b3c6e0131874ac558",
+                  "collection": "https://deeprockgalactic.danlevy.ca//planetes"
+                },
+                "relationships": {}
             }
           }
         }
@@ -208,7 +235,16 @@ exports.updatePlanete = (req, res, next) => {
             schema: {
                 message: "Planète modifiée avec succès!",
                 planète: {
-                    "$ref": "#/definitions/Planete"
+                    "attributes": {
+                  "_id": "625f4a9b3c6e0131874ac558",
+                  "nom": "Omicron Persei 8",
+                  "image": "planet_3.png"
+                },
+                "links": {
+                  "self": "https://deeprockgalactic.danlevy.ca//planetes/625f4a9b3c6e0131874ac558",
+                  "collection": "https://deeprockgalactic.danlevy.ca//planetes"
+                },
+                "relationships": {}
                 }
             }
         }

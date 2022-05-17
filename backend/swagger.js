@@ -51,101 +51,33 @@ const doc = {
   },
   definitions: {
     Mineur: {
-      $attributes: {
-        $email: "Malinda45@hotmail.com",
-        $nom: "Earline_Turner",
-        $motdepasse:
-          "$2a$12$Rzjj1vInymnROuXepA0qL.1g.O72xHds4RXgFRdYR7QKnRGR0.tLe",
-        $niveau: 1,
-        $createdAt: "2022-05-16T18:34:49.396Z",
-        $updatedAt: "2022-05-16T18:34:49.396Z",
-      },
-      $links: {
-        $self:
-          process.env.URL ??
-          "http://localhost:3000" + "/mineurs/62829949dfc507d6c4d0cedf",
-        $collection: process.env.URL ?? "http://localhost:3000" + "/mineurs",
-      },
-      $relationships: {},
+      $email: "email@exemple.com",
+      $nom: "Joe Dassin",
+      $motdepasse: "motdepasse123",
+      $niveau: 1,
     },
     Planete: {
-      $attributes: {
-        $nom: "sonya",
-        $image: "http://placeimg.com/640/480",
-      },
-      $links: {
-        $self:
-          process.env.URL ??
-          "http://localhost:3000" + "/planetes/62829a3429fdd0fd4b2ec525",
-        $collection: process.env.URL ?? "http://localhost:3000" + "/planetes",
-      },
-      $relationships: {},
+      $nom: "Terre",
+      $image: "https://picsum.photos/200",
     },
     Contrat: {
-      $attributes: {
-        $planeteId: "628290ad34dcba8b58f94004",
-        $prime: 203,
-        $danger: 1,
-        $ressource: "Concrete",
-        $quantiteRessource: 605,
-        $dateExpiration: "2022-05-21T10:55:19.000Z",
-        $createdAt: "2022-05-16T17:59:07.351Z",
-        $updatedAt: "2022-05-16T17:59:07.351Z",
-      },
-      $links: {
-        $self:
-          process.env.URL ??
-          "http://localhost:3000" + "/contrats/628290eb34dcba8b58f94007",
-        $collection: process.env.URL ?? "http://localhost:3000" + "/contrats",
-        $reserve:
-          process.env.URL ??
-          "http://localhost:3000" + "/reservations/628290eb34dcba8b58f94007",
-      },
-      $relationships: {
-        $planete: {
-          $links: {
-            $related:
-              process.env.URL ??
-              "http://localhost:3000" + "/planetes/628290ad34dcba8b58f94004",
-          },
-        },
+      $prime: 100,
+      $danger: 1,
+      $ressource: "fer",
+      $quantiteRessource: 100,
+      $dateExpiration: "2022-01-01",
+      $planeteId: {
+        $ref: "#/definitions/Planete",
       },
     },
     Reservation: {
-      $attributes: {
-        $mineurId: {
-          $ref: "#/definitions/Mineur",
-        },
-        $contratId: {
-          $ref: "#/definitions/Contrat",
-        },
-        $estTermine: false,
-        $createdAt: "2022-05-16T16:36:43.632Z",
-        $updatedAt: "2022-05-16T16:36:43.632Z",
+      $mineurId: {
+        $ref: "#/definitions/Mineur",
       },
-      $links: {
-        $self:
-          process.env.URL ??
-          "http://localhost:3000" + "/reservations/62827d9b72a5595a09618d55",
-        $collection:
-          process.env.URL ?? "http://localhost:3000" + "/reservations",
+      $contratId: {
+        $ref: "#/definitions/Contrat",
       },
-      $relationships: {
-        $mineur: {
-          $links: {
-            $related:
-              process.env.URL ??
-              "http://localhost:3000" + "/mineurs/62827ababfe5f11e9edb79b1",
-          },
-        },
-        $contrat: {
-          $links: {
-            $related:
-              process.env.URL ??
-              "http://localhost:3000" + "/contrats/6265f757995a50c7205fae51",
-          },
-        },
-      },
+      $estTermine: false,
     },
   },
 };

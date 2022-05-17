@@ -14,7 +14,18 @@ exports.getMineurs = (_req, res, next) => {
       /* #swagger.responses[200] = { 
             description: "Liste des mineurs",
             schema: [{
-                "$ref": "#/definitions/Mineur"
+              "attributes": {
+                "_id": "62674b7e563f2f0b49f8c8ba",
+                "email": "Theron_Jakubowski53@yahoo.com",
+                "nom": "Dean_Collier85",
+                "motdepasse": "$2a$12$0mmLJciY5EvSj.exoSrmEeYICRC0yHvKMi0Xqhvm/GUWilPydc/Ku",
+                "niveau": 2
+              },
+              "links": {
+                "self": "https://deeprockgalactic.danlevy.ca//mineurs/62674b7e563f2f0b49f8c8ba",
+                "collection": "https://deeprockgalactic.danlevy.ca//mineurs"
+              },
+              "relationships": {}
             }]
         }
       */
@@ -44,7 +55,18 @@ exports.getMineur = (req, res, next) => {
         /* #swagger.responses[200] = { 
             description: "Mineur",
             schema: {
-                "$ref": "#/definitions/Mineur"
+              "attributes": {
+                "_id": "62674b7e563f2f0b49f8c8ba",
+                "email": "Theron_Jakubowski53@yahoo.com",
+                "nom": "Dean_Collier85",
+                "motdepasse": "$2a$12$0mmLJciY5EvSj.exoSrmEeYICRC0yHvKMi0Xqhvm/GUWilPydc/Ku",
+                "niveau": 2
+              },
+              "links": {
+                "self": "https://deeprockgalactic.danlevy.ca//mineurs/62674b7e563f2f0b49f8c8ba",
+                "collection": "https://deeprockgalactic.danlevy.ca//mineurs"
+              },
+              "relationships": {}
             }
         }
       */
@@ -107,7 +129,18 @@ exports.createMineur = (req, res, next) => {
                 schema: {
                     message: "Mineur créé avec succès!",
                     mineur: {
-                        "$ref": "#/definitions/Mineur"
+                      "attributes": {
+                        "_id": "62674b7e563f2f0b49f8c8ba",
+                        "email": "Theron_Jakubowski53@yahoo.com",
+                        "nom": "Dean_Collier85",
+                        "motdepasse": "$2a$12$0mmLJciY5EvSj.exoSrmEeYICRC0yHvKMi0Xqhvm/GUWilPydc/Ku",
+                        "niveau": 2
+                      },
+                      "links": {
+                        "self": "https://deeprockgalactic.danlevy.ca//mineurs/62674b7e563f2f0b49f8c8ba",
+                        "collection": "https://deeprockgalactic.danlevy.ca//mineurs"
+                      },
+                      "relationships": {}
                     }
                 }
             }
@@ -207,14 +240,25 @@ exports.updateMineur = (req, res, next) => {
             mineur.niveau = niveau;
             mineur.save();
             /*  #swagger.responses[200] = { 
-                  description: "Mineur modifié",
-                  schema: {
-                      message: "Mineur modifié avec succès!",
-                      mineur: {
-                          "$ref": "#/definitions/Mineur"
-                      }
-                  }
-              }
+              description: "Mineur modifié",
+              schema: {
+                  message: "Mineur modifié avec succès!",
+                  mineur: {
+                    "attributes": {
+                      "_id": "62674b7e563f2f0b49f8c8ba",
+                      "email": "Theron_Jakubowski53@yahoo.com",
+                      "nom": "Dean_Collier85",
+                      "motdepasse": "$2a$12$0mmLJciY5EvSj.exoSrmEeYICRC0yHvKMi0Xqhvm/GUWilPydc/Ku",
+                      "niveau": 2
+                    },
+                    "links": {
+                      "self": "https://deeprockgalactic.danlevy.ca//mineurs/62674b7e563f2f0b49f8c8ba",
+                      "collection": "https://deeprockgalactic.danlevy.ca//mineurs"
+                    },
+                    "relationships": {}
+                    }
+                }
+            }
             */
             res.status(200).json({
               message: "Mineur modifié avec succès",
