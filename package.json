@@ -16,11 +16,7 @@
     "postinstall": "concurrently \"cd frontend && yarn install\" \"cd backend && yarn install\"",
     "start": "concurrently \"cd frontend && yarn run serve\" \"cd backend && yarn run start\"",
     "test": "node database/postman/runTests.js",
-    "pretest": "yarn run reset-contrats && yarn run reset-mineurs && yarn run reset-planetes && yarn run reset-reservations",
-    "reset-contrats": "mongoimport --db deepRockGalactic --collection contrats --drop --file database/collections/contrats.json --jsonArray",
-    "reset-mineurs": "mongoimport --db deepRockGalactic --collection mineurs --drop --file database/collections/mineurs.json --jsonArray",
-    "reset-planetes": "mongoimport --db deepRockGalactic --collection planetes --drop --file database/collections/planetes.json --jsonArray",
-    "reset-reservations": "mongoimport --db deepRockGalactic --collection reservations --drop --file database/collections/reservations.json --jsonArray"
+    "pretest": "bash database/postman/resetDb.sh"
   },
   "dependencies": {
     "prettier": "^2.6.2"

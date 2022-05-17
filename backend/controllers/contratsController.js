@@ -115,6 +115,10 @@ exports.createContrat = (req, res, next) => {
         }
     }
   */
+  /* #swagger.security = [{
+    "bearerAuth": []
+  }] */
+
   if (req.user.niveau !== 2) {
     return res
       .status(403)
@@ -217,6 +221,10 @@ exports.deleteContrat = (req, res, next) => {
         value: '626339247fe023c3b50ba0d4'
       }
  */
+  /* #swagger.security = [{
+    "bearerAuth": []
+  }] */
+
   if (req.user.niveau !== 2) {
     return res
       .status(403)
@@ -268,6 +276,10 @@ exports.updateContrat = (req, res, next) => {
         }
     }
   */
+  /* #swagger.security = [{
+    "bearerAuth": []
+  }] */
+
   if (req.user.niveau !== 2) {
     return res
       .status(403)

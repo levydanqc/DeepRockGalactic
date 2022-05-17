@@ -126,6 +126,9 @@ exports.createReservation = (req, res, next) => {
         }
     }
   */
+  /* #swagger.security = [{
+    "bearerAuth": []
+  }] */
 
   const { contratId } = req.params;
 
@@ -219,6 +222,10 @@ exports.deleteReservation = (req, res, next) => {
         value: '626339247fe023c3b50ba0d4'
       }
  */
+  /* #swagger.security = [{
+    "bearerAuth": []
+  }] */
+
   if (req.user.niveau !== 2) {
     return res
       .status(403)
@@ -270,6 +277,10 @@ exports.updateReservation = (req, res, next) => {
         }
     }
   */
+  /* #swagger.security = [{
+    "bearerAuth": []
+  }] */
+
   if (req.user.niveau !== 2) {
     return res
       .status(403)

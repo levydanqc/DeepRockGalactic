@@ -1,6 +1,7 @@
+const BASE = "http://localhost:3000";
 export default {
-  SEARCH: "http://127.0.0.1:3000/search",
-  LOGIN: "http://127.0.0.1:3000/auth/login",
-  REGISTER: "http://127.0.0.1:3000/auth/signup",
-  RESERVATION: "http://127.0.0.1:3000/reservations",
+  SEARCH: `${BASE}/search`,
+  LOGIN: `${BASE}/auth/login`,
+  REGISTER: `${BASE}/auth/signup`,
+  RESERVATION: `${BASE}/reservations`,
 };
