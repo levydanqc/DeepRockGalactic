@@ -13,20 +13,22 @@ exports.getMineurs = (_req, res, next) => {
     .then((mineurs) => {
       /* #swagger.responses[200] = { 
             description: "Liste des mineurs",
-            schema: [{
-              "attributes": {
-                "_id": "62674b7e563f2f0b49f8c8ba",
-                "email": "Theron_Jakubowski53@yahoo.com",
-                "nom": "Dean_Collier85",
-                "motdepasse": "$2a$12$0mmLJciY5EvSj.exoSrmEeYICRC0yHvKMi0Xqhvm/GUWilPydc/Ku",
-                "niveau": 2
-              },
-              "links": {
-                "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
-                "collection": "https://deeprockgalactic.danlevy.ca/mineurs"
-              },
-              "relationships": {}
-            }]
+            schema: {
+              data: [{
+                "attributes": {
+                  "_id": "62674b7e563f2f0b49f8c8ba",
+                  "email": "Theron_Jakubowski53@yahoo.com",
+                  "nom": "Dean_Collier85",
+                  "motdepasse": "$2a$12$0mmLJciY5EvSj.exoSrmEeYICRC0yHvKMi0Xqhvm/GUWilPydc/Ku",
+                  "niveau": 2
+                },
+                "links": {
+                  "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
+                  "collection": "https://deeprockgalactic.danlevy.ca/mineurs"
+                },
+                "relationships": {}
+              }]
+            }
         }
       */
       res.status(200).json({
@@ -132,7 +134,7 @@ exports.createMineur = (req, res, next) => {
                 description: "Mineur créé",
                 schema: {
                     message: "Mineur créé avec succès!",
-                    mineur: {
+                    data: {
                       "attributes": {
                         "_id": "62674b7e563f2f0b49f8c8ba",
                         "email": "Theron_Jakubowski53@yahoo.com",
@@ -255,7 +257,7 @@ exports.updateMineur = (req, res, next) => {
               description: "Mineur modifié",
               schema: {
                   message: "Mineur modifié avec succès!",
-                  mineur: {
+                  data: {
                     "attributes": {
                       "_id": "62674b7e563f2f0b49f8c8ba",
                       "email": "Theron_Jakubowski53@yahoo.com",

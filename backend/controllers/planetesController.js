@@ -12,7 +12,8 @@ exports.getPlanetes = (req, res, next) => {
     .then((planetes) => {
       /* #swagger.responses[200] = { 
             description: "Liste des planètes",
-            schema: [{
+            schema: {
+              data: [{
                 "attributes": {
                   "_id": "625f4a9b3c6e0131874ac558",
                   "nom": "Omicron Persei 8",
@@ -23,7 +24,8 @@ exports.getPlanetes = (req, res, next) => {
                   "collection": "https://deeprockgalactic.danlevy.ca/planetes"
                 },
                 "relationships": {}
-            }]
+              }]
+            }
         }
       */
       res.status(200).json({
@@ -124,7 +126,7 @@ exports.createPlanete = (req, res, next) => {
           description: "Planète créée",
           schema: {
             message: "Planète créée avec succès!",
-            planete: {
+            data: {
               "attributes": {
                   "_id": "625f4a9b3c6e0131874ac558",
                   "nom": "Omicron Persei 8",
@@ -246,7 +248,7 @@ exports.updatePlanete = (req, res, next) => {
             description: "Planète modifiée",
             schema: {
                 message: "Planète modifiée avec succès!",
-                planète: {
+                data: {
                     "attributes": {
                   "_id": "625f4a9b3c6e0131874ac558",
                   "nom": "Omicron Persei 8",

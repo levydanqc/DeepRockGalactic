@@ -166,7 +166,7 @@ exports.createContrat = (req, res, next) => {
               description: "Contrat créé",
               schema: {
                   message: "Contrat créé avec succès!",
-                  contrat: {
+                  data: {
                     "attributes": {
                       "planeteId": "6283da4158b47d87db5f485b",
                       "prime": 823,
@@ -182,7 +182,7 @@ exports.createContrat = (req, res, next) => {
                     "links": {
                         "self": "https://deeprockgalactic.danlevy.ca/contrats/6283e8a0c877f1f7d11423d1",
                         "collection": "https://deeprockgalactic.danlevy.ca/contrats",
-                        "reserve": "/reservations/6283e8a0c877f1f7d11423d1"
+                        "reserve": https://deeprockgalactic.danlevy.ca/reservations/6283e8a0c877f1f7d11423d1"
                     },
                     "relationships": {
                         "planete": {
@@ -317,7 +317,7 @@ exports.updateContrat = (req, res, next) => {
             description: "Contrat modifié",
             schema: {
               message: "Contrat modifié avec succès!",
-              contrat: {
+              data: {
                 "attributes": {
                   "planeteId": "6283da4158b47d87db5f485b",
                   "prime": 823,
@@ -333,7 +333,7 @@ exports.updateContrat = (req, res, next) => {
                 "links": {
                     "self": "https://deeprockgalactic.danlevy.ca/contrats/6283e8a0c877f1f7d11423d1",
                     "collection": "https://deeprockgalactic.danlevy.ca/contrats",
-                    "reserve": "/reservations/6283e8a0c877f1f7d11423d1"
+                    "reserve": "https://deeprockgalactic.danlevy.ca/reservations/6283e8a0c877f1f7d11423d1"
                 },
                 "relationships": {
                     "planete": {

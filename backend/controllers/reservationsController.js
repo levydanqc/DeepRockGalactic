@@ -24,28 +24,30 @@ exports.getReservations = (req, res, next) => {
     .then((reservations) => {
       /* #swagger.responses[200] = { 
           description: "Liste des réservations",
-          schema: [{
-            "attributes": {
-              "estTermine": false,
-              "_id": "628279cd8b40e062cb11b6c6"
-            },
-            "links": {
-              "self": "https://deeprockgalactic.danlevy.ca/reservations/628279cd8b40e062cb11b6c6",
-              "collection": "https://deeprockgalactic.danlevy.ca/reservations"
-            },
-            "relationships": {
-              "mineur": {
-                  "links": {
-                      "related": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba"
-                  }
+          schema: {
+            data: [{
+              "attributes": {
+                "estTermine": false,
+                "_id": "628279cd8b40e062cb11b6c6"
               },
-              "contrat": {
-                  "links": {
-                      "related": "https://deeprockgalactic.danlevy.ca/contrats/6265f749995a50c7205fae41"
-                  }
+              "links": {
+                "self": "https://deeprockgalactic.danlevy.ca/reservations/628279cd8b40e062cb11b6c6",
+                "collection": "https://deeprockgalactic.danlevy.ca/reservations"
+              },
+              "relationships": {
+                "mineur": {
+                    "links": {
+                        "related": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba"
+                    }
+                },
+                "contrat": {
+                    "links": {
+                        "related": "https://deeprockgalactic.danlevy.ca/contrats/6265f749995a50c7205fae41"
+                    }
+                }
               }
-            }
-          }]
+            }]
+          }
         }
       */
       if (reservations.length > 0)
@@ -167,28 +169,27 @@ exports.createReservation = (req, res, next) => {
                         description: "Réservation créée",
                         schema: {
                             message: "Réservation créée avec succès!",
-                            reservation: {
-                                    "attributes": {
-              "estTermine": false,
-              "_id": "628279cd8b40e062cb11b6c6"
-            },
-            "links": {
-              "self": "https://deeprockgalactic.danlevy.ca/reservations/628279cd8b40e062cb11b6c6",
-              "collection": "https://deeprockgalactic.danlevy.ca/reservations"
-            },
-            "relationships": {
-              "mineur": {
-                  "links": {
-                      "related": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba"
-                  }
-              },
-              "contrat": {
-                  "links": {
-                      "related": "https://deeprockgalactic.danlevy.ca/contrats/6265f749995a50c7205fae41"
-                  }
-              }
-            }
-
+                            data: {
+                              "attributes": {
+                                "estTermine": false,
+                                "_id": "628279cd8b40e062cb11b6c6"
+                              },
+                              "links": {
+                                "self": "https://deeprockgalactic.danlevy.ca/reservations/628279cd8b40e062cb11b6c6",
+                                "collection": "https://deeprockgalactic.danlevy.ca/reservations"
+                              },
+                              "relationships": {
+                                "mineur": {
+                                    "links": {
+                                        "related": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba"
+                                    }
+                                },
+                                "contrat": {
+                                    "links": {
+                                        "related": "https://deeprockgalactic.danlevy.ca/contrats/6265f749995a50c7205fae41"
+                                    }
+                                }
+                              }
                             }
                         }
                     }*/
@@ -329,28 +330,27 @@ exports.updateReservation = (req, res, next) => {
                     description: "Réservation modifiée",
                     schema: {
                         message: "Réservation modifiée avec succès!",
-                        réservation: {
-                                        "attributes": {
-              "estTermine": false,
-              "_id": "628279cd8b40e062cb11b6c6"
-            },
-            "links": {
-              "self": "https://deeprockgalactic.danlevy.ca/reservations/628279cd8b40e062cb11b6c6",
-              "collection": "https://deeprockgalactic.danlevy.ca/reservations"
-            },
-            "relationships": {
-              "mineur": {
-                  "links": {
-                      "related": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba"
-                  }
-              },
-              "contrat": {
-                  "links": {
-                      "related": "https://deeprockgalactic.danlevy.ca/contrats/6265f749995a50c7205fae41"
-                  }
-              }
-            }
-
+                        data: {
+                          "attributes": {
+                            "estTermine": false,
+                            "_id": "628279cd8b40e062cb11b6c6"
+                          },
+                          "links": {
+                            "self": "https://deeprockgalactic.danlevy.ca/reservations/628279cd8b40e062cb11b6c6",
+                            "collection": "https://deeprockgalactic.danlevy.ca/reservations"
+                          },
+                          "relationships": {
+                            "mineur": {
+                                "links": {
+                                    "related": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba"
+                                }
+                            },
+                            "contrat": {
+                                "links": {
+                                    "related": "https://deeprockgalactic.danlevy.ca/contrats/6265f749995a50c7205fae41"
+                                }
+                            }
+                          }
                         }
                     }
                 }
