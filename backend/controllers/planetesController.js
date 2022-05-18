@@ -19,8 +19,8 @@ exports.getPlanetes = (req, res, next) => {
                   "image": "planet_3.png"
                 },
                 "links": {
-                  "self": "https://deeprockgalactic.danlevy.ca//planetes/625f4a9b3c6e0131874ac558",
-                  "collection": "https://deeprockgalactic.danlevy.ca//planetes"
+                  "self": "https://deeprockgalactic.danlevy.ca/planetes/625f4a9b3c6e0131874ac558",
+                  "collection": "https://deeprockgalactic.danlevy.ca/planetes"
                 },
                 "relationships": {}
             }]
@@ -59,8 +59,8 @@ exports.getPlanete = (req, res, next) => {
                   "image": "planet_3.png"
                 },
                 "links": {
-                  "self": "https://deeprockgalactic.danlevy.ca//planetes/625f4a9b3c6e0131874ac558",
-                  "collection": "https://deeprockgalactic.danlevy.ca//planetes"
+                  "self": "https://deeprockgalactic.danlevy.ca/planetes/625f4a9b3c6e0131874ac558",
+                  "collection": "https://deeprockgalactic.danlevy.ca/planetes"
                 },
                 "relationships": {}
             }
@@ -131,8 +131,8 @@ exports.createPlanete = (req, res, next) => {
                   "image": "planet_3.png"
                 },
                 "links": {
-                  "self": "https://deeprockgalactic.danlevy.ca//planetes/625f4a9b3c6e0131874ac558",
-                  "collection": "https://deeprockgalactic.danlevy.ca//planetes"
+                  "self": "https://deeprockgalactic.danlevy.ca/planetes/625f4a9b3c6e0131874ac558",
+                  "collection": "https://deeprockgalactic.danlevy.ca/planetes"
                 },
                 "relationships": {}
             }
@@ -253,8 +253,8 @@ exports.updatePlanete = (req, res, next) => {
                   "image": "planet_3.png"
                 },
                 "links": {
-                  "self": "https://deeprockgalactic.danlevy.ca//planetes/625f4a9b3c6e0131874ac558",
-                  "collection": "https://deeprockgalactic.danlevy.ca//planetes"
+                  "self": "https://deeprockgalactic.danlevy.ca/planetes/625f4a9b3c6e0131874ac558",
+                  "collection": "https://deeprockgalactic.danlevy.ca/planetes"
                 },
                 "relationships": {}
                 }

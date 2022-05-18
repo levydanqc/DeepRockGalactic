@@ -24,14 +24,14 @@ exports.getContrats = (req, res, next) => {
               "dateExpiration": "2023-03-19T11:42:17.000Z"
             },
             "links": {
-              "self": "https://deeprockgalactic.danlevy.ca//contrats/6265f745995a50c7205fae3d",
-              "collection": "https://deeprockgalactic.danlevy.ca//contrats",
-              "reserve": "https://deeprockgalactic.danlevy.ca//reservations/6265f745995a50c7205fae3d"
+              "self": "https://deeprockgalactic.danlevy.ca/contrats/6265f745995a50c7205fae3d",
+              "collection": "https://deeprockgalactic.danlevy.ca/contrats",
+              "reserve": "https://deeprockgalactic.danlevy.ca/reservations/6265f745995a50c7205fae3d"
             },
             "relationships": {
               "planete": {
                   "links": {
-                    "related": "https://deeprockgalactic.danlevy.ca//planetes/6265f73f995a50c7205fae3b"
+                    "related": "https://deeprockgalactic.danlevy.ca/planetes/6265f73f995a50c7205fae3b"
                   }
               }
             }
@@ -75,14 +75,14 @@ exports.getContrat = (req, res, next) => {
                 "dateExpiration": "2023-03-19T11:42:17.000Z"
               },
               "links": {
-                "self": "https://deeprockgalactic.danlevy.ca//contrats/6265f745995a50c7205fae3d",
-                "collection": "https://deeprockgalactic.danlevy.ca//contrats",
-                "reserve": "https://deeprockgalactic.danlevy.ca//reservations/6265f745995a50c7205fae3d"
+                "self": "https://deeprockgalactic.danlevy.ca/contrats/6265f745995a50c7205fae3d",
+                "collection": "https://deeprockgalactic.danlevy.ca/contrats",
+                "reserve": "https://deeprockgalactic.danlevy.ca/reservations/6265f745995a50c7205fae3d"
               },
               "relationships": {
                 "planete": {
                     "links": {
-                      "related": "https://deeprockgalactic.danlevy.ca//planetes/6265f73f995a50c7205fae3b"
+                      "related": "https://deeprockgalactic.danlevy.ca/planetes/6265f73f995a50c7205fae3b"
                     }
                 }
               }
@@ -180,14 +180,14 @@ exports.createContrat = (req, res, next) => {
                       "__v": 0
                     },
                     "links": {
-                        "self": "https://deeprockgalactic.danlevy.ca//contrats/6283e8a0c877f1f7d11423d1",
-                        "collection": "https://deeprockgalactic.danlevy.ca//contrats",
+                        "self": "https://deeprockgalactic.danlevy.ca/contrats/6283e8a0c877f1f7d11423d1",
+                        "collection": "https://deeprockgalactic.danlevy.ca/contrats",
                         "reserve": "/reservations/6283e8a0c877f1f7d11423d1"
                     },
                     "relationships": {
                         "planete": {
                             "links": {
-                                "related": "https://deeprockgalactic.danlevy.ca//planetes/6283da4158b47d87db5f485b"
+                                "related": "https://deeprockgalactic.danlevy.ca/planetes/6283da4158b47d87db5f485b"
                             }
                         }
                     }
@@ -331,14 +331,14 @@ exports.updateContrat = (req, res, next) => {
                   "__v": 0
                 },
                 "links": {
-                    "self": "https://deeprockgalactic.danlevy.ca//contrats/6283e8a0c877f1f7d11423d1",
-                    "collection": "https://deeprockgalactic.danlevy.ca//contrats",
+                    "self": "https://deeprockgalactic.danlevy.ca/contrats/6283e8a0c877f1f7d11423d1",
+                    "collection": "https://deeprockgalactic.danlevy.ca/contrats",
                     "reserve": "/reservations/6283e8a0c877f1f7d11423d1"
                 },
                 "relationships": {
                     "planete": {
                         "links": {
-                            "related": "https://deeprockgalactic.danlevy.ca//planetes/6283da4158b47d87db5f485b"
+                            "related": "https://deeprockgalactic.danlevy.ca/planetes/6283da4158b47d87db5f485b"
                         }
                     }
                 }

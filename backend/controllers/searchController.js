@@ -66,14 +66,14 @@ exports.createSearch = async (req, res, next) => {
                 "dateExpiration": "2022-09-08T02:51:00.000Z"
             },
             "links": {
-                "self": "https://deeprockgalactic.danlevy.ca//contrats/6265f749995a50c7205fae41",
-                "collection": "https://deeprockgalactic.danlevy.ca//contrats",
-                "reserve": "https://deeprockgalactic.danlevy.ca//reservations/6265f749995a50c7205fae41"
+                "self": "https://deeprockgalactic.danlevy.ca/contrats/6265f749995a50c7205fae41",
+                "collection": "https://deeprockgalactic.danlevy.ca/contrats",
+                "reserve": "https://deeprockgalactic.danlevy.ca/reservations/6265f749995a50c7205fae41"
             },
             "relationships": {
                 "planete": {
                     "links": {
-                        "related": "https://deeprockgalactic.danlevy.ca//planetes/6265f73f995a50c7205fae3b"
+                        "related": "https://deeprockgalactic.danlevy.ca/planetes/6265f73f995a50c7205fae3b"
                     }
                 }
             },

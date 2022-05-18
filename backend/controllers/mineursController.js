@@ -22,8 +22,8 @@ exports.getMineurs = (_req, res, next) => {
                 "niveau": 2
               },
               "links": {
-                "self": "https://deeprockgalactic.danlevy.ca//mineurs/62674b7e563f2f0b49f8c8ba",
-                "collection": "https://deeprockgalactic.danlevy.ca//mineurs"
+                "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
+                "collection": "https://deeprockgalactic.danlevy.ca/mineurs"
               },
               "relationships": {}
             }]
@@ -63,8 +63,8 @@ exports.getMineur = (req, res, next) => {
                 "niveau": 2
               },
               "links": {
-                "self": "https://deeprockgalactic.danlevy.ca//mineurs/62674b7e563f2f0b49f8c8ba",
-                "collection": "https://deeprockgalactic.danlevy.ca//mineurs"
+                "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
+                "collection": "https://deeprockgalactic.danlevy.ca/mineurs"
               },
               "relationships": {}
             }
@@ -141,8 +141,8 @@ exports.createMineur = (req, res, next) => {
                         "niveau": 2
                       },
                       "links": {
-                        "self": "https://deeprockgalactic.danlevy.ca//mineurs/62674b7e563f2f0b49f8c8ba",
-                        "collection": "https://deeprockgalactic.danlevy.ca//mineurs"
+                        "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
+                        "collection": "https://deeprockgalactic.danlevy.ca/mineurs"
                       },
                       "relationships": {}
                     }
@@ -264,8 +264,8 @@ exports.updateMineur = (req, res, next) => {
                       "niveau": 2
                     },
                     "links": {
-                      "self": "https://deeprockgalactic.danlevy.ca//mineurs/62674b7e563f2f0b49f8c8ba",
-                      "collection": "https://deeprockgalactic.danlevy.ca//mineurs"
+                      "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
+                      "collection": "https://deeprockgalactic.danlevy.ca/mineurs"
                     },
                     "relationships": {}
                     }
