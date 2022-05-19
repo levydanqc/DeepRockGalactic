@@ -15,13 +15,7 @@ exports.getContrats = (req, res, next) => {
           description: "Liste des contrats",
           schema: [{
             "attributes": {
-              "_id": "6265f745995a50c7205fae3d",
-              "planeteId": "6265f73f995a50c7205fae3b",
-              "prime": 588,
-              "danger": 1,
-              "ressource": "Fresh",
-              "quantiteRessource": 171,
-              "dateExpiration": "2023-03-19T11:42:17.000Z"
+              "$ref": "#/definitions/Contrat"
             },
             "links": {
               "self": "https://deeprockgalactic.danlevy.ca/contrats/6265f745995a50c7205fae3d",
@@ -66,13 +60,7 @@ exports.getContrat = (req, res, next) => {
             description: "Contrat",
             schema: {
               "attributes": {
-                "_id": "6265f745995a50c7205fae3d",
-                "planeteId": "6265f73f995a50c7205fae3b",
-                "prime": 588,
-                "danger": 1,
-                "ressource": "Fresh",
-                "quantiteRessource": 171,
-                "dateExpiration": "2023-03-19T11:42:17.000Z"
+                "$ref": "#/definitions/Contrat"
               },
               "links": {
                 "self": "https://deeprockgalactic.danlevy.ca/contrats/6265f745995a50c7205fae3d",
@@ -165,35 +153,26 @@ exports.createContrat = (req, res, next) => {
             /* #swagger.responses[201] = { 
               description: "Contrat créé",
               schema: {
-                  message: "Contrat créé avec succès!",
-                  data: {
-                    "attributes": {
-                      "planeteId": "6283da4158b47d87db5f485b",
-                      "prime": 823,
-                      "danger": 3,
-                      "ressource": "Rubber",
-                      "quantiteRessource": 475,
-                      "dateExpiration": "2022-12-22T19:40:45.000Z",
-                      "_id": "6283e8a0c877f1f7d11423d1",
-                      "createdAt": "2022-05-17T18:25:36.439Z",
-                      "updatedAt": "2022-05-17T18:25:36.439Z",
-                      "__v": 0
-                    },
-                    "links": {
-                        "self": "https://deeprockgalactic.danlevy.ca/contrats/6283e8a0c877f1f7d11423d1",
-                        "collection": "https://deeprockgalactic.danlevy.ca/contrats",
-                        "reserve": https://deeprockgalactic.danlevy.ca/reservations/6283e8a0c877f1f7d11423d1"
-                    },
-                    "relationships": {
-                        "planete": {
-                            "links": {
-                                "related": "https://deeprockgalactic.danlevy.ca/planetes/6283da4158b47d87db5f485b"
-                            }
-                        }
+                message: "Contrat créé avec succès!",
+                data: {
+                  "attributes": {
+                    "$ref": "#/definitions/Contrat"
+                  },
+                  "links": {
+                    "self": "https://deeprockgalactic.danlevy.ca/contrats/6283e8a0c877f1f7d11423d1",
+                    "collection": "https://deeprockgalactic.danlevy.ca/contrats",
+                    "reserve": "https://deeprockgalactic.danlevy.ca/reservations/6283e8a0c877f1f7d11423d1",
+                  },
+                  "relationships": {
+                    "planete": {
+                      "links": {
+                        "related": "https://deeprockgalactic.danlevy.ca/planetes/6283da4158b47d87db5f485b"
+                      }
                     }
-                  }
-                }
-              }
+                  },
+                },
+              },
+            }
             */
             res.status(201).json({
               message: "Contrat créé avec succès!",
@@ -319,16 +298,7 @@ exports.updateContrat = (req, res, next) => {
               message: "Contrat modifié avec succès!",
               data: {
                 "attributes": {
-                  "planeteId": "6283da4158b47d87db5f485b",
-                  "prime": 823,
-                  "danger": 3,
-                  "ressource": "Rubber",
-                  "quantiteRessource": 475,
-                  "dateExpiration": "2022-12-22T19:40:45.000Z",
-                  "_id": "6283e8a0c877f1f7d11423d1",
-                  "createdAt": "2022-05-17T18:25:36.439Z",
-                  "updatedAt": "2022-05-17T18:25:36.439Z",
-                  "__v": 0
+                  "$ref": "#/definitions/Contrat"
                 },
                 "links": {
                     "self": "https://deeprockgalactic.danlevy.ca/contrats/6283e8a0c877f1f7d11423d1",

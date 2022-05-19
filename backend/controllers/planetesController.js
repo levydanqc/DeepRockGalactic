@@ -15,9 +15,7 @@ exports.getPlanetes = (req, res, next) => {
             schema: {
               data: [{
                 "attributes": {
-                  "_id": "625f4a9b3c6e0131874ac558",
-                  "nom": "Omicron Persei 8",
-                  "image": "planet_3.png"
+                  "$ref": "#/definitions/Planete"
                 },
                 "links": {
                   "self": "https://deeprockgalactic.danlevy.ca/planetes/625f4a9b3c6e0131874ac558",
@@ -56,9 +54,7 @@ exports.getPlanete = (req, res, next) => {
             description: "Planete",
             schema: {
               "attributes": {
-                  "_id": "625f4a9b3c6e0131874ac558",
-                  "nom": "Omicron Persei 8",
-                  "image": "planet_3.png"
+                  "$ref": "#/definitions/Planete"
                 },
                 "links": {
                   "self": "https://deeprockgalactic.danlevy.ca/planetes/625f4a9b3c6e0131874ac558",
@@ -128,9 +124,7 @@ exports.createPlanete = (req, res, next) => {
             message: "Planète créée avec succès!",
             data: {
               "attributes": {
-                  "_id": "625f4a9b3c6e0131874ac558",
-                  "nom": "Omicron Persei 8",
-                  "image": "planet_3.png"
+                  "$ref": "#/definitions/Planete"
                 },
                 "links": {
                   "self": "https://deeprockgalactic.danlevy.ca/planetes/625f4a9b3c6e0131874ac558",
@@ -249,10 +243,8 @@ exports.updatePlanete = (req, res, next) => {
             schema: {
                 message: "Planète modifiée avec succès!",
                 data: {
-                    "attributes": {
-                  "_id": "625f4a9b3c6e0131874ac558",
-                  "nom": "Omicron Persei 8",
-                  "image": "planet_3.png"
+                  "attributes": {
+                    "$ref": "#/definitions/Planete"
                 },
                 "links": {
                   "self": "https://deeprockgalactic.danlevy.ca/planetes/625f4a9b3c6e0131874ac558",

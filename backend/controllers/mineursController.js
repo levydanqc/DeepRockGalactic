@@ -16,11 +16,7 @@ exports.getMineurs = (_req, res, next) => {
             schema: {
               data: [{
                 "attributes": {
-                  "_id": "62674b7e563f2f0b49f8c8ba",
-                  "email": "Theron_Jakubowski53@yahoo.com",
-                  "nom": "Dean_Collier85",
-                  "motdepasse": "$2a$12$0mmLJciY5EvSj.exoSrmEeYICRC0yHvKMi0Xqhvm/GUWilPydc/Ku",
-                  "niveau": 2
+                  "$ref": "#/definitions/Mineur"
                 },
                 "links": {
                   "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
@@ -58,11 +54,7 @@ exports.getMineur = (req, res, next) => {
             description: "Mineur",
             schema: {
               "attributes": {
-                "_id": "62674b7e563f2f0b49f8c8ba",
-                "email": "Theron_Jakubowski53@yahoo.com",
-                "nom": "Dean_Collier85",
-                "motdepasse": "$2a$12$0mmLJciY5EvSj.exoSrmEeYICRC0yHvKMi0Xqhvm/GUWilPydc/Ku",
-                "niveau": 2
+                "$ref": "#/definitions/Mineur"
               },
               "links": {
                 "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
@@ -136,11 +128,7 @@ exports.createMineur = (req, res, next) => {
                     message: "Mineur créé avec succès!",
                     data: {
                       "attributes": {
-                        "_id": "62674b7e563f2f0b49f8c8ba",
-                        "email": "Theron_Jakubowski53@yahoo.com",
-                        "nom": "Dean_Collier85",
-                        "motdepasse": "$2a$12$0mmLJciY5EvSj.exoSrmEeYICRC0yHvKMi0Xqhvm/GUWilPydc/Ku",
-                        "niveau": 2
+                        "$ref": "#/definitions/Mineur"
                       },
                       "links": {
                         "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
@@ -259,11 +247,7 @@ exports.updateMineur = (req, res, next) => {
                   message: "Mineur modifié avec succès!",
                   data: {
                     "attributes": {
-                      "_id": "62674b7e563f2f0b49f8c8ba",
-                      "email": "Theron_Jakubowski53@yahoo.com",
-                      "nom": "Dean_Collier85",
-                      "motdepasse": "$2a$12$0mmLJciY5EvSj.exoSrmEeYICRC0yHvKMi0Xqhvm/GUWilPydc/Ku",
-                      "niveau": 2
+                      "$ref": "#/definitions/Mineur"
                     },
                     "links": {
                       "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",

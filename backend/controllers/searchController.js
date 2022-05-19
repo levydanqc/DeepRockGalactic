@@ -58,13 +58,7 @@ exports.createSearch = async (req, res, next) => {
             schema: {
               data: [{
                 "attributes": {
-                  "_id": "6265f749995a50c7205fae41",
-                  "planeteId": "6265f73f995a50c7205fae3b",
-                  "prime": 979,
-                  "danger": 2,
-                  "ressource": "Fresh",
-                  "quantiteRessource": 12,
-                  "dateExpiration": "2022-09-08T02:51:00.000Z"
+                  "$ref": "#/definitions/Contrat"
                 },
                 "links": {
                     "self": "https://deeprockgalactic.danlevy.ca/contrats/6265f749995a50c7205fae41",
