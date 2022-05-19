@@ -13,7 +13,8 @@ exports.getContrats = (req, res, next) => {
     .then((contrats) => {
       /* #swagger.responses[200] = { 
           description: "Liste des contrats",
-          schema: [{
+          schema: {
+            data: [{
             "attributes": {
               "$ref": "#/definitions/Contrat"
             },
@@ -29,7 +30,7 @@ exports.getContrats = (req, res, next) => {
                   }
               }
             }
-          }]
+          }]}
         }
       */
       res.status(200).json({
