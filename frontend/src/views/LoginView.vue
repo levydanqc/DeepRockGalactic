@@ -23,7 +23,4 @@ form {
   width: 25vw;
   min-width: 300px;
 }
-input {
-  background: var(--background-color);
-}
 </style>
