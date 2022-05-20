@@ -55,9 +55,25 @@ exports.createSearch = async (req, res, next) => {
     if (contrats.length > 0) {
       /* #swagger.responses[200] = { 
             description: "Liste des contrats",
-            schema: [{
-                "$ref": "#/definitions/Contrat",
-            }]
+            schema: {
+              data: [{
+                "attributes": {
+                  "$ref": "#/definitions/Contrat"
+                },
+                "links": {
+                    "self": "https://deeprockgalactic.danlevy.ca/contrats/6265f749995a50c7205fae41",
+                    "collection": "https://deeprockgalactic.danlevy.ca/contrats",
+                    "reserve": "https://deeprockgalactic.danlevy.ca/reservations/6265f749995a50c7205fae41"
+                },
+                "relationships": {
+                    "planete": {
+                        "links": {
+                            "related": "https://deeprockgalactic.danlevy.ca/planetes/6265f73f995a50c7205fae3b"
+                        }
+                    }
+                },
+              }]
+            }
         }
       */
       res.status(200).json({ data: formated(contrats) });

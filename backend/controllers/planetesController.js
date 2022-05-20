@@ -12,9 +12,18 @@ exports.getPlanetes = (req, res, next) => {
     .then((planetes) => {
       /* #swagger.responses[200] = { 
             description: "Liste des planètes",
-            schema: [{
-                "$ref": "#/definitions/Planete"
-            }]
+            schema: {
+              data: [{
+                "attributes": {
+                  "$ref": "#/definitions/Planete"
+                },
+                "links": {
+                  "self": "https://deeprockgalactic.danlevy.ca/planetes/625f4a9b3c6e0131874ac558",
+                  "collection": "https://deeprockgalactic.danlevy.ca/planetes"
+                },
+                "relationships": {}
+              }]
+            }
         }
       */
       res.status(200).json({
@@ -44,7 +53,14 @@ exports.getPlanete = (req, res, next) => {
         /* #swagger.responses[200] = { 
             description: "Planete",
             schema: {
-                "$ref": "#/definitions/Planete"
+              "attributes": {
+                  "$ref": "#/definitions/Planete"
+                },
+                "links": {
+                  "self": "https://deeprockgalactic.danlevy.ca/planetes/625f4a9b3c6e0131874ac558",
+                  "collection": "https://deeprockgalactic.danlevy.ca/planetes"
+                },
+                "relationships": {}
             }
         }
       */
@@ -106,8 +122,15 @@ exports.createPlanete = (req, res, next) => {
           description: "Planète créée",
           schema: {
             message: "Planète créée avec succès!",
-            planete: {
-              "$ref": "#/definitions/Planete"
+            data: {
+              "attributes": {
+                  "$ref": "#/definitions/Planete"
+                },
+                "links": {
+                  "self": "https://deeprockgalactic.danlevy.ca/planetes/625f4a9b3c6e0131874ac558",
+                  "collection": "https://deeprockgalactic.danlevy.ca/planetes"
+                },
+                "relationships": {}
             }
           }
         }
@@ -219,8 +242,15 @@ exports.updatePlanete = (req, res, next) => {
             description: "Planète modifiée",
             schema: {
                 message: "Planète modifiée avec succès!",
-                planète: {
+                data: {
+                  "attributes": {
                     "$ref": "#/definitions/Planete"
+                },
+                "links": {
+                  "self": "https://deeprockgalactic.danlevy.ca/planetes/625f4a9b3c6e0131874ac558",
+                  "collection": "https://deeprockgalactic.danlevy.ca/planetes"
+                },
+                "relationships": {}
                 }
             }
         }

@@ -69,14 +69,11 @@ const doc = {
       $ressource: "fer",
       $quantiteRessource: 100,
       $dateExpiration: "2022-01-01",
+      $planeteId: "6283da4158b47d87db5f485b",
     },
     Reservation: {
-      $mineurId: {
-        $ref: "#/definitions/Mineur",
-      },
-      $planeteId: {
-        $ref: "#/definitions/Planete",
-      },
+      $mineurId: "62674b7e563f2f0b49f8c8ba",
+      $contratId: "6283e8a0c877f1f7d11423d1",
       $estTermine: false,
     },
   },

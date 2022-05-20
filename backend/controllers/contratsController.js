@@ -12,10 +12,25 @@ exports.getContrats = (req, res, next) => {
   Contrat.find()
     .then((contrats) => {
       /* #swagger.responses[200] = { 
-            description: "Liste des contrats",
-            schema: [{
-                "$ref": "#/definitions/Contrat"
-            }]
+          description: "Liste des contrats",
+          schema: {
+            data: [{
+            "attributes": {
+              "$ref": "#/definitions/Contrat"
+            },
+            "links": {
+              "self": "https://deeprockgalactic.danlevy.ca/contrats/6265f745995a50c7205fae3d",
+              "collection": "https://deeprockgalactic.danlevy.ca/contrats",
+              "reserve": "https://deeprockgalactic.danlevy.ca/reservations/6265f745995a50c7205fae3d"
+            },
+            "relationships": {
+              "planete": {
+                  "links": {
+                    "related": "https://deeprockgalactic.danlevy.ca/planetes/6265f73f995a50c7205fae3b"
+                  }
+              }
+            }
+          }]}
         }
       */
       res.status(200).json({
@@ -45,7 +60,21 @@ exports.getContrat = (req, res, next) => {
         /* #swagger.responses[200] = { 
             description: "Contrat",
             schema: {
+              "attributes": {
                 "$ref": "#/definitions/Contrat"
+              },
+              "links": {
+                "self": "https://deeprockgalactic.danlevy.ca/contrats/6265f745995a50c7205fae3d",
+                "collection": "https://deeprockgalactic.danlevy.ca/contrats",
+                "reserve": "https://deeprockgalactic.danlevy.ca/reservations/6265f745995a50c7205fae3d"
+              },
+              "relationships": {
+                "planete": {
+                    "links": {
+                      "related": "https://deeprockgalactic.danlevy.ca/planetes/6265f73f995a50c7205fae3b"
+                    }
+                }
+              }
             }
         }
       */
@@ -125,13 +154,27 @@ exports.createContrat = (req, res, next) => {
             /* #swagger.responses[201] = { 
               description: "Contrat créé",
               schema: {
-                  message: "Contrat créé avec succès!",
-                  contrat: {
-                      "$ref": "#/definitions/Contrat"
-                  }
-              }
-          }
-        */
+                message: "Contrat créé avec succès!",
+                data: {
+                  "attributes": {
+                    "$ref": "#/definitions/Contrat"
+                  },
+                  "links": {
+                    "self": "https://deeprockgalactic.danlevy.ca/contrats/6283e8a0c877f1f7d11423d1",
+                    "collection": "https://deeprockgalactic.danlevy.ca/contrats",
+                    "reserve": "https://deeprockgalactic.danlevy.ca/reservations/6283e8a0c877f1f7d11423d1",
+                  },
+                  "relationships": {
+                    "planete": {
+                      "links": {
+                        "related": "https://deeprockgalactic.danlevy.ca/planetes/6283da4158b47d87db5f485b"
+                      }
+                    }
+                  },
+                },
+              },
+            }
+            */
             res.status(201).json({
               message: "Contrat créé avec succès!",
               data: this.formated(contrat),
@@ -253,10 +296,24 @@ exports.updateContrat = (req, res, next) => {
       /* #swagger.responses[200] = { 
             description: "Contrat modifié",
             schema: {
-                message: "Contrat modifié avec succès!",
-                contrat: {
-                    "$ref": "#/definitions/Contrat"
+              message: "Contrat modifié avec succès!",
+              data: {
+                "attributes": {
+                  "$ref": "#/definitions/Contrat"
+                },
+                "links": {
+                    "self": "https://deeprockgalactic.danlevy.ca/contrats/6283e8a0c877f1f7d11423d1",
+                    "collection": "https://deeprockgalactic.danlevy.ca/contrats",
+                    "reserve": "https://deeprockgalactic.danlevy.ca/reservations/6283e8a0c877f1f7d11423d1"
+                },
+                "relationships": {
+                    "planete": {
+                        "links": {
+                            "related": "https://deeprockgalactic.danlevy.ca/planetes/6283da4158b47d87db5f485b"
+                        }
+                    }
                 }
+              }
             }
         }
       */

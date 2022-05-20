@@ -13,9 +13,18 @@ exports.getMineurs = (_req, res, next) => {
     .then((mineurs) => {
       /* #swagger.responses[200] = { 
             description: "Liste des mineurs",
-            schema: [{
-                "$ref": "#/definitions/Mineur"
-            }]
+            schema: {
+              data: [{
+                "attributes": {
+                  "$ref": "#/definitions/Mineur"
+                },
+                "links": {
+                  "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
+                  "collection": "https://deeprockgalactic.danlevy.ca/mineurs"
+                },
+                "relationships": {}
+              }]
+            }
         }
       */
       res.status(200).json({
@@ -44,7 +53,14 @@ exports.getMineur = (req, res, next) => {
         /* #swagger.responses[200] = { 
             description: "Mineur",
             schema: {
+              "attributes": {
                 "$ref": "#/definitions/Mineur"
+              },
+              "links": {
+                "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
+                "collection": "https://deeprockgalactic.danlevy.ca/mineurs"
+              },
+              "relationships": {}
             }
         }
       */
@@ -110,8 +126,15 @@ exports.createMineur = (req, res, next) => {
                 description: "Mineur créé",
                 schema: {
                     message: "Mineur créé avec succès!",
-                    mineur: {
+                    data: {
+                      "attributes": {
                         "$ref": "#/definitions/Mineur"
+                      },
+                      "links": {
+                        "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
+                        "collection": "https://deeprockgalactic.danlevy.ca/mineurs"
+                      },
+                      "relationships": {}
                     }
                 }
             }
@@ -219,14 +242,21 @@ exports.updateMineur = (req, res, next) => {
             mineur.niveau = niveau;
             mineur.save();
             /*  #swagger.responses[200] = { 
-                  description: "Mineur modifié",
-                  schema: {
-                      message: "Mineur modifié avec succès!",
-                      mineur: {
-                          "$ref": "#/definitions/Mineur"
-                      }
-                  }
-              }
+              description: "Mineur modifié",
+              schema: {
+                  message: "Mineur modifié avec succès!",
+                  data: {
+                    "attributes": {
+                      "$ref": "#/definitions/Mineur"
+                    },
+                    "links": {
+                      "self": "https://deeprockgalactic.danlevy.ca/mineurs/62674b7e563f2f0b49f8c8ba",
+                      "collection": "https://deeprockgalactic.danlevy.ca/mineurs"
+                    },
+                    "relationships": {}
+                    }
+                }
+            }
             */
             res.status(200).json({
               message: "Mineur modifié avec succès",
